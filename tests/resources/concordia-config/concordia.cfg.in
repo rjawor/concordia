@@ -1,0 +1,9 @@
+#----------------------------
+# Concordia configuration file
+#---------------------------
+#
+
+#Path to the Puddle tagset
+puddle_tagset_path = "@TEST_PUDDLE_TAGSET_PATH@";
+
+### eof

@@ -1,0 +1,69 @@
+Concordia Installation & Build Manual
+=================================
+
+This file describes how to compile, build
+and install Concordia library.
+
+Requirements
+============
+
+* cmake
+* Boost library
+* Log4cpp
+* libstemmer (Snowball stemming library)
+* (optional) Doxygen
+
+Boost Ubuntu installation
+=========================
+
+sudo apt-get install libboost-dev libboost-serialization-dev libboost-test-dev libboost-filesystem-dev libboost-system-de libboost-program-options-dev libboost-iostreams-dev
+
+Log4cpp Ubuntu installation
+===========================
+
+sudo apt-get install liblog4cpp5-dev
+
+libconfig Ubuntu installation
+=============================
+
+sudo apt-get install libconfig++-dev
+sudo apt-get install libconfig-dev
+
+libstemmer Ubuntu installation
+==============================
+sudo apt-get install libstemmer-dev
+
+Perl-compatible regular expressions (PCRE) Ubuntu installation
+=======================================================
+
+sudo apt-get install libpcre3-dev
+
+Doxygen Ubuntu installation
+=======================================================
+
+sudo apt-get install doxygen
+
+Installation procedure
+======================
+
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+make
+make test
+make install
+
+Documentation
+=============
+
+If Doxygen is available, a successful compilation generates documentation data in three
+formats in the build/doc directory.
+
+The man files in doc/man will be installed during installation. Open doc/html/index.html for
+a HTML version of the same documentation. The latex directory contains uncompiled latex
+files. To generate a single pdf file run
+
+cd doc/latex
+make
+
+This should generate a single file called refman.pdf in the same directory.

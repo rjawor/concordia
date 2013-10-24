@@ -1,3 +1,0 @@
-Rule "street"
-Match: [orth~"[P]ort.*"]+;
-Eval: group(ne_ADDRESS, 1);

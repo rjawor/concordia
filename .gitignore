@@ -1,0 +1,5 @@
+build
+cppcheck-result.txt
+cpplint-result.txt
+prod/resources/concordia-config/concordia.cfg
+

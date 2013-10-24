@@ -1,0 +1,32 @@
+/** \page running Running the Concordia library
+
+\section running1 Programmatical use of the library
+
+The main access point to the functionalities of the library is the Concordia class. An example programmatical use of the class is shown below:
+
+\verbatim
+snippet
+\endverbatim
+
+\section running2 The concordia-console program
+
+
+After successful build of the project (see \ref compilation2) the concordia-console program is available in the folder build/concordia-console.
+
+\subsection running2_1 concordia-console options
+
+The full list of program options is given below:
+
+\verbatim
+  -h [ --help ]         Display this message
+  -c [ --config ] arg   Concordia configuration file (required)
+\endverbatim
+
+\subsection running2_2 concordia-console example run
+
+\subsection running2_3 concordia-console output format
+
+
+\section running3 The Concordia configuration
+
+Concordia is configured by the means of a configuration file in the libconfig format (http://www.hyperrealm.com/libconfig/). 

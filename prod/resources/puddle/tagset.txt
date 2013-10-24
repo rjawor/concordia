@@ -1,0 +1,7 @@
+[ATTR]
+
+case                    = nom gen dat acc inst loc voc
+
+[POS]
+
+subst = case

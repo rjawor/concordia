@@ -4,8 +4,7 @@
 #include <string>
 #include <map>
 #include <vector>
-
-#include "concordia/concordia_config.hpp"
+#include "concordia/concordia_exception.hpp"
 
 /*!
   Class for generating a sentence hash.
@@ -28,7 +27,7 @@ public:
 
 private:
     
-    map<int,string> _wordMap;
+    map<string,int> _wordMap;
     
     string _wordMapFilename;
 

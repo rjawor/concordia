@@ -28,7 +28,6 @@ public:
     */
     std::string & getVersion();
 
-
 private:
     static std::string _libraryVersion;
 

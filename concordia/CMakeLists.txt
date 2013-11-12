@@ -6,6 +6,7 @@ foreach(dir ${ALL_DIRECTORIES})
 endforeach(dir)
 
 add_library(concordia SHARED
+  hash_generator.cpp
   concordia.cpp
   concordia_config.cpp
   concordia_exception.cpp

@@ -3,18 +3,18 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/serialization/map.hpp>
 #include <fstream>
 
-
-HashGenerator::HashGenerator(const string & wordMapFilename) throw(ConcordiaException) {
-    _wordMapFilename = wordMapFilename;
+HashGenerator::HashGenerator(const string & wordMapFilename)
+                                         throw(ConcordiaException) :
+    _wordMapFilename(wordMapFilename),
+    _wordMap(boost::shared_ptr<WordMap>(new WordMap)) {
     if (boost::filesystem::exists(_wordMapFilename)) {
         ifstream ifs(_wordMapFilename.c_str(), std::ios::binary);
         boost::archive::binary_iarchive ia(ifs);
-        ia >> _wordMap;
-        
-    }  
+        boost::shared_ptr<WordMap> restoredWordMap(new WordMap);
+        ia >> *_wordMap;
+    }
 }
 
 HashGenerator::~HashGenerator() {
@@ -24,18 +24,21 @@ vector<int> HashGenerator::generateHash(const string & sentence) {
     vector<int> result;
     vector<string> tokenTexts;
     boost::split(tokenTexts, sentence, boost::is_any_of(" "));
-   
-    for(vector<string>::iterator it = tokenTexts.begin(); it != tokenTexts.end(); ++it) {
+
+    for (vector<string>::iterator it = tokenTexts.begin();
+                                it != tokenTexts.end(); ++it) {
         string token = *it;
-    }   
-    
+        int code = _wordMap->getWordCode(token);
+        result.push_back(code);
+    }
+
     return result;
 }
 
 void HashGenerator::serializeWordMap() {
     ofstream ofs(_wordMapFilename.c_str(), std::ios::binary);
     boost::archive::binary_oarchive oa(ofs);
-    oa << _wordMap;
+    oa << *_wordMap;
 }
 
 

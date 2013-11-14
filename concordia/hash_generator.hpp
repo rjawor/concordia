@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <boost/shared_ptr.hpp>
+#include "concordia/word_map.hpp"
 #include "concordia/concordia_exception.hpp"
 
 /*!
@@ -15,8 +17,9 @@ using namespace std;
 
 class HashGenerator {
 public:
-    explicit HashGenerator(const string & wordMapFilename) throw(ConcordiaException);
-   
+    explicit HashGenerator(const string & wordMapFilename)
+                                    throw(ConcordiaException);
+
     /*! Destructor.
     */
     virtual ~HashGenerator();
@@ -26,11 +29,9 @@ public:
     void serializeWordMap();
 
 private:
-    
-    map<string,int> _wordMap;
-    
-    string _wordMapFilename;
+    boost::shared_ptr<WordMap> _wordMap;
 
+    string _wordMapFilename;
 };
 
 #endif

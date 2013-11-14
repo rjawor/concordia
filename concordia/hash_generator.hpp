@@ -17,7 +17,7 @@ using namespace std;
 
 class HashGenerator {
 public:
-    explicit HashGenerator(const string & wordMapFilename)
+    explicit HashGenerator(const string & wordMapFilePath)
                                     throw(ConcordiaException);
 
     /*! Destructor.
@@ -31,7 +31,7 @@ public:
 private:
     boost::shared_ptr<WordMap> _wordMap;
 
-    string _wordMapFilename;
+    string _wordMapFilePath;
 };
 
 #endif

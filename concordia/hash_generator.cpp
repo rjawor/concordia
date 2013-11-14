@@ -5,12 +5,12 @@
 #include <boost/algorithm/string.hpp>
 #include <fstream>
 
-HashGenerator::HashGenerator(const string & wordMapFilename)
+HashGenerator::HashGenerator(const string & wordMapFilePath)
                                          throw(ConcordiaException) :
-    _wordMapFilename(wordMapFilename),
+    _wordMapFilePath(wordMapFilePath),
     _wordMap(boost::shared_ptr<WordMap>(new WordMap)) {
-    if (boost::filesystem::exists(_wordMapFilename)) {
-        ifstream ifs(_wordMapFilename.c_str(), std::ios::binary);
+    if (boost::filesystem::exists(_wordMapFilePath)) {
+        ifstream ifs(_wordMapFilePath.c_str(), std::ios::binary);
         boost::archive::binary_iarchive ia(ifs);
         boost::shared_ptr<WordMap> restoredWordMap(new WordMap);
         ia >> *_wordMap;
@@ -36,7 +36,7 @@ vector<int> HashGenerator::generateHash(const string & sentence) {
 }
 
 void HashGenerator::serializeWordMap() {
-    ofstream ofs(_wordMapFilename.c_str(), std::ios::binary);
+    ofstream ofs(_wordMapFilePath.c_str(), std::ios::binary);
     boost::archive::binary_oarchive oa(ofs);
     oa << *_wordMap;
 }

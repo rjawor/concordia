@@ -18,8 +18,8 @@ BOOST_AUTO_TEST_CASE( SimpleHashTest )
     
     HashGenerator hashGenerator = HashGenerator(TEST_WORD_MAP_PATH);
 
-    vector<int> hash = hashGenerator.generateHash("Ala ma kota");
-    vector<int> expected;
+    vector<sauchar_t> hash = hashGenerator.generateHash("Ala ma kota");
+    vector<sauchar_t> expected;
     expected.push_back(0);
     expected.push_back(1);
     expected.push_back(2);
@@ -34,8 +34,8 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     } 
 
     HashGenerator hashGenerator1 = HashGenerator(TEST_WORD_MAP_PATH);
-    vector<int> hash1 = hashGenerator1.generateHash("Ala ma kota");
-    vector<int> expected1;
+    vector<sauchar_t> hash1 = hashGenerator1.generateHash("Ala ma kota");
+    vector<sauchar_t> expected1;
     expected1.push_back(0);
     expected1.push_back(1);
     expected1.push_back(2);
@@ -44,8 +44,8 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     hashGenerator1.serializeWordMap();
    
     HashGenerator hashGenerator2 = HashGenerator(TEST_WORD_MAP_PATH);
-    vector<int> hash2 = hashGenerator2.generateHash("Ala ma psa");
-    vector<int> expected2;
+    vector<sauchar_t> hash2 = hashGenerator2.generateHash("Ala ma psa");
+    vector<sauchar_t> expected2;
     expected2.push_back(0);
     expected2.push_back(1);
     expected2.push_back(3);

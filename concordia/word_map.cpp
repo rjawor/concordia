@@ -8,9 +8,9 @@ WordMap::WordMap() throw(ConcordiaException) {
 WordMap::~WordMap() {
 }
 
-int WordMap::getWordCode(const string & word) {
+sauchar_t WordMap::getWordCode(const string & word) {
     if (_map.find(word) == _map.end()) {
-        int newCode = _nextFree;
+        sauchar_t newCode = _nextFree;
         _map[word] = newCode;
         _nextFree++;
         return newCode;

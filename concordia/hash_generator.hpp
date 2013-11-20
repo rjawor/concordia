@@ -8,6 +8,9 @@
 #include "concordia/word_map.hpp"
 #include "concordia/concordia_exception.hpp"
 
+#include <divsufsort.h>
+
+
 /*!
   Class for generating a sentence hash.
 
@@ -24,7 +27,7 @@ public:
     */
     virtual ~HashGenerator();
 
-    vector<int> generateHash(const string & sentence);
+    vector<sauchar_t> generateHash(const string & sentence);
 
     void serializeWordMap();
 

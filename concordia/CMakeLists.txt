@@ -24,6 +24,7 @@ install(FILES concordia.hpp DESTINATION include/concordia/)
 target_link_libraries(concordia log4cpp)
 target_link_libraries(concordia ${LIBSTEMMER_LIB})
 target_link_libraries(concordia ${Boost_LIBRARIES})
+target_link_libraries(concordia divsufsort)
 
 if (WITH_RE2)
   target_link_libraries(concordia re2)

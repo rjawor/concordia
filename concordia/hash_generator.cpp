@@ -20,15 +20,15 @@ HashGenerator::HashGenerator(const string & wordMapFilePath)
 HashGenerator::~HashGenerator() {
 }
 
-vector<int> HashGenerator::generateHash(const string & sentence) {
-    vector<int> result;
+vector<sauchar_t> HashGenerator::generateHash(const string & sentence) {
+    vector<sauchar_t> result;
     vector<string> tokenTexts;
     boost::split(tokenTexts, sentence, boost::is_any_of(" "));
 
     for (vector<string>::iterator it = tokenTexts.begin();
                                 it != tokenTexts.end(); ++it) {
         string token = *it;
-        int code = _wordMap->getWordCode(token);
+        sauchar_t code = _wordMap->getWordCode(token);
         result.push_back(code);
     }
 

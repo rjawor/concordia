@@ -8,6 +8,9 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/map.hpp>
 
+#include <divsufsort.h>
+
+
 
 /*!
   Class representing dictionary for word to int encoding.
@@ -24,7 +27,7 @@ public:
     */
     virtual ~WordMap();
 
-    int getWordCode(const string & word);
+    sauchar_t getWordCode(const string & word);
 
 private:
     friend class boost::serialization::access;
@@ -36,9 +39,9 @@ private:
         ar & _nextFree;
     }
 
-    map<string, int> _map;
+    map<string, sauchar_t> _map;
 
-    int _nextFree;
+    sauchar_t _nextFree;
 };
 
 #endif

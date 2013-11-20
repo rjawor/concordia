@@ -1,7 +1,12 @@
 #ifndef CONCORDIA_INDEX_HDR
 #define CONCORDIA_INDEX_HDR
 
+#include <divsufsort.h>
 #include <boost/shared_ptr.hpp>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
 
@@ -31,6 +36,10 @@ public:
 
 private:
     boost::shared_ptr<HashGenerator> _hashGenerator;
+
+    fstream _hashedIndexFile;
+
+    ofstream _suffixArrayFile;
 };
 
 #endif

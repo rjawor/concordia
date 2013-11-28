@@ -24,6 +24,8 @@ set (TEMP_WORD_MAP "temp_word_map.bin")
 set (TEMP_HASHED_INDEX "temp_hashed_index.bin")
 set (TEMP_SUFFIX_ARRAY "temp_suffix_array.bin")
 
+file(MAKE_DIRECTORY ${TEST_RESOURCES_DIRECTORY}/temp)
+
 
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 

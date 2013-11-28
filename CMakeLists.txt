@@ -20,10 +20,16 @@ set (PROD_PUDDLE_TAGSET_PATH "${PROD_RESOURCES_DIRECTORY}/puddle/tagset.txt")
 
 set (TEST_RESOURCES_DIRECTORY "${concordia_SOURCE_DIR}/tests/resources")
 set (TEST_PUDDLE_TAGSET_PATH "${TEST_RESOURCES_DIRECTORY}/puddle/basic-tagset.txt")
+set (TEMP_WORD_MAP "temp_word_map.bin")
+set (TEMP_HASHED_INDEX "temp_hashed_index.bin")
+set (TEMP_SUFFIX_ARRAY "temp_suffix_array.bin")
+
 
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
 set(BASE_TARGETS concordia)
+
+
                 
 # ================================================
 # Third-party libraries
@@ -97,11 +103,6 @@ endif(EXISTS ${LOG4CPP_LIB} AND EXISTS ${LOG4CPP_INCLUDE})
 configure_file (
   "${concordia_SOURCE_DIR}/concordia/common/config.hpp.in"
   "${concordia_SOURCE_DIR}/concordia/common/config.hpp"
-  )
-
-configure_file (
-  "${concordia_SOURCE_DIR}/prod/resources/concordia-config/concordia.cfg.in"
-  "${concordia_SOURCE_DIR}/prod/resources/concordia-config/concordia.cfg"
   )
 
 configure_file (

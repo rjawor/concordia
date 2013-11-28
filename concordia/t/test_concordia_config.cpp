@@ -13,8 +13,11 @@ BOOST_AUTO_TEST_SUITE(concordia_config)
 
 BOOST_AUTO_TEST_CASE( ConfigParameters )
 {
-    ConcordiaConfig config(TestResourcesManager::getTestConcordiaConfigFilePath("concordia-test.cfg"));
+    ConcordiaConfig config(TestResourcesManager::getTestConcordiaConfigFilePath("concordia-mock.cfg"));
     BOOST_CHECK_EQUAL( config.getPuddleTagsetFilePath() , "puddle/tagset.txt" );
+    BOOST_CHECK_EQUAL( config.getWordMapFilePath() , "tmp/wm.bin" );
+    BOOST_CHECK_EQUAL( config.getHashedIndexFilePath() , "tmp/hi.bin" );
+    BOOST_CHECK_EQUAL( config.getSuffixArrayFilePath() , "tmp/sa.bin" );
 }
 
 BOOST_AUTO_TEST_CASE( NonexistentConfigTest )

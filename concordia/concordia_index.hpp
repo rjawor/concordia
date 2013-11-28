@@ -19,9 +19,9 @@ using namespace std;
 
 class ConcordiaIndex {
 public:
-    explicit ConcordiaIndex(const string & wordMapFilepath,
-                            const string & hashedIndexFilepath,
-                            const string & suffixArrayFilepath)
+    explicit ConcordiaIndex(const string & wordMapFilePath,
+                            const string & hashedIndexFilePath,
+                            const string & suffixArrayFilePath)
                                     throw(ConcordiaException);
 
     /*! Destructor.
@@ -37,9 +37,9 @@ public:
 private:
     boost::shared_ptr<HashGenerator> _hashGenerator;
 
-    fstream _hashedIndexFile;
+    string _hashedIndexFilePath;
 
-    ofstream _suffixArrayFile;
+    string _suffixArrayFilePath;
 };
 
 #endif

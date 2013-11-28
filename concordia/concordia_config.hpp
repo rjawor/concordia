@@ -34,10 +34,28 @@ public:
         return _puddleTagsetFilePath;
     }
 
+    string & getWordMapFilePath() {
+        return _wordMapFilePath;
+    }
+
+    string & getHashedIndexFilePath() {
+        return _hashedIndexFilePath;
+    }
+
+    string & getSuffixArrayFilePath() {
+        return _suffixArrayFilePath;
+    }
+
 private:
     Config _config;
 
     string _puddleTagsetFilePath;
+
+    string _wordMapFilePath;
+
+    string _hashedIndexFilePath;
+
+    string _suffixArrayFilePath;
 
     string _readConfigParameterStr(const string & name)
                                      throw(ConcordiaException);

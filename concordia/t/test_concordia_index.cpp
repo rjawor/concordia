@@ -13,9 +13,9 @@ BOOST_AUTO_TEST_SUITE(concordia_index)
 
 BOOST_AUTO_TEST_CASE( ResourcesExistenceTest1 )
 {
-    ConcordiaIndex index(TestResourcesManager::getTestWordMapFilePath("mock_word_map.bin"),
-                         TestResourcesManager::getTestHashIndexFilePath("mock_hash_index.bin"),
-                         TestResourcesManager::getTestSuffixArrayFilePath());
+    ConcordiaIndex index(TestResourcesManager::getTestFilePath("concordia-index","mock_word_map.bin"),
+                         TestResourcesManager::getTestFilePath("concordia-index","mock_hash_index.bin"),
+                         TestResourcesManager::getTestFilePath("concordia-index","test_SA.bin"));
                          
 }
 
@@ -26,9 +26,9 @@ BOOST_AUTO_TEST_CASE( ResourcesExistenceTest2 )
     string message = "";
 
     try {
-        ConcordiaIndex index(TestResourcesManager::getTestWordMapFilePath("mock_word_map.bin"),
-                             TestResourcesManager::getTestHashIndexFilePath("nonexistent.bin"),
-                             TestResourcesManager::getTestSuffixArrayFilePath());
+        ConcordiaIndex index(TestResourcesManager::getTestFilePath("concordia-index","mock_word_map.bin"),
+                             TestResourcesManager::getTestFilePath("concordia-index","nonexistent.bin"),
+                             TestResourcesManager::getTestFilePath("concordia-index","test_SA.bin"));
     } catch (ConcordiaException & e) {
         exceptionThrown = true;
         message = e.what();
@@ -44,9 +44,9 @@ BOOST_AUTO_TEST_CASE( ResourcesExistenceTest3 )
     string message = "";
 
     try {
-        ConcordiaIndex index(TestResourcesManager::getTestWordMapFilePath("nonexistent.bin"),
-                             TestResourcesManager::getTestHashIndexFilePath("mock_hash_index.bin"),
-                             TestResourcesManager::getTestSuffixArrayFilePath());
+        ConcordiaIndex index(TestResourcesManager::getTestFilePath("concordia-index","nonexistent.bin"),
+                             TestResourcesManager::getTestFilePath("concordia-index","mock_hash_index.bin"),
+                             TestResourcesManager::getTestFilePath("concordia-index","test_SA.bin"));
     } catch (ConcordiaException & e) {
         exceptionThrown = true;
         message = e.what();
@@ -58,20 +58,23 @@ BOOST_AUTO_TEST_CASE( ResourcesExistenceTest3 )
 
 BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
 {
-    ConcordiaIndex index(TestResourcesManager::getTestWordMapFilePath("test_word_map.bin"),
-                         TestResourcesManager::getTestHashIndexFilePath("test_hash_index.bin"),
-                         TestResourcesManager::getTestSuffixArrayFilePath());
+    ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_word_map.bin"),
+                         TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
+                         TestResourcesManager::getTestFilePath("temp","test_SA.bin"));
     index.addSentence("Ala ma kota");
+    index.addSentence("Ala ma rysia");
+    index.addSentence("Marysia ma rysia");
+
     index.generateSuffixArray();
     index.serializeWordMap();
                          
-    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestWordMapFilePath("test_word_map.bin")));
-    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestHashIndexFilePath("test_hash_index.bin")));
-    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestSuffixArrayFilePath()));
+    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_word_map.bin")));
+    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin")));
+    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_SA.bin")));
     
-    boost::filesystem::remove(TestResourcesManager::getTestWordMapFilePath("test_word_map.bin")); 
-    boost::filesystem::remove(TestResourcesManager::getTestHashIndexFilePath("test_hash_index.bin")); 
-    boost::filesystem::remove(TestResourcesManager::getTestSuffixArrayFilePath()); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp","test_word_map.bin")); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin")); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp","test_SA.bin"));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

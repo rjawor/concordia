@@ -14,13 +14,10 @@ public:
 
     static string getTestConcordiaConfigFilePath(const string & filename);
 
-    static string getTestWordMapFilePath(const string & filename);
-
-    static string getTestHashIndexFilePath(const string & filename);
-
-    static string getTestSuffixArrayFilePath();
-
 	static string getProdConcordiaConfigFilePath(const string & filename);
+
+    static string getTestFilePath(const string & module, const string & filename);
+
 };
 
 #endif

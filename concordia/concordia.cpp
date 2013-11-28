@@ -1,7 +1,7 @@
+#include <sstream>
+
 #include "concordia/concordia.hpp"
 #include "concordia/common/config.hpp"
-
-#include <sstream>
 
 // ===========================================
 
@@ -13,9 +13,15 @@ std::string Concordia::_libraryVersion = _createLibraryVersion();
 
 // ===========================================
 
-Concordia::Concordia(const string & configFilePath) throw(ConcordiaException) {
-    boost::shared_ptr<ConcordiaConfig> _config(
+Concordia::Concordia(const std::string & configFilePath)
+                                         throw(ConcordiaException) {
+    _config = boost::shared_ptr<ConcordiaConfig> (
                                 new ConcordiaConfig(configFilePath));
+    _index = boost::shared_ptr<ConcordiaIndex>(
+                        new ConcordiaIndex(_config->getWordMapFilePath(),
+                                           _config->getHashedIndexFilePath(),
+                                           _config->getSuffixArrayFilePath()));
+    _searcher = boost::shared_ptr<IndexSearcher>(new IndexSearcher());
 }
 
 Concordia::~Concordia() {
@@ -34,4 +40,23 @@ std::string _createLibraryVersion() {
 
     return version.str();
 }
+
+void Concordia::addSentence(const std::string & sentence)
+                                 throw(ConcordiaException) {
+    _index->addSentence(sentence);
+}
+
+void Concordia::generateIndex() throw(ConcordiaException) {
+    _index->generateSuffixArray();
+    _index->serializeWordMap();
+    _searcher->loadIndex(_config->getWordMapFilePath(),
+                         _config->getHashedIndexFilePath(),
+                         _config->getSuffixArrayFilePath());
+}
+
+std::vector<saidx_t> Concordia::simpleSearch(const std::string & pattern)
+                                  throw(ConcordiaException) {
+    return _searcher->simpleSearch(pattern);
+}
+
 

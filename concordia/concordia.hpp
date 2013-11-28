@@ -2,9 +2,14 @@
 #define CONCORDIA_HDR
 
 #include <string>
+#include <vector>
 #include <boost/shared_ptr.hpp>
 
 #include "concordia/concordia_config.hpp"
+#include "concordia/concordia_index.hpp"
+#include "concordia/index_searcher.hpp"
+#include <divsufsort.h>
+
 
 /*!
   The Concordia class is the main access point to the library.
@@ -28,10 +33,21 @@ public:
     */
     std::string & getVersion();
 
+    void addSentence(const std::string & sentence) throw(ConcordiaException);
+
+    void generateIndex() throw(ConcordiaException);
+
+    std::vector<saidx_t> simpleSearch(const std::string & pattern)
+                                      throw(ConcordiaException);
+
 private:
     static std::string _libraryVersion;
 
     boost::shared_ptr<ConcordiaConfig> _config;
+
+    boost::shared_ptr<ConcordiaIndex> _index;
+
+    boost::shared_ptr<IndexSearcher> _searcher;
 };
 
 #endif

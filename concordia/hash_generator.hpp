@@ -8,7 +8,7 @@
 #include "concordia/word_map.hpp"
 #include "concordia/concordia_exception.hpp"
 
-#include <divsufsort.h>
+#include "build/libdivsufsort/include/divsufsort.h"
 
 
 /*!

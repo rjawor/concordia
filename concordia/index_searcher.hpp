@@ -1,11 +1,11 @@
 #ifndef INDEX_SEARCHER_HDR
 #define INDEX_SEARCHER_HDR
 
-#include <divsufsort.h>
 #include <boost/shared_ptr.hpp>
 #include <fstream>
 #include <iostream>
 
+#include "build/libdivsufsort/include/divsufsort.h"
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
 

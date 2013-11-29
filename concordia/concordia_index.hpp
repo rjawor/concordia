@@ -1,7 +1,6 @@
 #ifndef CONCORDIA_INDEX_HDR
 #define CONCORDIA_INDEX_HDR
 
-#include <divsufsort.h>
 #include <boost/shared_ptr.hpp>
 #include <fstream>
 #include <iostream>
@@ -9,6 +8,7 @@
 
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
+#include "build/libdivsufsort/include/divsufsort.h"
 
 /*!
   Class for creating and maintaining the index.

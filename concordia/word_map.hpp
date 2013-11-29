@@ -8,7 +8,7 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/map.hpp>
 
-#include <divsufsort.h>
+#include "build/libdivsufsort/include/divsufsort.h"
 
 
 

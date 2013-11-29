@@ -1,11 +1,10 @@
-#include <divsufsort.h>
-
 #include <iostream>
 #include <fstream>
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include "concordia/concordia.hpp"
+#include "build/libdivsufsort/include/divsufsort.h"
 
 namespace po = boost::program_options;
 

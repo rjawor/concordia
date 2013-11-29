@@ -1,7 +1,7 @@
 # Tutorial: http://www.cmake.org/cmake/help/cmake_tutorial.html
 
 cmake_minimum_required(VERSION 2.6)
-project(concordia CXX)
+project(concordia C CXX)
 
 set (CONCORDIA_VERSION_MAJOR 0)
 set (CONCORDIA_VERSION_MINOR 1)
@@ -117,7 +117,7 @@ configure_file (
 # Concordia: sub-projects
 # ================================================
 
-set(ALL_DIRECTORIES concordia concordia-console)
+set(ALL_DIRECTORIES concordia concordia-console libdivsufsort)
 
 include_directories("${concordia_SOURCE_DIR}")
 

@@ -8,7 +8,7 @@
 #include "concordia/concordia_config.hpp"
 #include "concordia/concordia_index.hpp"
 #include "concordia/index_searcher.hpp"
-#include <divsufsort.h>
+#include "build/libdivsufsort/include/divsufsort.h"
 
 
 /*!

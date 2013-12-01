@@ -37,7 +37,7 @@ void ConcordiaIndex::generateSuffixArray() {
                                              ios::ate|ios::binary);
 
     /* Get the file size. */
-    long n = hashedIndexFile.tellg();
+    long n = hashedIndexFile.tellg() / sizeof(sauchar_t);
 
     sauchar_t *T;
     saidx_t *SA;

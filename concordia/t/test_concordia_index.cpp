@@ -11,16 +11,8 @@ using namespace std;
 
 BOOST_AUTO_TEST_SUITE(concordia_index)
 
+
 BOOST_AUTO_TEST_CASE( ResourcesExistenceTest1 )
-{
-    ConcordiaIndex index(TestResourcesManager::getTestFilePath("concordia-index","mock_word_map.bin"),
-                         TestResourcesManager::getTestFilePath("concordia-index","mock_hash_index.bin"),
-                         TestResourcesManager::getTestFilePath("concordia-index","test_SA.bin"));
-                         
-}
-
-
-BOOST_AUTO_TEST_CASE( ResourcesExistenceTest2 )
 {
     bool exceptionThrown = false;
     string message = "";
@@ -38,7 +30,7 @@ BOOST_AUTO_TEST_CASE( ResourcesExistenceTest2 )
     BOOST_CHECK_EQUAL(boost::starts_with(message, "E01"), true);    
 }
 
-BOOST_AUTO_TEST_CASE( ResourcesExistenceTest3 )
+BOOST_AUTO_TEST_CASE( ResourcesExistenceTest2 )
 {
     bool exceptionThrown = false;
     string message = "";

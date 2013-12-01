@@ -38,11 +38,17 @@ void IndexSearcher::loadIndex(const string & wordMapFilepath,
     ifstream hashedIndexFile;
     hashedIndexFile.open(hashedIndexFilepath.c_str(), ios::in
                                                 | ios::ate | ios::binary);
-    _n = hashedIndexFile.tellg();
+    _n = hashedIndexFile.tellg() / sizeof(sauchar_t);
     _T = new sauchar_t[_n];
 
     hashedIndexFile.seekg(0, ios::beg);
-    hashedIndexFile.read(reinterpret_cast<char*> (_T), _n);
+    sauchar_t sauchar_buff;
+    int pos = 0;
+    while (!hashedIndexFile.eof()) {
+        hashedIndexFile.read(reinterpret_cast<char *>(&sauchar_buff),
+                                                 sizeof(sauchar_t));
+        _T[pos++] = sauchar_buff;
+    }
     hashedIndexFile.close();
 
     _SA = new saidx_t[_n];
@@ -50,11 +56,11 @@ void IndexSearcher::loadIndex(const string & wordMapFilepath,
     ifstream suffixArrayFile;
     suffixArrayFile.open(suffixArrayFilepath.c_str(), ios::in | ios::binary);
 
-    saidx_t buff;
-    int pos = 0;
+    saidx_t saidx_buff;
+    pos = 0;
     while (!suffixArrayFile.eof() && pos < _n) {
-        suffixArrayFile.read(reinterpret_cast<char *>(&buff), sizeof(saidx_t));
-        _SA[pos++] = buff;
+        suffixArrayFile.read(reinterpret_cast<char *>(&saidx_buff), sizeof(saidx_t));
+        _SA[pos++] = saidx_buff;
     }
     suffixArrayFile.close();
 }
@@ -72,8 +78,7 @@ vector<saidx_t> IndexSearcher::simpleSearch(const string & pattern)
                                           it != hash.end(); ++it) {
         patternArray[i] = *it;
         i++;
-    }
-
+    }    
     int size = sa_search(_T, (saidx_t) _n,
                (const sauchar_t *) patternArray, patternLength,
                _SA, (saidx_t) _n, &left);

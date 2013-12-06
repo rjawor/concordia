@@ -4,13 +4,10 @@
 #include <string>
 #include <map>
 #include "concordia/concordia_exception.hpp"
+#include "concordia/common/config.hpp"
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/map.hpp>
-
-#include "build/libdivsufsort/include/divsufsort.h"
-
-
 
 /*!
   Class representing dictionary for word to int encoding.
@@ -27,7 +24,7 @@ public:
     */
     virtual ~WordMap();
 
-    sauchar_t getWordCode(const string & word);
+    INDEX_CHARACTER_TYPE getWordCode(const string & word);
 
 private:
     friend class boost::serialization::access;
@@ -39,9 +36,9 @@ private:
         ar & _nextFree;
     }
 
-    map<string, sauchar_t> _map;
+    map<string, INDEX_CHARACTER_TYPE> _map;
 
-    sauchar_t _nextFree;
+    INDEX_CHARACTER_TYPE _nextFree;
 };
 
 #endif

@@ -58,7 +58,6 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
     index.addSentence("Marysia ma rysia");
 
     index.generateSuffixArray();
-    index.serializeWordMap();
                          
     BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_word_map.bin")));
     BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin")));

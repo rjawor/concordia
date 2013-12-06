@@ -1,4 +1,5 @@
 add_library(concordia-tests
+  test_utils.cpp
   test_word_map.cpp
   test_hash_generator.cpp
   test_concordia_index.cpp

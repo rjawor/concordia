@@ -46,9 +46,16 @@ void Concordia::addSentence(const std::string & sentence)
     _index->addSentence(sentence);
 }
 
+void Concordia::addAllSentences(vector<std::string> & sentences)
+                                     throw(ConcordiaException) {
+    _index->addAllSentences(sentences);
+}
+
 void Concordia::generateIndex() throw(ConcordiaException) {
     _index->generateSuffixArray();
-    _index->serializeWordMap();
+}
+
+void Concordia::loadIndex() throw(ConcordiaException) {
     _searcher->loadIndex(_config->getWordMapFilePath(),
                          _config->getHashedIndexFilePath(),
                          _config->getSuffixArrayFilePath());

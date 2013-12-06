@@ -14,6 +14,7 @@ add_library(concordia SHARED
   concordia_config.cpp
   concordia_exception.cpp
   common/logging.cpp
+  common/utils.cpp
   )
 
 add_subdirectory(t)
@@ -21,6 +22,18 @@ add_subdirectory(t)
 
 install(TARGETS concordia DESTINATION lib/)
 install(FILES concordia.hpp DESTINATION include/concordia/)
+
+# ----------------------------------------------------
+# libconfig
+# ----------------------------------------------------
+find_library(LIBCONFIG_LIB NAMES config++ REQUIRED)
+find_path(LIBCONFIG_INCLUDE libconfig.h++)
+
+if(EXISTS ${LIBCONFIG_LIB} AND EXISTS ${LIBCONFIG_INCLUDE})
+  message(STATUS "Found Libconfig")
+  include_directories(${LIBCONFIG_INCLUDE})
+  link_directories(${LIBCONFIG_LIB})
+endif(EXISTS ${LIBCONFIG_LIB} AND EXISTS ${LIBCONFIG_INCLUDE})
 
 target_link_libraries(concordia log4cpp)
 target_link_libraries(concordia ${LIBSTEMMER_LIB})

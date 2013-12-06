@@ -1,5 +1,6 @@
 #include "concordia/index_searcher.hpp"
 
+#include "concordia/common/utils.hpp"
 #include <boost/filesystem.hpp>
 
 IndexSearcher::IndexSearcher():
@@ -38,16 +39,15 @@ void IndexSearcher::loadIndex(const string & wordMapFilepath,
     ifstream hashedIndexFile;
     hashedIndexFile.open(hashedIndexFilepath.c_str(), ios::in
                                                 | ios::ate | ios::binary);
-    _n = hashedIndexFile.tellg() / sizeof(sauchar_t);
-    _T = new sauchar_t[_n];
-
+    _n = hashedIndexFile.tellg();
     hashedIndexFile.seekg(0, ios::beg);
-    sauchar_t sauchar_buff;
+    _T = new sauchar_t[_n];
     int pos = 0;
     while (!hashedIndexFile.eof()) {
-        hashedIndexFile.read(reinterpret_cast<char *>(&sauchar_buff),
-                                                 sizeof(sauchar_t));
-        _T[pos++] = sauchar_buff;
+        INDEX_CHARACTER_TYPE character =
+                         Utils::readIndexCharacter(hashedIndexFile);
+        Utils::insertCharToSaucharArray(_T, character, pos);
+        pos+=sizeof(character);
     }
     hashedIndexFile.close();
 
@@ -59,7 +59,8 @@ void IndexSearcher::loadIndex(const string & wordMapFilepath,
     saidx_t saidx_buff;
     pos = 0;
     while (!suffixArrayFile.eof() && pos < _n) {
-        suffixArrayFile.read(reinterpret_cast<char *>(&saidx_buff), sizeof(saidx_t));
+        suffixArrayFile.read(reinterpret_cast<char *>(&saidx_buff),
+                                                  sizeof(saidx_t));
         _SA[pos++] = saidx_buff;
     }
     suffixArrayFile.close();
@@ -70,20 +71,22 @@ vector<saidx_t> IndexSearcher::simpleSearch(const string & pattern)
     vector<saidx_t> result;
 
     int left;
-    vector<sauchar_t> hash = _hashGenerator->generateHash(pattern);
-    saidx_t patternLength = hash.size();
-    sauchar_t * patternArray = new sauchar_t[patternLength];
-    int i = 0;
-    for (vector<sauchar_t>::iterator it = hash.begin();
-                                          it != hash.end(); ++it) {
-        patternArray[i] = *it;
-        i++;
-    }    
+    vector<INDEX_CHARACTER_TYPE> hash = _hashGenerator->generateHash(pattern);
+    saidx_t patternLength = hash.size()*sizeof(INDEX_CHARACTER_TYPE);
+    sauchar_t * patternArray = Utils::indexVectorToSaucharArray(hash);
     int size = sa_search(_T, (saidx_t) _n,
                (const sauchar_t *) patternArray, patternLength,
                _SA, (saidx_t) _n, &left);
-    for (i = 0; i < size; ++i) {
-        result.push_back(_SA[left + i]);
+    for (int i = 0; i < size; ++i) {
+        saidx_t result_pos = _SA[left + i];
+        if (result_pos % sizeof(INDEX_CHARACTER_TYPE) == 0) {
+        // As we are looking for a pattern in an array of higher
+        // resolution than the hashed index file, we might
+        // obtain accidental results exceeding the boundaries
+        // of characters in hashed index. The above check
+        // removes these accidental results.
+            result.push_back(result_pos / sizeof(INDEX_CHARACTER_TYPE));
+        }
     }
 
     delete[] patternArray;

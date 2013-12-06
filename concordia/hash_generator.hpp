@@ -6,9 +6,8 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include "concordia/word_map.hpp"
+#include "concordia/common/config.hpp"
 #include "concordia/concordia_exception.hpp"
-
-#include "build/libdivsufsort/include/divsufsort.h"
 
 
 /*!
@@ -27,7 +26,7 @@ public:
     */
     virtual ~HashGenerator();
 
-    vector<sauchar_t> generateHash(const string & sentence);
+    vector<INDEX_CHARACTER_TYPE> generateHash(const string & sentence);
 
     void serializeWordMap();
 

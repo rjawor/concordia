@@ -1,5 +1,6 @@
 #include "concordia/concordia_index.hpp"
 
+#include "concordia/common/utils.hpp"
 #include <boost/filesystem.hpp>
 #include <iostream>
 
@@ -27,68 +28,94 @@ ConcordiaIndex::ConcordiaIndex(const string & wordMapFilePath,
 ConcordiaIndex::~ConcordiaIndex() {
 }
 
-void ConcordiaIndex::serializeWordMap() {
+void ConcordiaIndex::_serializeWordMap() {
     _hashGenerator->serializeWordMap();
 }
 
 void ConcordiaIndex::generateSuffixArray() {
-    ifstream hashedIndexFile;
-    hashedIndexFile.open(_hashedIndexFilePath.c_str(), ios::in|
-                                             ios::ate|ios::binary);
+    if (boost::filesystem::exists(_hashedIndexFilePath.c_str())) {
+        ifstream hashedIndexFile;
+        hashedIndexFile.open(_hashedIndexFilePath.c_str(), ios::in|
+                                                 ios::ate|ios::binary);
 
-    /* Get the file size. */
-    long n = hashedIndexFile.tellg() / sizeof(sauchar_t);
+        /* Get the file size. */
+        saidx_t n = hashedIndexFile.tellg();
+        if (n > 0) {
+            sauchar_t *T;
+            saidx_t *SA;
 
-    sauchar_t *T;
-    saidx_t *SA;
+            /* Read n bytes of data. */
+            hashedIndexFile.seekg(0, ios::beg);
+            T = new sauchar_t[n];
+            int pos = 0;
+            while (!hashedIndexFile.eof()) {
+                INDEX_CHARACTER_TYPE character =
+                             Utils::readIndexCharacter(hashedIndexFile);
+                Utils::insertCharToSaucharArray(T, character, pos);
+                pos+=sizeof(character);
+            }
+            hashedIndexFile.close();
 
-    T = new sauchar_t[n];
-    SA = new saidx_t[n];
+            SA = new saidx_t[n];
 
-    /* Read n bytes of data. */
-    hashedIndexFile.seekg(0, ios::beg);
+            /* Construct the suffix array. */
+            if (divsufsort(T, SA, (saidx_t)n) != 0) {
+                throw ConcordiaException("Error creating suffix array.");
+            }
 
-    sauchar_t buff;
-    int pos = 0;
-    while (!hashedIndexFile.eof()) {
-        hashedIndexFile.read(reinterpret_cast<char *>(&buff),
-                                                 sizeof(sauchar_t));
-        T[pos++] = buff;
+            /* Write the suffix array. */
+
+            ofstream suffixArrayFile;
+            suffixArrayFile.open(_suffixArrayFilePath.c_str(),
+                                                     ios::out|ios::binary);
+
+            for (int i = 0; i < n; i++) {
+                suffixArrayFile.write(reinterpret_cast<char *>(&SA[i]),
+                                                          sizeof(saidx_t));
+            }
+            suffixArrayFile.close();
+
+            /* Deallocate memory. */
+            delete[] T;
+            delete[] SA;
+        }  else {
+            throw ConcordiaException("Can not generate suffix array: "
+                                       "hashed index file is empty");
+        }
+    } else {
+        throw ConcordiaException("Can not generate suffix array: "
+                                 "hashed index file does not exist");
     }
-    hashedIndexFile.close();
-
-    /* Construct the suffix array. */
-    if (divsufsort(T, SA, (saidx_t)n) != 0) {
-        throw ConcordiaException("Error creating suffix array.");
-    }
-
-    /* Write the suffix array. */
-
-    ofstream suffixArrayFile;
-    suffixArrayFile.open(_suffixArrayFilePath.c_str(), ios::out|ios::binary);
-
-    for (int i = 0; i < n; i++) {
-        suffixArrayFile.write(reinterpret_cast<char *>(&SA[i]),
-                                                         sizeof(saidx_t));
-    }
-    suffixArrayFile.close();
-
-    /* Deallocate memory. */
-    delete[] T;
-    delete[] SA;
 }
 
 void ConcordiaIndex::addSentence(const string & sentence) {
-    vector<sauchar_t> hash = _hashGenerator->generateHash(sentence);
+    vector<INDEX_CHARACTER_TYPE> hash = _hashGenerator->generateHash(sentence);
     ofstream hashedIndexFile;
     hashedIndexFile.open(_hashedIndexFilePath.c_str(), ios::out|
                                                      ios::app|ios::binary);
-    for (vector<sauchar_t>::iterator it = hash.begin();
+    for (vector<INDEX_CHARACTER_TYPE>::iterator it = hash.begin();
                                           it != hash.end(); ++it) {
-        sauchar_t buff = *it;
-        hashedIndexFile.write(reinterpret_cast<char *>(&buff),
-                                                        sizeof(sauchar_t));
+        Utils::writeIndexCharacter(hashedIndexFile, *it);
     }
     hashedIndexFile.close();
+    _serializeWordMap();
+}
+
+void ConcordiaIndex::addAllSentences(vector<std::string> & sentences) {
+    ofstream hashedIndexFile;
+    hashedIndexFile.open(_hashedIndexFilePath.c_str(), ios::out|
+                                                     ios::app|ios::binary);
+    for (vector<string>::iterator sent_it = sentences.begin();
+                                   sent_it != sentences.end(); ++sent_it) {
+        string sentence = *sent_it;
+        vector<INDEX_CHARACTER_TYPE> hash =
+                                     _hashGenerator->generateHash(sentence);
+        for (vector<INDEX_CHARACTER_TYPE>::iterator it = hash.begin();
+                                              it != hash.end(); ++it) {
+            Utils::writeIndexCharacter(hashedIndexFile, *it);
+        }
+    }
+    hashedIndexFile.close();
+    _serializeWordMap();
 }
 

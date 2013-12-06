@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "concordia/common/config.hpp"
 #include "build/libdivsufsort/include/divsufsort.h"
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
@@ -39,7 +40,7 @@ private:
 
     saidx_t * _SA;
 
-    size_t _n;
+    saidx_t _n;
 };
 
 #endif

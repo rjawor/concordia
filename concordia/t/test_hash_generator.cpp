@@ -2,6 +2,7 @@
 #include "tests/unit-tests/unit_tests_globals.hpp"
 #include <string>
 
+#include "concordia/common/config.hpp"
 #include "concordia/hash_generator.hpp"
 
 #define TEST_WORD_MAP_PATH "/tmp/test_word_map.bin"
@@ -18,8 +19,8 @@ BOOST_AUTO_TEST_CASE( SimpleHashTest )
     
     HashGenerator hashGenerator = HashGenerator(TEST_WORD_MAP_PATH);
 
-    vector<sauchar_t> hash = hashGenerator.generateHash("Ala ma kota");
-    vector<sauchar_t> expected;
+    vector<INDEX_CHARACTER_TYPE> hash = hashGenerator.generateHash("Ala ma kota");
+    vector<INDEX_CHARACTER_TYPE> expected;
     expected.push_back(0);
     expected.push_back(1);
     expected.push_back(2);
@@ -34,8 +35,8 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     } 
 
     HashGenerator hashGenerator1 = HashGenerator(TEST_WORD_MAP_PATH);
-    vector<sauchar_t> hash1 = hashGenerator1.generateHash("Ala ma kota");
-    vector<sauchar_t> expected1;
+    vector<INDEX_CHARACTER_TYPE> hash1 = hashGenerator1.generateHash("Ala ma kota");
+    vector<INDEX_CHARACTER_TYPE> expected1;
     expected1.push_back(0);
     expected1.push_back(1);
     expected1.push_back(2);
@@ -44,8 +45,8 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     hashGenerator1.serializeWordMap();
    
     HashGenerator hashGenerator2 = HashGenerator(TEST_WORD_MAP_PATH);
-    vector<sauchar_t> hash2 = hashGenerator2.generateHash("Ala ma psa");
-    vector<sauchar_t> expected2;
+    vector<INDEX_CHARACTER_TYPE> hash2 = hashGenerator2.generateHash("Ala ma psa");
+    vector<INDEX_CHARACTER_TYPE> expected2;
     expected2.push_back(0);
     expected2.push_back(1);
     expected2.push_back(3);

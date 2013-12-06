@@ -6,6 +6,10 @@ project(concordia C CXX)
 set (CONCORDIA_VERSION_MAJOR 0)
 set (CONCORDIA_VERSION_MINOR 1)
 
+# Type of the characters in index
+
+set (INDEX_CHARACTER_TYPE "unsigned int")
+
 # ============================== #
 # Production paths
 # ============================== #
@@ -25,7 +29,7 @@ set (TEMP_HASHED_INDEX "temp_hashed_index.bin")
 set (TEMP_SUFFIX_ARRAY "temp_suffix_array.bin")
 
 file(MAKE_DIRECTORY ${TEST_RESOURCES_DIRECTORY}/temp)
-
+file(MAKE_DIRECTORY ${PROD_RESOURCES_DIRECTORY}/temp)
 
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
@@ -112,6 +116,10 @@ configure_file (
   "${concordia_SOURCE_DIR}/tests/resources/concordia-config/concordia.cfg"
   )
 
+configure_file (
+  "${concordia_SOURCE_DIR}/prod/resources/concordia-config/concordia.cfg.in"
+  "${concordia_SOURCE_DIR}/prod/resources/concordia-config/concordia.cfg"
+  )
 
 # ================================================
 # Concordia: sub-projects

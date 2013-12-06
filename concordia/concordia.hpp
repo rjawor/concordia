@@ -35,7 +35,12 @@ public:
 
     void addSentence(const std::string & sentence) throw(ConcordiaException);
 
+    void addAllSentences(vector<std::string> & sentences)
+                                                   throw(ConcordiaException);
+
     void generateIndex() throw(ConcordiaException);
+
+    void loadIndex() throw(ConcordiaException);
 
     std::vector<saidx_t> simpleSearch(const std::string & pattern)
                                       throw(ConcordiaException);

@@ -24,7 +24,6 @@ ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_word_map
     index.addSentence("Marysia ma rysia");
 
     index.generateSuffixArray();
-    index.serializeWordMap();
                          
     BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_word_map.bin")));
     BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin")));

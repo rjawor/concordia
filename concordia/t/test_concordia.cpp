@@ -54,6 +54,7 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
     expectedResult1.push_back(7);
     expectedResult1.push_back(4);
     
+    concordia.loadIndex();
     vector<saidx_t> searchResult1 = concordia.simpleSearch("ma rysia");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
@@ -68,10 +69,12 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    concordia.addSentence("to jest okno");
-    concordia.addSentence("czy jest okno otwarte");
-    concordia.addSentence("chyba to jest tutaj");
-    concordia.addSentence("to jest");
+    vector<string> testSentences;
+    testSentences.push_back("to jest okno");
+    testSentences.push_back("czy jest okno otwarte");
+    testSentences.push_back("chyba to jest tutaj");
+    testSentences.push_back("to jest");
+    concordia.addAllSentences(testSentences);
 
     concordia.generateIndex();
         
@@ -109,6 +112,7 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
     expectedResult2.push_back(1);
     expectedResult2.push_back(4);
     
+    concordia.loadIndex();
     vector<saidx_t> searchResult1 = concordia.simpleSearch("to jest");
     vector<saidx_t> searchResult2 = concordia.simpleSearch("jest okno");
 

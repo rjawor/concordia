@@ -30,11 +30,13 @@ public:
 
     void addSentence(const string & sentence);
 
-    void serializeWordMap();
+    void addAllSentences(vector<string> & sentences);
 
     void generateSuffixArray();
 
 private:
+    void _serializeWordMap();
+
     boost::shared_ptr<HashGenerator> _hashGenerator;
 
     string _hashedIndexFilePath;

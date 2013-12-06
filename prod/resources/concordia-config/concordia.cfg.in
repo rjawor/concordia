@@ -6,6 +6,21 @@
 #Path to the Puddle tagset
 puddle_tagset_path = "@PROD_PUDDLE_TAGSET_PATH@";
 
+#-------------------------------------------------------------------------------
+#Word map, hashed index and suffix array files are in a temporary directory
+#and should be deleted at the end of each test procedure.
 
+#Word map file containing unique codes for tokens
+
+word_map_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_WORD_MAP@"
+
+#File containing the "text" for suffix array searching, i.e. sequence of codes
+
+hashed_index_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_HASHED_INDEX@"
+
+#Binarized suffix array
+
+suffix_array_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_SUFFIX_ARRAY@"
+#-------------------------------------------------------------------------------
 
 ### eof

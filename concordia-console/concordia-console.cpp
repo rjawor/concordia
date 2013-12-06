@@ -9,7 +9,7 @@
 #include "concordia/common/utils.hpp"
 #include "build/libdivsufsort/include/divsufsort.h"
 
-#define READ_BUFFER_LENGTH 1000
+#define READ_BUFFER_LENGTH 10000
 
 namespace po = boost::program_options;
 
@@ -22,9 +22,9 @@ int main(int argc, char** argv) {
                                  "Concordia configuration file (required)")
         ("generate-index,g", "Generate suffix array based index out of "
                                                            "added sentences")
-        ("load-index,l", "Load the generated index for searching")
         ("simple-search,s", boost::program_options::value<std::string>(),
                                  "Pattern to be searched in the index")
+        ("silent,n", "While searching, do not output search results")
         ("read-file,r", boost::program_options::value<std::string>(),
                                  "File to be read and added to index");
 
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
             boost::posix_time::time_duration msdiff = time_end - time_start;
             std::cout << "\tIndex generated in: " <<
                           msdiff.total_milliseconds() << "ms." << std::endl;
-        } else if (cli.count("load-index")) {
+        } else if (cli.count("simple-search")) {
             std::cout << "\tLoading index..." << std::endl;
             boost::posix_time::ptime time_start =
                             boost::posix_time::microsec_clock::local_time();
@@ -71,10 +71,24 @@ int main(int argc, char** argv) {
             boost::posix_time::time_duration msdiff = time_end - time_start;
             std::cout << "\tIndex loaded in: " <<
                           msdiff.total_milliseconds() << "ms." << std::endl;
-        } else if (cli.count("simple-search")) {
+
             std::string pattern = cli["simple-search"].as<std::string>();
             std::cout << "\tSearching for pattern: \"" << pattern <<
                                                           "\"" << std::endl;
+            time_start = boost::posix_time::microsec_clock::local_time();
+            vector<saidx_t> result = concordia.simpleSearch(pattern);
+            time_end = boost::posix_time::microsec_clock::local_time();
+            msdiff = time_end - time_start;
+            std::cout << "\tFound: " << result.size() << " matches. "
+            << "Search took: " <<
+                          msdiff.total_milliseconds() << "ms." << std::endl;
+            if (!cli.count("silent")) {
+                for (vector<saidx_t>::iterator it = result.begin();
+                                          it != result.end(); ++it) {
+                    std::cout << "\t\tfound match on word number: " << *it
+                                                                   << std::endl;
+                }
+            }
         } else if (cli.count("read-file")) {
             std::string filePath = cli["read-file"].as<std::string>();
             std::cout << "\tReading sentences from file: " << filePath <<

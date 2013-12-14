@@ -26,7 +26,8 @@ public:
     */
     virtual ~HashGenerator();
 
-    vector<INDEX_CHARACTER_TYPE> generateHash(const string & sentence);
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> >
+                           generateHash(const string & sentence);
 
     void serializeWordMap();
 

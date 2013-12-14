@@ -19,13 +19,13 @@ BOOST_AUTO_TEST_CASE( SimpleHashTest )
     
     HashGenerator hashGenerator = HashGenerator(TEST_WORD_MAP_PATH);
 
-    vector<INDEX_CHARACTER_TYPE> hash = hashGenerator.generateHash("Ala ma kota");
-    vector<INDEX_CHARACTER_TYPE> expected;
-    expected.push_back(0);
-    expected.push_back(1);
-    expected.push_back(2);
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash = hashGenerator.generateHash("Ala ma kota");
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected(new vector<INDEX_CHARACTER_TYPE>());
+    expected->push_back(0);
+    expected->push_back(1);
+    expected->push_back(2);
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(hash.begin(), hash.end(), expected.begin(), expected.end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(hash->begin(), hash->end(), expected->begin(), expected->end());
 }
 
 BOOST_AUTO_TEST_CASE( HashSerializationTest )
@@ -35,22 +35,22 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     } 
 
     HashGenerator hashGenerator1 = HashGenerator(TEST_WORD_MAP_PATH);
-    vector<INDEX_CHARACTER_TYPE> hash1 = hashGenerator1.generateHash("Ala ma kota");
-    vector<INDEX_CHARACTER_TYPE> expected1;
-    expected1.push_back(0);
-    expected1.push_back(1);
-    expected1.push_back(2);
-    BOOST_CHECK_EQUAL_COLLECTIONS(hash1.begin(), hash1.end(), expected1.begin(), expected1.end());
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash1 = hashGenerator1.generateHash("Ala ma kota");
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected1(new vector<INDEX_CHARACTER_TYPE>());
+    expected1->push_back(0);
+    expected1->push_back(1);
+    expected1->push_back(2);
+    BOOST_CHECK_EQUAL_COLLECTIONS(hash1->begin(), hash1->end(), expected1->begin(), expected1->end());
 
     hashGenerator1.serializeWordMap();
    
     HashGenerator hashGenerator2 = HashGenerator(TEST_WORD_MAP_PATH);
-    vector<INDEX_CHARACTER_TYPE> hash2 = hashGenerator2.generateHash("Ala ma psa");
-    vector<INDEX_CHARACTER_TYPE> expected2;
-    expected2.push_back(0);
-    expected2.push_back(1);
-    expected2.push_back(3);
-    BOOST_CHECK_EQUAL_COLLECTIONS(hash2.begin(), hash2.end(), expected2.begin(), expected2.end());
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash2 = hashGenerator2.generateHash("Ala ma psa");
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected2(new vector<INDEX_CHARACTER_TYPE>());
+    expected2->push_back(0);
+    expected2->push_back(1);
+    expected2->push_back(3);
+    BOOST_CHECK_EQUAL_COLLECTIONS(hash2->begin(), hash2->end(), expected2->begin(), expected2->end());
 
     boost::filesystem::remove(TEST_WORD_MAP_PATH);       
 }

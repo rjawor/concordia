@@ -25,8 +25,7 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
     concordia.addSentence("Ala ma kota");
     concordia.addSentence("Ala ma rysia");
     concordia.addSentence("Marysia ma rysia");
-
-    concordia.generateIndex();
+    concordia.refreshSAfromRAM();
         
     /*The test index contains 3 sentences:    
     "Ala ma kota"
@@ -50,34 +49,30 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
     
     */
     
-    vector<saidx_t> expectedResult1;
-    expectedResult1.push_back(7);
-    expectedResult1.push_back(4);
+    boost::shared_ptr<std::vector<saidx_t> > expectedResult1(new std::vector<saidx_t>());
+    expectedResult1->push_back(7);
+    expectedResult1->push_back(4);
     
-    concordia.loadIndex();
-    vector<saidx_t> searchResult1 = concordia.simpleSearch("ma rysia");
+    boost::shared_ptr<std::vector<saidx_t> > searchResult1 = concordia.simpleSearch("ma rysia");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX)); 
-    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_SUFFIX_ARRAY));                                 
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult1.begin(), searchResult1.end(), 
-                                 expectedResult1.begin(), expectedResult1.end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult1->begin(), searchResult1->end(), 
+                                 expectedResult1->begin(), expectedResult1->end());
 
 }
 
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    vector<string> testSentences;
-    testSentences.push_back("to jest okno");
-    testSentences.push_back("czy jest okno otwarte");
-    testSentences.push_back("chyba to jest tutaj");
-    testSentences.push_back("to jest");
+    boost::shared_ptr<vector<string> > testSentences (new vector<string>());
+    testSentences->push_back("to jest okno");
+    testSentences->push_back("czy jest okno otwarte");
+    testSentences->push_back("chyba to jest tutaj");
+    testSentences->push_back("to jest");
     concordia.addAllSentences(testSentences);
 
-    concordia.generateIndex();
-        
     /*The test index contains 4 sentences:    
     "to jest okno"
     "czy jest okno otwarte"
@@ -103,27 +98,26 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
     
     */
     
-    vector<saidx_t> expectedResult1;
-    expectedResult1.push_back(11);
-    expectedResult1.push_back(0);
-    expectedResult1.push_back(8);
+    boost::shared_ptr<vector<saidx_t> > expectedResult1(new vector<saidx_t>());
+    expectedResult1->push_back(11);
+    expectedResult1->push_back(0);
+    expectedResult1->push_back(8);
 
-    vector<saidx_t> expectedResult2;
-    expectedResult2.push_back(1);
-    expectedResult2.push_back(4);
+    boost::shared_ptr<vector<saidx_t> > expectedResult2(new vector<saidx_t>());
+    expectedResult2->push_back(1);
+    expectedResult2->push_back(4);
     
-    concordia.loadIndex();
-    vector<saidx_t> searchResult1 = concordia.simpleSearch("to jest");
-    vector<saidx_t> searchResult2 = concordia.simpleSearch("jest okno");
+    Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
+    boost::shared_ptr<vector<saidx_t> > searchResult1 = concordia2.simpleSearch("to jest");
+    boost::shared_ptr<vector<saidx_t> > searchResult2 = concordia2.simpleSearch("jest okno");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX)); 
-    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_SUFFIX_ARRAY));                                 
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult1.begin(), searchResult1.end(), 
-                                 expectedResult1.begin(), expectedResult1.end());
-    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult2.begin(), searchResult2.end(), 
-                                 expectedResult2.begin(), expectedResult2.end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult1->begin(), searchResult1->end(), 
+                                 expectedResult1->begin(), expectedResult1->end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult2->begin(), searchResult2->end(), 
+                                 expectedResult2->begin(), expectedResult2->end());
 
 }
 

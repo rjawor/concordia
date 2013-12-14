@@ -20,17 +20,18 @@ HashGenerator::HashGenerator(const string & wordMapFilePath)
 HashGenerator::~HashGenerator() {
 }
 
-vector<INDEX_CHARACTER_TYPE> HashGenerator::generateHash(
+boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > HashGenerator::generateHash(
                                         const string & sentence) {
-    vector<INDEX_CHARACTER_TYPE> result;
-    vector<string> tokenTexts;
-    boost::split(tokenTexts, sentence, boost::is_any_of(" "));
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> >
+                                  result(new vector<INDEX_CHARACTER_TYPE>());
+    boost::shared_ptr<vector<string> > tokenTexts(new vector<string>());
+    boost::split(*tokenTexts, sentence, boost::is_any_of(" "));
 
-    for (vector<string>::iterator it = tokenTexts.begin();
-                                it != tokenTexts.end(); ++it) {
+    for (vector<string>::iterator it = tokenTexts->begin();
+                                it != tokenTexts->end(); ++it) {
         string token = *it;
         INDEX_CHARACTER_TYPE code = _wordMap->getWordCode(token);
-        result.push_back(code);
+        result->push_back(code);
     }
 
     return result;

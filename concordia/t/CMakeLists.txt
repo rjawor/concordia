@@ -4,7 +4,6 @@ add_library(concordia-tests
   test_word_map.cpp
   test_hash_generator.cpp
   test_concordia_index.cpp
-  test_index_searcher.cpp
   test_concordia_config.cpp
   test_concordia.cpp
   )

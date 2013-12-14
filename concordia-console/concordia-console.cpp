@@ -3,6 +3,7 @@
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "concordia/concordia.hpp"
 #include "concordia/common/config.hpp"
@@ -20,8 +21,6 @@ int main(int argc, char** argv) {
         ("help,h", "Display this message")
         ("config,c", boost::program_options::value<std::string>(),
                                  "Concordia configuration file (required)")
-        ("generate-index,g", "Generate suffix array based index out of "
-                                                           "added sentences")
         ("simple-search,s", boost::program_options::value<std::string>(),
                                  "Pattern to be searched in the index")
         ("silent,n", "While searching, do not output search results")
@@ -48,45 +47,36 @@ int main(int argc, char** argv) {
 
 
     try {
+        std::cout << "\tInitializing concordia..." << std::endl;
+        boost::posix_time::ptime time_start =
+                        boost::posix_time::microsec_clock::local_time();
         Concordia concordia(configFile);
-        std::cout << "Welcome to Concordia. Version = "
-                  << concordia.getVersion() << std::endl;
-        if (cli.count("generate-index")) {
-            std::cout << "\tGenerating index..." << std::endl;
-            boost::posix_time::ptime time_start =
-                            boost::posix_time::microsec_clock::local_time();
-            concordia.generateIndex();
-            boost::posix_time::ptime time_end =
-                            boost::posix_time::microsec_clock::local_time();
-            boost::posix_time::time_duration msdiff = time_end - time_start;
-            std::cout << "\tIndex generated in: " <<
-                          msdiff.total_milliseconds() << "ms." << std::endl;
-        } else if (cli.count("simple-search")) {
-            std::cout << "\tLoading index..." << std::endl;
-            boost::posix_time::ptime time_start =
-                            boost::posix_time::microsec_clock::local_time();
-            concordia.loadIndex();
-            boost::posix_time::ptime time_end =
-                            boost::posix_time::microsec_clock::local_time();
-            boost::posix_time::time_duration msdiff = time_end - time_start;
-            std::cout << "\tIndex loaded in: " <<
-                          msdiff.total_milliseconds() << "ms." << std::endl;
+        boost::posix_time::ptime time_end =
+                        boost::posix_time::microsec_clock::local_time();
+        boost::posix_time::time_duration msdiff = time_end - time_start;
+        std::cout << "\tInitialization (loading index from disk "
+                      << "and regenerating SA) took: "
+                      << msdiff.total_milliseconds() << "ms." << std::endl;
 
+        std::cout << "\tWelcome to Concordia. Version = "
+                  << concordia.getVersion() << std::endl;
+        if  (cli.count("simple-search")) {
             std::string pattern = cli["simple-search"].as<std::string>();
             std::cout << "\tSearching for pattern: \"" << pattern <<
                                                           "\"" << std::endl;
             time_start = boost::posix_time::microsec_clock::local_time();
-            vector<saidx_t> result = concordia.simpleSearch(pattern);
+            boost::shared_ptr<vector<saidx_t> > result =
+                                             concordia.simpleSearch(pattern);
             time_end = boost::posix_time::microsec_clock::local_time();
             msdiff = time_end - time_start;
-            std::cout << "\tFound: " << result.size() << " matches. "
+            std::cout << "\tFound: " << result->size() << " matches. "
             << "Search took: " <<
                           msdiff.total_milliseconds() << "ms." << std::endl;
             if (!cli.count("silent")) {
-                for (vector<saidx_t>::iterator it = result.begin();
-                                          it != result.end(); ++it) {
+                for (vector<saidx_t>::iterator it = result->begin();
+                                          it != result->end(); ++it) {
                     std::cout << "\t\tfound match on word number: " << *it
-                                                                   << std::endl;
+                                                                  << std::endl;
                 }
             }
         } else if (cli.count("read-file")) {
@@ -97,15 +87,16 @@ int main(int argc, char** argv) {
             std::string line;
             if (text_file.is_open()) {
                 long lineCount = 0;
-                vector<std::string> buffer;
+                boost::shared_ptr<std::vector<std::string> >
+                                     buffer(new std::vector<std::string>());
                 boost::posix_time::ptime timeStart =
                             boost::posix_time::microsec_clock::local_time();
                 while (getline(text_file, line)) {
                     lineCount++;
-                    buffer.push_back(line);
+                    buffer->push_back(line);
                     if (lineCount % READ_BUFFER_LENGTH == 0) {
                         concordia.addAllSentences(buffer);
-                        buffer.clear();
+                        buffer->clear();
                         boost::posix_time::ptime timeEnd =
                             boost::posix_time::microsec_clock::local_time();
                         boost::posix_time::time_duration msdiff =
@@ -119,7 +110,7 @@ int main(int argc, char** argv) {
                                   " sentences per second" << std::endl;
                     }
                 }
-                if (buffer.size() > 0) {
+                if (buffer->size() > 0) {
                     concordia.addAllSentences(buffer);
                 }
                 text_file.close();
@@ -146,7 +137,7 @@ int main(int argc, char** argv) {
             return 1;
         }
 
-        std::cout << "Concordia operation completed without errors."
+        std::cout << "\tConcordia operation completed without errors."
                                                                 << std::endl;
     } catch(ConcordiaException & e) {
         std::cerr << "ConcordiaException caught with message: "

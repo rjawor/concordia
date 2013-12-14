@@ -25,22 +25,12 @@ public:
     */
     virtual ~IndexSearcher();
 
-    void loadIndex(const string & wordMapFilepath,
-                            const string & hashedIndexFilepath,
-                            const string & suffixArrayFilepath)
-                                      throw(ConcordiaException);
-
-    vector<saidx_t> simpleSearch(const string & pattern)
-                                      throw(ConcordiaException);
-
+    boost::shared_ptr<vector<saidx_t> > simpleSearch(
+                    boost::shared_ptr<HashGenerator> hashGenerator,
+                    boost::shared_ptr<std::vector<sauchar_t> > T,
+                    boost::shared_ptr<std::vector<saidx_t> > SA,
+                    const string & pattern) throw(ConcordiaException);
 private:
-    boost::shared_ptr<HashGenerator> _hashGenerator;
-
-    sauchar_t * _T;
-
-    saidx_t * _SA;
-
-    saidx_t _n;
 };
 
 #endif

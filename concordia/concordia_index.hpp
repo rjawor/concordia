@@ -19,29 +19,35 @@ using namespace std;
 
 class ConcordiaIndex {
 public:
-    explicit ConcordiaIndex(const string & wordMapFilePath,
-                            const string & hashedIndexFilePath,
-                            const string & suffixArrayFilePath)
+    explicit ConcordiaIndex(const string & hashedIndexFilePath)
                                     throw(ConcordiaException);
 
     /*! Destructor.
     */
     virtual ~ConcordiaIndex();
 
-    void addSentence(const string & sentence);
+    void addSentence(
+                boost::shared_ptr<HashGenerator> hashGenerator,
+                boost::shared_ptr<vector<sauchar_t> > T,
+                const string & sentence);
 
-    void addAllSentences(vector<string> & sentences);
+    void addAllSentences(
+                boost::shared_ptr<HashGenerator> hashGenerator,
+                boost::shared_ptr<vector<sauchar_t> > T,
+                boost::shared_ptr<vector<string> > sentences);
 
-    void generateSuffixArray();
+    boost::shared_ptr<vector<saidx_t> > generateSuffixArray(
+                boost::shared_ptr<HashGenerator> hashGenerator,
+                boost::shared_ptr<vector<sauchar_t> > T);
 
 private:
-    void _serializeWordMap();
-
-    boost::shared_ptr<HashGenerator> _hashGenerator;
+    // Add sentence to disk index and update RAM index.
+    void _addSingleSentence(ofstream & hashedIndexFile,
+                            boost::shared_ptr<HashGenerator> hashGenerator,
+                            boost::shared_ptr<std::vector<sauchar_t> > T,
+                            const string & sentence);
 
     string _hashedIndexFilePath;
-
-    string _suffixArrayFilePath;
 };
 
 #endif

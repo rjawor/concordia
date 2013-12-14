@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/filesystem.hpp>
 
 #include "concordia/concordia_config.hpp"
 #include "concordia/concordia_index.hpp"
@@ -35,17 +36,20 @@ public:
 
     void addSentence(const std::string & sentence) throw(ConcordiaException);
 
-    void addAllSentences(vector<std::string> & sentences)
+    void addAllSentences(boost::shared_ptr<std::vector<std::string> > sentences)
                                                    throw(ConcordiaException);
 
-    void generateIndex() throw(ConcordiaException);
+    boost::shared_ptr<std::vector<saidx_t> > simpleSearch(
+                                                   const std::string & pattern)
+                                                      throw(ConcordiaException);
 
-    void loadIndex() throw(ConcordiaException);
+    void loadRAMIndexFromDisk() throw(ConcordiaException);
 
-    std::vector<saidx_t> simpleSearch(const std::string & pattern)
-                                      throw(ConcordiaException);
+    void refreshSAfromRAM() throw(ConcordiaException);
 
 private:
+    void _initializeIndex() throw(ConcordiaException);
+
     static std::string _libraryVersion;
 
     boost::shared_ptr<ConcordiaConfig> _config;
@@ -53,6 +57,12 @@ private:
     boost::shared_ptr<ConcordiaIndex> _index;
 
     boost::shared_ptr<IndexSearcher> _searcher;
+
+    boost::shared_ptr<HashGenerator> _hashGenerator;
+
+    boost::shared_ptr<std::vector<sauchar_t> > _T;
+
+    boost::shared_ptr<std::vector<saidx_t> > _SA;
 };
 
 #endif

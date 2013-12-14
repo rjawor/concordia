@@ -12,60 +12,42 @@ using namespace std;
 BOOST_AUTO_TEST_SUITE(concordia_index)
 
 
-BOOST_AUTO_TEST_CASE( ResourcesExistenceTest1 )
-{
-    bool exceptionThrown = false;
-    string message = "";
-
-    try {
-        ConcordiaIndex index(TestResourcesManager::getTestFilePath("concordia-index","mock_word_map.bin"),
-                             TestResourcesManager::getTestFilePath("concordia-index","nonexistent.bin"),
-                             TestResourcesManager::getTestFilePath("concordia-index","test_SA.bin"));
-    } catch (ConcordiaException & e) {
-        exceptionThrown = true;
-        message = e.what();
-    }
-    
-    BOOST_CHECK(exceptionThrown);
-    BOOST_CHECK_EQUAL(boost::starts_with(message, "E01"), true);    
-}
-
-BOOST_AUTO_TEST_CASE( ResourcesExistenceTest2 )
-{
-    bool exceptionThrown = false;
-    string message = "";
-
-    try {
-        ConcordiaIndex index(TestResourcesManager::getTestFilePath("concordia-index","nonexistent.bin"),
-                             TestResourcesManager::getTestFilePath("concordia-index","mock_hash_index.bin"),
-                             TestResourcesManager::getTestFilePath("concordia-index","test_SA.bin"));
-    } catch (ConcordiaException & e) {
-        exceptionThrown = true;
-        message = e.what();
-    }
-    
-    BOOST_CHECK(exceptionThrown);    
-    BOOST_CHECK_EQUAL(boost::starts_with(message, "E02"), true);    
-}
-
 BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
 {
-    ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_word_map.bin"),
-                         TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
-                         TestResourcesManager::getTestFilePath("temp","test_SA.bin"));
-    index.addSentence("Ala ma kota");
-    index.addSentence("Ala ma rysia");
-    index.addSentence("Marysia ma rysia");
-
-    index.generateSuffixArray();
-                         
-    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_word_map.bin")));
-    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin")));
-    BOOST_CHECK(boost::filesystem::exists(TestResourcesManager::getTestFilePath("temp","test_SA.bin")));
+    boost::shared_ptr<HashGenerator> hashGenerator (new HashGenerator("nonexistent"));
     
-    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp","test_word_map.bin")); 
-    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin")); 
-    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp","test_SA.bin"));
+    ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"));
+    boost::shared_ptr<vector<sauchar_t> > T = boost::shared_ptr<vector<sauchar_t> >(new vector<sauchar_t>());
+    //    Test hashed index:
+    //    n: 0 1 2 3 4 5 6 7 8
+    // T[n]: 0 1 2 0 1 3 4 1 3 
+    T->push_back(0);
+    T->push_back(1);
+    T->push_back(2);
+    T->push_back(0);
+    T->push_back(1);
+    T->push_back(3);
+    T->push_back(4);
+    T->push_back(1);
+    T->push_back(3);
+    
+    //    Test suffix array:
+    //    n: 0 1 2 3 4 5 6 7 8
+    //SA[n]: 0 3 1 7 4 2 8 5 6
+
+    boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(hashGenerator, T);
+
+    boost::shared_ptr<vector<saidx_t> > expectedSA = boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
+    expectedSA->push_back(0);
+    expectedSA->push_back(3);
+    expectedSA->push_back(1);
+    expectedSA->push_back(7);
+    expectedSA->push_back(4);
+    expectedSA->push_back(2);
+    expectedSA->push_back(8);
+    expectedSA->push_back(5);
+    expectedSA->push_back(6);
+    BOOST_CHECK_EQUAL_COLLECTIONS(SA->begin(), SA->end(), expectedSA->begin(), expectedSA->end());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

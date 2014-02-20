@@ -58,4 +58,31 @@ cd doc/latex
 make
 
 This should generate a single file called refman.pdf in the same directory.
+
+\section compilation4 Sample program
+
+Sample program using the library:
+
+\verbatim
+
+#include <concordia/concordia.hpp>
+
+using namespace std;
+
+int main() {
+
+    Concordia concordia("concordia.cfg");
+    cout << concordia.getVersion() << endl;
+    
+}
+
+\endverbatim
+
+Compilation method:
+
+\verbatim
+
+g++ test.cpp -lconcordia -lconfig++ -lboost_system -lboost_serialization -lboost_unit_test_framework -lboost_filesystem -lboost_program_options -lboost_iostreams
+
+\endverbatim
 */

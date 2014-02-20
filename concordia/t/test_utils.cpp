@@ -2,9 +2,9 @@
 #include "concordia/common/utils.hpp"
 #include "concordia/common/config.hpp"
 #include "tests/common/test_resources_manager.hpp"
-#include "build/libdivsufsort/include/divsufsort.h"
 #include <boost/filesystem.hpp>
 
+#include "divsufsort.h"
 #include <string>
 
 using namespace std;

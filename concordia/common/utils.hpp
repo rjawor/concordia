@@ -8,7 +8,7 @@
 
 #include "concordia/common/config.hpp"
 #include "concordia/concordia_exception.hpp"
-#include "build/libdivsufsort/include/divsufsort.h"
+#include "divsufsort.h"
 
 using namespace std;
 

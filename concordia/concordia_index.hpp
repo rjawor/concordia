@@ -11,7 +11,7 @@
 #include "concordia/example.hpp"
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
-#include "build/libdivsufsort/include/divsufsort.h"
+#include "divsufsort.h"
 
 /*!
   Class for creating and maintaining the index.

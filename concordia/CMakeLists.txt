@@ -23,7 +23,23 @@ add_subdirectory(t)
 # =====================================
 
 install(TARGETS concordia DESTINATION lib/)
-install(FILES concordia.hpp DESTINATION include/concordia/)
+install(FILES 
+          substring_occurence.hpp
+          example.hpp
+          index_searcher.hpp
+          concordia_index.hpp
+          word_map.hpp
+          hash_generator.hpp
+          concordia.hpp
+          concordia_config.hpp
+          concordia_exception.hpp
+        DESTINATION include/concordia/)
+
+install(FILES 
+          common/config.hpp
+          common/logging.hpp
+          common/utils.hpp
+        DESTINATION include/concordia/common/)
 
 # ----------------------------------------------------
 # libconfig

@@ -7,10 +7,11 @@
 #include <iostream>
 
 #include "concordia/common/config.hpp"
-#include "build/libdivsufsort/include/divsufsort.h"
 #include "concordia/substring_occurence.hpp"
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
+
+#include "divsufsort.h"
 
 /*!
   Class for searching the index with a sentence.

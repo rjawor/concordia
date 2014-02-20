@@ -6,9 +6,16 @@ project(concordia C CXX)
 set (CONCORDIA_VERSION_MAJOR 0)
 set (CONCORDIA_VERSION_MINOR 1)
 
-# Type of the characters in index
+# Type of the characters in SA
 
 set (INDEX_CHARACTER_TYPE "unsigned int")
+# The above allows for (roughly) 2^32 = 4 294 967 295 words in corpus.
+
+# Suffix markers
+set (SUFFIX_MARKER_TYPE "unsigned int")
+set (SUFFIX_MARKER_DIVISOR 256)
+# The above settings assign 3 bytes to sentence id and 1 byte for suffix offset.
+# This allows to store 2^24 = 16 777 216 sentences no longer than 256 words.
 
 # ============================== #
 # Production paths
@@ -26,6 +33,7 @@ set (TEST_RESOURCES_DIRECTORY "${concordia_SOURCE_DIR}/tests/resources")
 set (TEST_PUDDLE_TAGSET_PATH "${TEST_RESOURCES_DIRECTORY}/puddle/basic-tagset.txt")
 set (TEMP_WORD_MAP "temp_word_map.bin")
 set (TEMP_HASHED_INDEX "temp_hashed_index.bin")
+set (TEMP_MARKERS "temp_markers.bin")
 set (TEMP_SUFFIX_ARRAY "temp_suffix_array.bin")
 
 file(MAKE_DIRECTORY ${TEST_RESOURCES_DIRECTORY}/temp)

@@ -23,7 +23,12 @@ public:
     static void writeIndexCharacter(ofstream & file,
                                      INDEX_CHARACTER_TYPE character);
 
+    static void writeMarker(ofstream & file,
+                                     SUFFIX_MARKER_TYPE marker);
+
     static INDEX_CHARACTER_TYPE readIndexCharacter(ifstream & file);
+
+    static SUFFIX_MARKER_TYPE readMarker(ifstream & file);
 
     static sauchar_t * indexVectorToSaucharArray(
                        boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input);
@@ -31,6 +36,7 @@ public:
     static void appendCharToSaucharVector(
                              boost::shared_ptr<std::vector<sauchar_t> > vector,
                              INDEX_CHARACTER_TYPE character);
+
 private:
     static void _insertCharToSaucharArray(sauchar_t * array,
                                  INDEX_CHARACTER_TYPE character, int pos);

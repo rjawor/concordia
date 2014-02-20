@@ -17,6 +17,7 @@ BOOST_AUTO_TEST_CASE( ConfigParameters )
     BOOST_CHECK_EQUAL( config.getPuddleTagsetFilePath() , "puddle/tagset.txt" );
     BOOST_CHECK_EQUAL( config.getWordMapFilePath() , "tmp/wm.bin" );
     BOOST_CHECK_EQUAL( config.getHashedIndexFilePath() , "tmp/hi.bin" );
+    BOOST_CHECK_EQUAL( config.getMarkersFilePath() , "tmp/ma.bin" );
     BOOST_CHECK_EQUAL( config.getSuffixArrayFilePath() , "tmp/sa.bin" );
 }
 

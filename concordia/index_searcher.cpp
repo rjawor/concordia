@@ -10,13 +10,13 @@ IndexSearcher::IndexSearcher() {
 IndexSearcher::~IndexSearcher() {
 }
 
-boost::shared_ptr<vector<saidx_t> > IndexSearcher::simpleSearch(
-                      boost::shared_ptr<HashGenerator> hashGenerator,
-                      boost::shared_ptr<std::vector<sauchar_t> > T,
-                      boost::shared_ptr<std::vector<saidx_t> > SA,
-                      const string & pattern) throw(ConcordiaException) {
-    boost::shared_ptr<vector<saidx_t> > result =
-                    boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
+boost::ptr_vector<SubstringOccurence> IndexSearcher::simpleSearch(
+                  boost::shared_ptr<HashGenerator> hashGenerator,
+                  boost::shared_ptr<std::vector<sauchar_t> > T,
+                  boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+                  boost::shared_ptr<std::vector<saidx_t> > SA,
+                  const string & pattern) throw(ConcordiaException) {
+    boost::ptr_vector<SubstringOccurence> result;
 
     int left;
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash =
@@ -27,21 +27,23 @@ boost::shared_ptr<vector<saidx_t> > IndexSearcher::simpleSearch(
                          (const sauchar_t *) patternArray, patternLength,
                          SA->data(), (saidx_t) T->size(), &left);
     for (int i = 0; i < size; ++i) {
-        saidx_t result_pos = SA->at(left + i);
-        if (result_pos % sizeof(INDEX_CHARACTER_TYPE) == 0) {
+        saidx_t resultPos = SA->at(left + i);
+        if (resultPos % sizeof(INDEX_CHARACTER_TYPE) == 0) {
         // As we are looking for a pattern in an array of higher
         // resolution than the hashed index file, we might
         // obtain accidental results exceeding the boundaries
         // of characters in hashed index. The above check
         // removes these accidental results.
-            result->push_back(result_pos / sizeof(INDEX_CHARACTER_TYPE));
+            saidx_t actualResultPos = resultPos / sizeof(INDEX_CHARACTER_TYPE);
+            SUFFIX_MARKER_TYPE marker = markers->at(actualResultPos);
+
+            result.push_back(new SubstringOccurence(
+                marker / SUFFIX_MARKER_DIVISOR,
+                marker % SUFFIX_MARKER_DIVISOR));
         }
     }
 
     delete[] patternArray;
     return result;
 }
-
-
-
 

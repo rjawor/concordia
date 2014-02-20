@@ -11,10 +11,21 @@ void Utils::writeIndexCharacter(ofstream & file,
     file.write(reinterpret_cast<char *>(&character), sizeof(character));
 }
 
+void Utils::writeMarker(ofstream & file,
+                                      SUFFIX_MARKER_TYPE marker) {
+    file.write(reinterpret_cast<char *>(&marker), sizeof(marker));
+}
+
 INDEX_CHARACTER_TYPE Utils::readIndexCharacter(ifstream & file) {
     INDEX_CHARACTER_TYPE character;
     file.read(reinterpret_cast<char *>(&character), sizeof(character));
     return character;
+}
+
+SUFFIX_MARKER_TYPE Utils::readMarker(ifstream & file) {
+    SUFFIX_MARKER_TYPE marker;
+    file.read(reinterpret_cast<char *>(&marker), sizeof(marker));
+    return marker;
 }
 
 sauchar_t * Utils::indexVectorToSaucharArray(

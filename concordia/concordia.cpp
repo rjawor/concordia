@@ -19,7 +19,8 @@ Concordia::Concordia(const std::string & configFilePath)
     _config = boost::shared_ptr<ConcordiaConfig> (
                                 new ConcordiaConfig(configFilePath));
     _index = boost::shared_ptr<ConcordiaIndex>(
-                        new ConcordiaIndex(_config->getHashedIndexFilePath()));
+                        new ConcordiaIndex(_config->getHashedIndexFilePath(),
+                                           _config->getMarkersFilePath()));
     _searcher = boost::shared_ptr<IndexSearcher>(new IndexSearcher());
     _initializeIndex();
 }
@@ -42,30 +43,32 @@ std::string _createLibraryVersion() {
 }
 
 // Sentences are written to disk and added to T.
-// SA is generated on command by different methods.
-void Concordia::addSentence(const std::string & sentence)
+// SA is generated on command by other methods.
+// TODO(rjawor): modify SA on the fly
+void Concordia::addExample(const Example & example)
                                  throw(ConcordiaException) {
-    _index->addSentence(_hashGenerator, _T, sentence);
+    _index->addExample(_hashGenerator, _T, _markers, example);
 }
 
 // Sentences are written to disk and added to T.
-// SA is generated on command by different methods.
-void Concordia::addAllSentences(
-                boost::shared_ptr<std::vector<std::string> > sentences)
+// SA is generated on command by other methods.
+// TODO(rjawor): modify SA on the fly
+void Concordia::addAllExamples(const boost::ptr_vector<Example > & examples)
                                               throw(ConcordiaException) {
-    _index->addAllSentences(_hashGenerator, _T, sentences);
+    _index->addAllExamples(_hashGenerator, _T, _markers, examples);
 }
 
 void Concordia::loadRAMIndexFromDisk() throw(ConcordiaException) {
     if (boost::filesystem::exists(_config->getWordMapFilePath())
-      && boost::filesystem::exists(_config->getHashedIndexFilePath())) {
-        // reading index from files
+      && boost::filesystem::exists(_config->getHashedIndexFilePath())
+      && boost::filesystem::exists(_config->getMarkersFilePath())) {
+        // reading index from file
         _T->clear();
         ifstream hashedIndexFile;
         hashedIndexFile.open(_config->getHashedIndexFilePath().c_str(), ios::in
                                                      | ios::ate | ios::binary);
-        saidx_t fileSize = hashedIndexFile.tellg();
-        if (fileSize > 0) {
+        saidx_t hiFileSize = hashedIndexFile.tellg();
+        if (hiFileSize > 0) {
             hashedIndexFile.seekg(0, ios::beg);
 
             while (!hashedIndexFile.eof()) {
@@ -74,12 +77,32 @@ void Concordia::loadRAMIndexFromDisk() throw(ConcordiaException) {
                 Utils::appendCharToSaucharVector(_T, character);
             }
             hashedIndexFile.close();
-
-            // generating suffix array
-            _SA = _index->generateSuffixArray(_hashGenerator, _T);
         } else {
+            hashedIndexFile.close();
             throw ConcordiaException("Index corrupt: empty hash index file");
         }
+
+        // reading markers from file
+        _markers->clear();
+        ifstream markersFile;
+        markersFile.open(_config->getMarkersFilePath().c_str(), ios::in
+                                                     | ios::ate | ios::binary);
+        saidx_t maFileSize = markersFile.tellg();
+        if (maFileSize > 0) {
+            markersFile.seekg(0, ios::beg);
+
+            while (!markersFile.eof()) {
+                SUFFIX_MARKER_TYPE marker =
+                                 Utils::readMarker(markersFile);
+                _markers->push_back(marker);
+            }
+            markersFile.close();
+        } else {
+            markersFile.close();
+            throw ConcordiaException("Index corrupt: empty markers file");
+        }
+        // generating suffix array
+        _SA = _index->generateSuffixArray(_hashGenerator, _T);
     } else {
         throw ConcordiaException("Index corrupt: missing files");
     }
@@ -95,6 +118,8 @@ void Concordia::_initializeIndex() throw(ConcordiaException) {
                             new HashGenerator(_config->getWordMapFilePath()));
     _T = boost::shared_ptr<std::vector<sauchar_t> >(
                                                   new std::vector<sauchar_t>);
+    _markers = boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> >(
+                                         new std::vector<SUFFIX_MARKER_TYPE>);
     if (boost::filesystem::exists(_config->getWordMapFilePath())
       && boost::filesystem::exists(_config->getHashedIndexFilePath())) {
         loadRAMIndexFromDisk();
@@ -108,16 +133,15 @@ void Concordia::_initializeIndex() throw(ConcordiaException) {
     }
 }
 
-boost::shared_ptr<std::vector<saidx_t> > Concordia::simpleSearch(
+boost::ptr_vector<SubstringOccurence> Concordia::simpleSearch(
                                           const string & pattern)
                                   throw(ConcordiaException) {
     if (_T->size() > 0) {
-        return _searcher->simpleSearch(_hashGenerator, _T, _SA, pattern);
+        return _searcher->simpleSearch(_hashGenerator, _T,
+                                         _markers, _SA, pattern);
     } else {
-        boost::shared_ptr<std::vector<saidx_t> > result =
-            boost::shared_ptr<std::vector<saidx_t> >(new std::vector<saidx_t>);
+        boost::ptr_vector<SubstringOccurence> result;
         return result;
     }
 }
-
 

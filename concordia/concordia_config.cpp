@@ -5,6 +5,7 @@
 #define PUDDLE_TAGSET_PARAM "puddle_tagset_path"
 #define WORD_MAP_PARAM "word_map_path"
 #define HASHED_INDEX_PARAM "hashed_index_path"
+#define MARKERS_PARAM "markers_path"
 #define SUFFIX_ARRAY_PARAM "suffix_array_path"
 
 ConcordiaConfig::ConcordiaConfig(const string & configFilePath)
@@ -24,6 +25,8 @@ ConcordiaConfig::ConcordiaConfig(const string & configFilePath)
           ConcordiaConfig::_readConfigParameterStr(WORD_MAP_PARAM);
     _hashedIndexFilePath =
           ConcordiaConfig::_readConfigParameterStr(HASHED_INDEX_PARAM);
+    _markersFilePath =
+          ConcordiaConfig::_readConfigParameterStr(MARKERS_PARAM);
     _suffixArrayFilePath =
           ConcordiaConfig::_readConfigParameterStr(SUFFIX_ARRAY_PARAM);
 }

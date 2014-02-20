@@ -42,6 +42,10 @@ public:
         return _hashedIndexFilePath;
     }
 
+    string & getMarkersFilePath() {
+        return _markersFilePath;
+    }
+
     string & getSuffixArrayFilePath() {
         return _suffixArrayFilePath;
     }
@@ -54,6 +58,8 @@ private:
     string _wordMapFilePath;
 
     string _hashedIndexFilePath;
+
+    string _markersFilePath;
 
     string _suffixArrayFilePath;
 

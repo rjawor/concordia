@@ -3,9 +3,12 @@
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/foreach.hpp>
 
 #include "concordia/concordia.hpp"
+#include "concordia/substring_occurence.hpp"
 #include "concordia/common/config.hpp"
 #include "concordia/common/utils.hpp"
 #include "build/libdivsufsort/include/divsufsort.h"
@@ -65,18 +68,17 @@ int main(int argc, char** argv) {
             std::cout << "\tSearching for pattern: \"" << pattern <<
                                                           "\"" << std::endl;
             time_start = boost::posix_time::microsec_clock::local_time();
-            boost::shared_ptr<vector<saidx_t> > result =
+            boost::ptr_vector<SubstringOccurence> result =
                                              concordia.simpleSearch(pattern);
             time_end = boost::posix_time::microsec_clock::local_time();
             msdiff = time_end - time_start;
-            std::cout << "\tFound: " << result->size() << " matches. "
+            std::cout << "\tFound: " << result.size() << " matches. "
             << "Search took: " <<
                           msdiff.total_milliseconds() << "ms." << std::endl;
             if (!cli.count("silent")) {
-                for (vector<saidx_t>::iterator it = result->begin();
-                                          it != result->end(); ++it) {
-                    std::cout << "\t\tfound match on word number: " << *it
-                                                                  << std::endl;
+                BOOST_FOREACH(SubstringOccurence occurence, result) {
+                    std::cout << "\t\tfound match in sentence number: "
+                              << occurence.getId() << std::endl;
                 }
             }
         } else if (cli.count("read-file")) {
@@ -87,16 +89,15 @@ int main(int argc, char** argv) {
             std::string line;
             if (text_file.is_open()) {
                 long lineCount = 0;
-                boost::shared_ptr<std::vector<std::string> >
-                                     buffer(new std::vector<std::string>());
+                boost::ptr_vector<Example> buffer;
                 boost::posix_time::ptime timeStart =
                             boost::posix_time::microsec_clock::local_time();
                 while (getline(text_file, line)) {
                     lineCount++;
-                    buffer->push_back(line);
+                    buffer.push_back(new Example(line, lineCount));
                     if (lineCount % READ_BUFFER_LENGTH == 0) {
-                        concordia.addAllSentences(buffer);
-                        buffer->clear();
+                        concordia.addAllExamples(buffer);
+                        buffer.clear();
                         boost::posix_time::ptime timeEnd =
                             boost::posix_time::microsec_clock::local_time();
                         boost::posix_time::time_duration msdiff =
@@ -110,8 +111,8 @@ int main(int argc, char** argv) {
                                   " sentences per second" << std::endl;
                     }
                 }
-                if (buffer->size() > 0) {
-                    concordia.addAllSentences(buffer);
+                if (buffer.size() > 0) {
+                    concordia.addAllExamples(buffer);
                 }
                 text_file.close();
                 boost::posix_time::ptime timeTotalEnd =
@@ -156,6 +157,5 @@ int main(int argc, char** argv) {
                   << std::endl;
         return 1;
     }
-
     return 0;
 }

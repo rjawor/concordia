@@ -6,6 +6,8 @@ foreach(dir ${ALL_DIRECTORIES})
 endforeach(dir)
 
 add_library(concordia SHARED
+  substring_occurence.cpp
+  example.cpp
   index_searcher.cpp
   concordia_index.cpp
   word_map.cpp

@@ -18,6 +18,10 @@ word_map_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_WORD_MAP@"
 
 hashed_index_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_HASHED_INDEX@"
 
+#File containing suffix markers (sentence ids and offsets)
+
+markers_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_MARKERS@"
+
 #Binarized suffix array
 
 suffix_array_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_SUFFIX_ARRAY@"

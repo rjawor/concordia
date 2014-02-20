@@ -4,8 +4,12 @@
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/filesystem.hpp>
 
+#include "concordia/common/config.hpp"
+#include "concordia/example.hpp"
+#include "concordia/substring_occurence.hpp"
 #include "concordia/concordia_config.hpp"
 #include "concordia/concordia_index.hpp"
 #include "concordia/index_searcher.hpp"
@@ -34,12 +38,12 @@ public:
     */
     std::string & getVersion();
 
-    void addSentence(const std::string & sentence) throw(ConcordiaException);
+    void addExample(const Example & example) throw(ConcordiaException);
 
-    void addAllSentences(boost::shared_ptr<std::vector<std::string> > sentences)
+    void addAllExamples(const boost::ptr_vector<Example > & examples)
                                                    throw(ConcordiaException);
 
-    boost::shared_ptr<std::vector<saidx_t> > simpleSearch(
+    boost::ptr_vector<SubstringOccurence> simpleSearch(
                                                    const std::string & pattern)
                                                       throw(ConcordiaException);
 
@@ -63,6 +67,8 @@ private:
     boost::shared_ptr<std::vector<sauchar_t> > _T;
 
     boost::shared_ptr<std::vector<saidx_t> > _SA;
+
+    boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > _markers;
 };
 
 #endif

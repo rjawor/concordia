@@ -2,11 +2,15 @@
 
 #include "concordia/common/utils.hpp"
 #include <boost/filesystem.hpp>
+#include <boost/foreach.hpp>
 #include <iostream>
+#include <climits>
 
-ConcordiaIndex::ConcordiaIndex(const string & hashedIndexFilePath)
+ConcordiaIndex::ConcordiaIndex(const string & hashedIndexFilePath,
+                               const string & markersFilePath)
                                          throw(ConcordiaException) :
-                           _hashedIndexFilePath(hashedIndexFilePath) {
+                           _hashedIndexFilePath(hashedIndexFilePath),
+                           _markersFilePath(markersFilePath) {
 }
 
 ConcordiaIndex::~ConcordiaIndex() {
@@ -30,45 +34,80 @@ boost::shared_ptr<vector<saidx_t> > ConcordiaIndex::generateSuffixArray(
     return result;
 }
 
-void ConcordiaIndex::addSentence(boost::shared_ptr<HashGenerator> hashGenerator,
+void ConcordiaIndex::addExample(
+                boost::shared_ptr<HashGenerator> hashGenerator,
                 boost::shared_ptr<vector<sauchar_t> > T,
-                const string & sentence) {
+                boost::shared_ptr<vector<SUFFIX_MARKER_TYPE> > markers,
+                const Example & example) {
     ofstream hashedIndexFile;
     hashedIndexFile.open(_hashedIndexFilePath.c_str(), ios::out|
                                                      ios::app|ios::binary);
-    _addSingleSentence(hashedIndexFile, hashGenerator, T, sentence);
+    ofstream markersFile;
+    markersFile.open(_markersFilePath.c_str(), ios::out|
+                                                     ios::app|ios::binary);
+    _addSingleExample(hashedIndexFile, markersFile, hashGenerator,
+                                                      T, markers, example);
     hashedIndexFile.close();
+    markersFile.close();
     hashGenerator->serializeWordMap();
 }
 
-void ConcordiaIndex::addAllSentences(
-                        boost::shared_ptr<HashGenerator> hashGenerator,
-                        boost::shared_ptr<vector<sauchar_t> > T,
-                        boost::shared_ptr<vector<string> > sentences) {
+void ConcordiaIndex::addAllExamples(
+                boost::shared_ptr<HashGenerator> hashGenerator,
+                boost::shared_ptr<vector<sauchar_t> > T,
+                boost::shared_ptr<vector<SUFFIX_MARKER_TYPE> > markers,
+                const boost::ptr_vector<Example > & examples) {
     ofstream hashedIndexFile;
     hashedIndexFile.open(_hashedIndexFilePath.c_str(), ios::out|
                                                      ios::app|ios::binary);
-    for (vector<string>::iterator sent_it = sentences->begin();
-                                   sent_it != sentences->end(); ++sent_it) {
-        string sentence = *sent_it;
-        _addSingleSentence(hashedIndexFile, hashGenerator, T, sentence);
+    ofstream markersFile;
+    markersFile.open(_markersFilePath.c_str(), ios::out|
+                                                     ios::app|ios::binary);
+
+    BOOST_FOREACH(Example example, examples) {
+        _addSingleExample(hashedIndexFile, markersFile, hashGenerator,
+                                                      T, markers, example);
     }
+
     hashedIndexFile.close();
+    markersFile.close();
     hashGenerator->serializeWordMap();
 }
 
-void ConcordiaIndex::_addSingleSentence(
-                                ofstream & hashedIndexFile,
-                                boost::shared_ptr<HashGenerator> hashGenerator,
-                                boost::shared_ptr<std::vector<sauchar_t> > T,
-                                const string & sentence) {
+void ConcordiaIndex::_addSingleExample(
+                        ofstream & hashedIndexFile,
+                        ofstream & markersFile,
+                        boost::shared_ptr<HashGenerator> hashGenerator,
+                        boost::shared_ptr<std::vector<sauchar_t> > T,
+                        boost::shared_ptr<vector<SUFFIX_MARKER_TYPE> > markers,
+                        const Example & example) {
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash
-                             = hashGenerator->generateHash(sentence);
+                          = hashGenerator->generateHash(example.getSentence());
+    int offset = 0;
     for (vector<INDEX_CHARACTER_TYPE>::iterator it = hash->begin();
                                           it != hash->end(); ++it) {
         INDEX_CHARACTER_TYPE character = *it;
         Utils::writeIndexCharacter(hashedIndexFile, character);
         Utils::appendCharToSaucharVector(T, character);
+
+        // append to markersFile
+
+        SUFFIX_MARKER_TYPE marker = offset;
+        marker += example.getId() * SUFFIX_MARKER_DIVISOR;
+
+        Utils::writeMarker(markersFile, marker);
+        markers->push_back(marker);
+
+        offset++;
     }
+
+    // append sentence boundary marker
+    INDEX_CHARACTER_TYPE sentenceBoundaryHI = ULONG_MAX;
+    Utils::writeIndexCharacter(hashedIndexFile, sentenceBoundaryHI);
+    Utils::appendCharToSaucharVector(T, sentenceBoundaryHI);
+
+    SUFFIX_MARKER_TYPE sentenceBoundaryMA = ULONG_MAX;
+    Utils::writeMarker(markersFile, sentenceBoundaryMA);
+    markers->push_back(sentenceBoundaryMA);
 }
 

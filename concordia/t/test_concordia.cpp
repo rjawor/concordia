@@ -4,6 +4,7 @@
 #include "concordia/common/config.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/filesystem.hpp>
 
 #include <string>
@@ -19,18 +20,19 @@ BOOST_AUTO_TEST_CASE( ConcordiaVersion )
     BOOST_CHECK_EQUAL( version , "0.1");
 }
 
+
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    concordia.addSentence("Ala ma kota");
-    concordia.addSentence("Ala ma rysia");
-    concordia.addSentence("Marysia ma rysia");
+    concordia.addExample(Example("Ala ma kota",14));
+    concordia.addExample(Example("Ala ma rysia",51));
+    concordia.addExample(Example("Marysia ma rysia",123));
     concordia.refreshSAfromRAM();
         
     /*The test index contains 3 sentences:    
-    "Ala ma kota"
-    "Ala ma rysia"
-    "Marysia ma rysia"
+     14: "Ala ma kota"
+     51: "Ala ma rysia"
+    123: "Marysia ma rysia"
     
     Test word map:
     Ala -> 0
@@ -40,44 +42,48 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
     Marysia -> 4
     
     Test hashed index:
-        n: 0 1 2 3 4 5 6 7 8
-     T[n]: 0 1 2 0 1 3 4 1 3 
+        n: 0  1  2  3  4  5  6  7  8  9 10 11
+     T[n]: 0  1  2  |  0  1  3  |  4  1  3  |
     
     Test suffix array:
-        n: 0 1 2 3 4 5 6 7 8
-    SA[n]: 0 3 1 7 4 2 8 5 6
+        n: 0  1  2  3  4  5  6  7  8  9 10 11
+    SA[n]: 0  4  1  9  5  2 10  6  8 11  3  7 
     
     */
     
-    boost::shared_ptr<std::vector<saidx_t> > expectedResult1(new std::vector<saidx_t>());
-    expectedResult1->push_back(7);
-    expectedResult1->push_back(4);
-    
-    boost::shared_ptr<std::vector<saidx_t> > searchResult1 = concordia.simpleSearch("ma rysia");
+    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia.simpleSearch("ma rysia");
+    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia.simpleSearch("ma kota Ala");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX)); 
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult1->begin(), searchResult1->end(), 
-                                 expectedResult1->begin(), expectedResult1->end());
+    BOOST_CHECK_EQUAL(searchResult1.size(), 2);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getId(), 123);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getOffset(), 1);
+    BOOST_CHECK_EQUAL(searchResult1.at(1).getId(), 51);
+    BOOST_CHECK_EQUAL(searchResult1.at(1).getOffset(), 1);
+    
+    // Checking pattern spanning over 2 segments
+    BOOST_CHECK_EQUAL(searchResult2.size(), 0);
 
 }
 
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    boost::shared_ptr<vector<string> > testSentences (new vector<string>());
-    testSentences->push_back("to jest okno");
-    testSentences->push_back("czy jest okno otwarte");
-    testSentences->push_back("chyba to jest tutaj");
-    testSentences->push_back("to jest");
-    concordia.addAllSentences(testSentences);
+    boost::ptr_vector<Example> testExamples;
+    testExamples.push_back(new Example("to jest okno",312));
+    testExamples.push_back(new Example("czy jest okno otwarte",202));
+    testExamples.push_back(new Example("chyba to jest tutaj",45));
+    testExamples.push_back(new Example("to jest",29));
+    concordia.addAllExamples(testExamples);
 
     /*The test index contains 4 sentences:    
-    "to jest okno"
-    "czy jest okno otwarte"
-    "chyba to jest tutaj"
-    "to jest"
+    312: "to jest okno"
+    202: "czy jest okno otwarte"
+     45: "chyba to jest tutaj"
+     29: "to jest"
     
     Test word map:
     to -> 0
@@ -98,27 +104,27 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
     
     */
     
-    boost::shared_ptr<vector<saidx_t> > expectedResult1(new vector<saidx_t>());
-    expectedResult1->push_back(11);
-    expectedResult1->push_back(0);
-    expectedResult1->push_back(8);
-
-    boost::shared_ptr<vector<saidx_t> > expectedResult2(new vector<saidx_t>());
-    expectedResult2->push_back(1);
-    expectedResult2->push_back(4);
-    
     Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    boost::shared_ptr<vector<saidx_t> > searchResult1 = concordia2.simpleSearch("to jest");
-    boost::shared_ptr<vector<saidx_t> > searchResult2 = concordia2.simpleSearch("jest okno");
+    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("to jest");
+    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia2.simpleSearch("jest okno");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX)); 
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult1->begin(), searchResult1->end(), 
-                                 expectedResult1->begin(), expectedResult1->end());
-    BOOST_CHECK_EQUAL_COLLECTIONS(searchResult2->begin(), searchResult2->end(), 
-                                 expectedResult2->begin(), expectedResult2->end());
+    BOOST_CHECK_EQUAL(searchResult1.size(), 3);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getId(), 312);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getOffset(), 0);
+    BOOST_CHECK_EQUAL(searchResult1.at(1).getId(), 45);
+    BOOST_CHECK_EQUAL(searchResult1.at(1).getOffset(), 1);
+    BOOST_CHECK_EQUAL(searchResult1.at(2).getId(), 29);
+    BOOST_CHECK_EQUAL(searchResult1.at(2).getOffset(), 0);
 
+    BOOST_CHECK_EQUAL(searchResult2.size(), 2);
+    BOOST_CHECK_EQUAL(searchResult2.at(0).getId(), 202);
+    BOOST_CHECK_EQUAL(searchResult2.at(0).getOffset(), 1);
+    BOOST_CHECK_EQUAL(searchResult2.at(1).getId(), 312);
+    BOOST_CHECK_EQUAL(searchResult2.at(1).getOffset(), 1);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

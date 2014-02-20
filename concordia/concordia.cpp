@@ -44,7 +44,6 @@ std::string _createLibraryVersion() {
 
 // Sentences are written to disk and added to T.
 // SA is generated on command by other methods.
-// TODO(rjawor): modify SA on the fly
 void Concordia::addExample(const Example & example)
                                  throw(ConcordiaException) {
     _index->addExample(_hashGenerator, _T, _markers, example);
@@ -52,7 +51,6 @@ void Concordia::addExample(const Example & example)
 
 // Sentences are written to disk and added to T.
 // SA is generated on command by other methods.
-// TODO(rjawor): modify SA on the fly
 void Concordia::addAllExamples(const boost::ptr_vector<Example > & examples)
                                               throw(ConcordiaException) {
     _index->addAllExamples(_hashGenerator, _T, _markers, examples);

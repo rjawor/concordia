@@ -37,6 +37,7 @@ boost::ptr_vector<SubstringOccurence> IndexSearcher::simpleSearch(
             saidx_t actualResultPos = resultPos / sizeof(INDEX_CHARACTER_TYPE);
             SUFFIX_MARKER_TYPE marker = markers->at(actualResultPos);
 
+            //TODO think about using bitwise operators in the below code
             result.push_back(new SubstringOccurence(
                 marker / SUFFIX_MARKER_DIVISOR,
                 marker % SUFFIX_MARKER_DIVISOR));
@@ -47,3 +48,12 @@ boost::ptr_vector<SubstringOccurence> IndexSearcher::simpleSearch(
     return result;
 }
 
+boost::ptr_vector<AnubisSearchResult> IndexSearcher::anubisSearch(
+                  boost::shared_ptr<HashGenerator> hashGenerator,
+                  boost::shared_ptr<std::vector<sauchar_t> > T,
+                  boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+                  boost::shared_ptr<std::vector<saidx_t> > SA,
+                  const string & pattern) throw(ConcordiaException) {
+    boost::ptr_vector<AnubisSearchResult> result;
+    return result;
+}

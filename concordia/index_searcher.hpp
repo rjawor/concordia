@@ -10,6 +10,7 @@
 #include "concordia/substring_occurence.hpp"
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
+#include "concordia/anubis_search_result.hpp"
 
 #include "divsufsort.h"
 
@@ -29,6 +30,13 @@ public:
     virtual ~IndexSearcher();
 
     boost::ptr_vector<SubstringOccurence> simpleSearch(
+                    boost::shared_ptr<HashGenerator> hashGenerator,
+                    boost::shared_ptr<std::vector<sauchar_t> > T,
+                    boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+                    boost::shared_ptr<std::vector<saidx_t> > SA,
+                    const string & pattern) throw(ConcordiaException);
+
+    boost::ptr_vector<AnubisSearchResult> anubisSearch(
                     boost::shared_ptr<HashGenerator> hashGenerator,
                     boost::shared_ptr<std::vector<sauchar_t> > T,
                     boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,

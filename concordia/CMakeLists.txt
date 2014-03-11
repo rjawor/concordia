@@ -6,6 +6,9 @@ foreach(dir ${ALL_DIRECTORIES})
 endforeach(dir)
 
 add_library(concordia SHARED
+  interval.cpp
+  tm_matches.cpp
+  anubis_search_result.cpp
   substring_occurence.cpp
   example.cpp
   index_searcher.cpp
@@ -24,6 +27,9 @@ add_subdirectory(t)
 
 install(TARGETS concordia DESTINATION lib/)
 install(FILES 
+          interval.hpp
+          tm_matches.hpp
+          anubis_search_result.hpp
           substring_occurence.hpp
           example.hpp
           index_searcher.hpp

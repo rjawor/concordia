@@ -1,6 +1,6 @@
 #include "concordia/tm_matches.hpp"
 #include <boost/foreach.hpp>
-
+#include <math.h>
 
 TmMatches::TmMatches(const SUFFIX_MARKER_TYPE exampleId,
                        const unsigned char exampleSize,
@@ -14,20 +14,13 @@ TmMatches::~TmMatches() {
 }
 
 void TmMatches::calculateScore() {
-    /* TODO logarithmic function
-	unsigned char exampleMatchedLength = 0;
-	BOOST_FOREACH(Interval & interval, _exampleMatchedRegions) {
-		exampleMatchedLength += interval.getLength();
-	}
 
-	unsigned char patternMatchedLength = 0;
-	BOOST_FOREACH(Interval & interval, _patternMatchedRegions) {
-		patternMatchedLength += interval.getLength();
-	}
-
-	_score = (double) (exampleMatchedLength + patternMatchedLength)
-			/ (double) (_exampleSize + _patternSize);
-    */
+    double exampleOverlay = _getLogarithmicOverlay(_exampleMatchedRegions,
+                                                   _exampleSize, 1.0);
+                                                   
+    double patternOverlay = _getLogarithmicOverlay(_patternMatchedRegions,
+                                                   _patternSize, 2.0);
+	_score = (exampleOverlay + patternOverlay) / 2.0;
 }
 
 void TmMatches::calculateSimpleScore() {
@@ -71,4 +64,18 @@ bool TmMatches::_alreadyIntersects(
 
 	return false;
 }
+
+double TmMatches::_getLogarithmicOverlay(boost::ptr_vector<Interval> intervalList,
+                             unsigned char sentenceSize,
+                             double k) {
+    double overlayScore = 0;
+	BOOST_FOREACH(Interval & interval, intervalList) {
+        double intervalOverlay = (double) interval.getLength() / (double) sentenceSize;
+        double significanceFactor = pow(log(interval.getLength()+1) / log(sentenceSize+1), 1/k);
+        
+        overlayScore += intervalOverlay * significanceFactor;
+	}
+    return overlayScore;                            
+}
+
 

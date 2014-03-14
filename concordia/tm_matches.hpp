@@ -44,6 +44,10 @@ private:
     bool _alreadyIntersects(boost::ptr_vector<Interval> intervalList,
                            int start, int end);
     
+    double _getLogarithmicOverlay(boost::ptr_vector<Interval> intervalList,
+                                 unsigned char sentenceSize,
+                                 double k);
+    
 	SUFFIX_MARKER_TYPE _exampleId;
 
 	boost::ptr_vector<Interval> _exampleMatchedRegions;

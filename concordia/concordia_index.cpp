@@ -1,10 +1,10 @@
 #include "concordia/concordia_index.hpp"
 
 #include "concordia/common/utils.hpp"
+#include "concordia/common/config.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 #include <iostream>
-#include <climits>
 
 ConcordiaIndex::ConcordiaIndex(const string & hashedIndexFilePath,
                                const string & markersFilePath)
@@ -102,11 +102,11 @@ void ConcordiaIndex::_addSingleExample(
     }
 
     // append sentence boundary marker
-    INDEX_CHARACTER_TYPE sentenceBoundaryHI = ULONG_MAX;
+    INDEX_CHARACTER_TYPE sentenceBoundaryHI = INDEX_CHARACTER_TYPE_MAX_VALUE;
     Utils::writeIndexCharacter(hashedIndexFile, sentenceBoundaryHI);
     Utils::appendCharToSaucharVector(T, sentenceBoundaryHI);
 
-    SUFFIX_MARKER_TYPE sentenceBoundaryMA = ULONG_MAX;
+    SUFFIX_MARKER_TYPE sentenceBoundaryMA = SUFFIX_MARKER_TYPE_MAX_VALUE;
     Utils::writeMarker(markersFile, sentenceBoundaryMA);
     markers->push_back(sentenceBoundaryMA);
 }

@@ -24,7 +24,8 @@ public:
     */
     virtual ~WordMap();
 
-    INDEX_CHARACTER_TYPE getWordCode(const string & word);
+    INDEX_CHARACTER_TYPE getWordCode(const string & word)
+                                throw(ConcordiaException);
 
 private:
     friend class boost::serialization::access;

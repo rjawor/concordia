@@ -21,12 +21,15 @@ HashGenerator::~HashGenerator() {
 }
 
 boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > HashGenerator::generateHash(
-                                        const string & sentence) {
+                         const string & sentence) throw(ConcordiaException) {
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> >
                                   result(new vector<INDEX_CHARACTER_TYPE>());
     boost::shared_ptr<vector<string> > tokenTexts(new vector<string>());
     boost::split(*tokenTexts, sentence, boost::is_any_of(" "));
-
+    
+    if (tokenTexts->size() > MAX_SENTENCE_SIZE) {
+        throw ConcordiaException("Trying to add to long sentence.");
+    }
     for (vector<string>::iterator it = tokenTexts->begin();
                                 it != tokenTexts->end(); ++it) {
         string token = *it;

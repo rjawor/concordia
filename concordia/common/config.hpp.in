@@ -18,6 +18,13 @@
 #define LEXICON_FIELD_SEPARATOR "\t"
 
 typedef @INDEX_CHARACTER_TYPE@ INDEX_CHARACTER_TYPE;
+#define INDEX_CHARACTER_TYPE_MAX_VALUE @INDEX_CHARACTER_TYPE_MAX_VALUE@
 typedef @SUFFIX_MARKER_TYPE@ SUFFIX_MARKER_TYPE;
+#define SUFFIX_MARKER_TYPE_MAX_VALUE @SUFFIX_MARKER_TYPE_MAX_VALUE@
+
 
 #define SUFFIX_MARKER_DIVISOR @SUFFIX_MARKER_DIVISOR@
+//Max sentence size is determined by suffix marker divisor.
+//The last bits in a sentence marker denote offset whose maximum value
+//is the sentence size minus 2.
+#define MAX_SENTENCE_SIZE @SUFFIX_MARKER_DIVISOR@

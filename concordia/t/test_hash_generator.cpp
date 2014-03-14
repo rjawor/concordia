@@ -1,6 +1,7 @@
 #include <boost/filesystem.hpp>
 #include "tests/unit-tests/unit_tests_globals.hpp"
 #include <string>
+#include <sstream>
 
 #include "concordia/common/config.hpp"
 #include "concordia/hash_generator.hpp"
@@ -26,6 +27,35 @@ BOOST_AUTO_TEST_CASE( SimpleHashTest )
     expected->push_back(2);
 
     BOOST_CHECK_EQUAL_COLLECTIONS(hash->begin(), hash->end(), expected->begin(), expected->end());
+}
+
+BOOST_AUTO_TEST_CASE( TooLongHashTest )
+{
+    if (boost::filesystem::exists(TEST_WORD_MAP_PATH)) {
+        boost::filesystem::remove(TEST_WORD_MAP_PATH);      
+    } 
+    
+    HashGenerator hashGenerator = HashGenerator(TEST_WORD_MAP_PATH);
+
+    stringstream ss;
+    for (int i=0;i<256;i++) {
+        ss << "a" << i << " ";
+    }
+
+    string longSentence = ss.str();
+    
+    bool exceptionThrown = false;
+    string message = "";
+    try {
+        boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash = hashGenerator.generateHash(longSentence);
+    } catch (ConcordiaException & e) {
+        exceptionThrown = true;
+        message = e.what();
+    }    
+    BOOST_CHECK_EQUAL(exceptionThrown, true);    
+    BOOST_CHECK_EQUAL(boost::starts_with(message, "Trying to add to long sentence"), true);    
+
+    
 }
 
 BOOST_AUTO_TEST_CASE( HashSerializationTest )

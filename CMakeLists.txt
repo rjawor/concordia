@@ -9,10 +9,12 @@ set (CONCORDIA_VERSION_MINOR 1)
 # Type of the characters in SA
 
 set (INDEX_CHARACTER_TYPE "unsigned int")
+set (INDEX_CHARACTER_TYPE_MAX_VALUE 4294967295)
 # The above allows for (roughly) 2^32 = 4 294 967 295 words in corpus.
 
 # Suffix markers
 set (SUFFIX_MARKER_TYPE "unsigned int")
+set (SUFFIX_MARKER_TYPE_MAX_VALUE 4294967295)
 set (SUFFIX_MARKER_DIVISOR 256)
 # The above settings assign 3 bytes to sentence id and 1 byte for suffix offset.
 # This allows to store 2^24 = 16 777 216 sentences no longer than 256 words.

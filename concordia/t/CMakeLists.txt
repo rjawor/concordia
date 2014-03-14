@@ -1,4 +1,5 @@
 add_library(concordia-tests
+  test_example.cpp
   test_tm_matches.cpp
   test_interval.cpp
   test_logging.cpp

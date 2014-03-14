@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 #include "concordia/word_map.hpp"
 #include "concordia/common/config.hpp"
 #include "concordia/concordia_exception.hpp"
@@ -27,7 +28,8 @@ public:
     virtual ~HashGenerator();
 
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> >
-                           generateHash(const string & sentence);
+                    generateHash(const string & sentence)
+                                throw(ConcordiaException);
 
     void serializeWordMap();
 

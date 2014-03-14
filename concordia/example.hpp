@@ -2,6 +2,7 @@
 #define EXAMPLE_HDR
 
 #include "concordia/common/config.hpp"
+#include "concordia/concordia_exception.hpp"
 #include <string>
 
 /*!
@@ -13,7 +14,7 @@ using namespace std;
 
 class Example {
 public:
-    explicit Example(const string & sentence, const SUFFIX_MARKER_TYPE & id);
+    explicit Example(const string & sentence, const SUFFIX_MARKER_TYPE & id) throw (ConcordiaException);
 
     /*! Destructor.
     */

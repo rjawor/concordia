@@ -1,0 +1,28 @@
+/** \page technical Project technical information
+
+\section technical1 Development
+
+\subsection technical1_1 Code style
+
+Use: ./run-checkers.sh script to find the most
+C++ coding errors. The script uses the following
+external tools:
+
+- cpplint.py (http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml?showone=cpplint)
+- cppcheck
+
+The reports are stored in the XXX-result.txt files (where XXX is the name of the tool)
+in the current directory.
+
+\subsection technical1_2 Unit tests
+
+Unit tests are integrated into makefiles. Unit tests codes are
+put in the t/ subdirectory for each library.
+
+In order to run all unit tests just type:
+
+make test
+
+You can get detailed test report by running:
+
+./tests/unit-tests/test_runner

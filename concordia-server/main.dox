@@ -1,0 +1,12 @@
+/** \mainpage Introduction
+
+\section main_1 Concordia - Tool for concordance search in CAT
+
+
+\section main_2 Overview
+
+- \subpage compilation This chapter contains instructions to compile, install and run Concordia.
+- \subpage running The methods of making use of the Concordia library are described in this chapter.
+- \subpage technical In this chapter technical information about unit tests, project resources and code style is provided.
+
+*/

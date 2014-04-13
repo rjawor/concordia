@@ -17,7 +17,6 @@ ConcordiaIndex::~ConcordiaIndex() {
 }
 
 boost::shared_ptr<vector<saidx_t> > ConcordiaIndex::generateSuffixArray(
-                boost::shared_ptr<HashGenerator> hashGenerator,
                 boost::shared_ptr<vector<sauchar_t> > T) {
     saidx_t * SA_array = new saidx_t[T->size()];
     if (divsufsort(T->data(), SA_array, (saidx_t) T->size()) != 0) {

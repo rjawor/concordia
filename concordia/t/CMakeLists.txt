@@ -1,4 +1,5 @@
 add_library(concordia-tests
+  test_regex_replacement.cpp
   test_example.cpp
   test_tm_matches.cpp
   test_interval.cpp

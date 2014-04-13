@@ -100,20 +100,20 @@ void Concordia::loadRAMIndexFromDisk() throw(ConcordiaException) {
             throw ConcordiaException("Index corrupt: empty markers file");
         }
         // generating suffix array
-        _SA = _index->generateSuffixArray(_hashGenerator, _T);
+        _SA = _index->generateSuffixArray(_T);
     } else {
         throw ConcordiaException("Index corrupt: missing files");
     }
 }
 
 void Concordia::refreshSAfromRAM() throw(ConcordiaException) {
-    _SA = _index->generateSuffixArray(_hashGenerator, _T);
+    _SA = _index->generateSuffixArray(_T);
 }
 
 
 void Concordia::_initializeIndex() throw(ConcordiaException) {
     _hashGenerator = boost::shared_ptr<HashGenerator>(
-                            new HashGenerator(_config->getWordMapFilePath()));
+                            new HashGenerator(_config));
     _T = boost::shared_ptr<std::vector<sauchar_t> >(
                                                   new std::vector<sauchar_t>);
     _markers = boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> >(

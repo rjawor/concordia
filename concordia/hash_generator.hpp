@@ -8,6 +8,8 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include "concordia/word_map.hpp"
 #include "concordia/common/config.hpp"
+#include "concordia/sentence_anonymizer.hpp"
+#include "concordia/concordia_config.hpp"
 #include "concordia/concordia_exception.hpp"
 
 
@@ -20,8 +22,8 @@ using namespace std;
 
 class HashGenerator {
 public:
-    explicit HashGenerator(const string & wordMapFilePath)
-                                    throw(ConcordiaException);
+    explicit HashGenerator(boost::shared_ptr<ConcordiaConfig> config)
+                                            throw(ConcordiaException);
 
     /*! Destructor.
     */
@@ -35,6 +37,8 @@ public:
 
 private:
     boost::shared_ptr<WordMap> _wordMap;
+    
+    boost::shared_ptr<SentenceAnonymizer> _sentenceAnonymizer;
 
     string _wordMapFilePath;
 };

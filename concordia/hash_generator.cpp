@@ -5,10 +5,11 @@
 #include <boost/algorithm/string.hpp>
 #include <fstream>
 
-HashGenerator::HashGenerator(const string & wordMapFilePath)
+HashGenerator::HashGenerator(boost::shared_ptr<ConcordiaConfig> config)
                                          throw(ConcordiaException) :
-    _wordMapFilePath(wordMapFilePath),
-    _wordMap(boost::shared_ptr<WordMap>(new WordMap)) {
+    _wordMapFilePath(config->getWordMapFilePath()),
+    _wordMap(boost::shared_ptr<WordMap>(new WordMap)),
+    _sentenceAnonymizer(boost::shared_ptr<SentenceAnonymizer>(new SentenceAnonymizer(config))) {
     if (boost::filesystem::exists(_wordMapFilePath)) {
         ifstream ifs(_wordMapFilePath.c_str(), std::ios::binary);
         boost::archive::binary_iarchive ia(ifs);

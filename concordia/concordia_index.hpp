@@ -43,7 +43,6 @@ public:
                 const boost::ptr_vector<Example > & examples);
 
     boost::shared_ptr<vector<saidx_t> > generateSuffixArray(
-                boost::shared_ptr<HashGenerator> hashGenerator,
                 boost::shared_ptr<vector<sauchar_t> > T);
 
 private:

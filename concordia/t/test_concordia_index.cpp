@@ -14,8 +14,6 @@ BOOST_AUTO_TEST_SUITE(concordia_index)
 
 BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
 {
-    boost::shared_ptr<HashGenerator> hashGenerator (new HashGenerator("nonexistent"));
-    
     ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
                          TestResourcesManager::getTestFilePath("temp","test_markers.bin"));
     boost::shared_ptr<vector<sauchar_t> > T = boost::shared_ptr<vector<sauchar_t> >(new vector<sauchar_t>());
@@ -36,7 +34,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
     //    n: 0 1 2 3 4 5 6 7 8
     //SA[n]: 0 3 1 7 4 2 8 5 6
 
-    boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(hashGenerator, T);
+    boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(T);
 
     boost::shared_ptr<vector<saidx_t> > expectedSA = boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
     expectedSA->push_back(0);
@@ -53,8 +51,6 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
 
 BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest2 )
 {
-    boost::shared_ptr<HashGenerator> hashGenerator (new HashGenerator("nonexistent"));
-    
     ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
                          TestResourcesManager::getTestFilePath("temp","test_markers.bin"));
     boost::shared_ptr<vector<sauchar_t> > T = boost::shared_ptr<vector<sauchar_t> >(new vector<sauchar_t>());
@@ -79,7 +75,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest2 )
     //    n: 0  1  2  3  4  5  6  7  8  9 10 11
     //SA[n]: 0  4  1  9  5  2 10  6  8 11  3  7 
 
-    boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(hashGenerator, T);
+    boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(T);
 
     boost::shared_ptr<vector<saidx_t> > expectedSA = boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
     expectedSA->push_back(0);

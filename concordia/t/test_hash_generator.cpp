@@ -3,10 +3,11 @@
 #include <string>
 #include <sstream>
 
+#include <boost/shared_ptr.hpp>
 #include "concordia/common/config.hpp"
 #include "concordia/hash_generator.hpp"
+#include "tests/common/test_resources_manager.hpp"
 
-#define TEST_WORD_MAP_PATH "/tmp/test_word_map.bin"
 
 using namespace std;
 
@@ -14,11 +15,13 @@ BOOST_AUTO_TEST_SUITE(hash_generator)
 
 BOOST_AUTO_TEST_CASE( SimpleHashTest )
 {
-    if (boost::filesystem::exists(TEST_WORD_MAP_PATH)) {
-        boost::filesystem::remove(TEST_WORD_MAP_PATH);      
+    boost::shared_ptr<ConcordiaConfig> config(new ConcordiaConfig(TestResourcesManager::getTestConcordiaConfigFilePath("concordia-mock.cfg")));
+    
+    if (boost::filesystem::exists(config->getWordMapFilePath())) {
+        boost::filesystem::remove(config->getWordMapFilePath());      
     } 
     
-    HashGenerator hashGenerator = HashGenerator(TEST_WORD_MAP_PATH);
+    HashGenerator hashGenerator = HashGenerator(config);
 
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash = hashGenerator.generateHash("Ala ma kota");
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected(new vector<INDEX_CHARACTER_TYPE>());
@@ -31,11 +34,13 @@ BOOST_AUTO_TEST_CASE( SimpleHashTest )
 
 BOOST_AUTO_TEST_CASE( TooLongHashTest )
 {
-    if (boost::filesystem::exists(TEST_WORD_MAP_PATH)) {
-        boost::filesystem::remove(TEST_WORD_MAP_PATH);      
+    boost::shared_ptr<ConcordiaConfig> config(new ConcordiaConfig(TestResourcesManager::getTestConcordiaConfigFilePath("concordia-mock.cfg")));
+    
+    if (boost::filesystem::exists(config->getWordMapFilePath())) {
+        boost::filesystem::remove(config->getWordMapFilePath());      
     } 
     
-    HashGenerator hashGenerator = HashGenerator(TEST_WORD_MAP_PATH);
+    HashGenerator hashGenerator = HashGenerator(config);
 
     stringstream ss;
     for (int i=0;i<256;i++) {
@@ -60,11 +65,14 @@ BOOST_AUTO_TEST_CASE( TooLongHashTest )
 
 BOOST_AUTO_TEST_CASE( HashSerializationTest )
 {
-    if (boost::filesystem::exists(TEST_WORD_MAP_PATH)) {
-        boost::filesystem::remove(TEST_WORD_MAP_PATH);      
+    boost::shared_ptr<ConcordiaConfig> config(new ConcordiaConfig(TestResourcesManager::getTestConcordiaConfigFilePath("concordia-mock.cfg")));
+    
+    if (boost::filesystem::exists(config->getWordMapFilePath())) {
+        boost::filesystem::remove(config->getWordMapFilePath());      
     } 
+    
+    HashGenerator hashGenerator1 = HashGenerator(config);
 
-    HashGenerator hashGenerator1 = HashGenerator(TEST_WORD_MAP_PATH);
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash1 = hashGenerator1.generateHash("Ala ma kota");
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected1(new vector<INDEX_CHARACTER_TYPE>());
     expected1->push_back(0);
@@ -74,7 +82,7 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
 
     hashGenerator1.serializeWordMap();
    
-    HashGenerator hashGenerator2 = HashGenerator(TEST_WORD_MAP_PATH);
+    HashGenerator hashGenerator2 = HashGenerator(config);
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash2 = hashGenerator2.generateHash("Ala ma psa");
     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected2(new vector<INDEX_CHARACTER_TYPE>());
     expected2->push_back(0);
@@ -82,7 +90,7 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     expected2->push_back(3);
     BOOST_CHECK_EQUAL_COLLECTIONS(hash2->begin(), hash2->end(), expected2->begin(), expected2->end());
 
-    boost::filesystem::remove(TEST_WORD_MAP_PATH);       
+    boost::filesystem::remove(config->getWordMapFilePath());       
 }
 
 BOOST_AUTO_TEST_SUITE_END()

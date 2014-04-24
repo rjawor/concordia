@@ -11,6 +11,9 @@ add_library(concordia-tests
   test_concordia_index.cpp
   test_concordia_config.cpp
   test_concordia.cpp
+  range_based_case_converter_tests.cpp
+  simple_convert_tests.cpp
+  special_casing_converter_tests.cpp
   )
 
-target_link_libraries(concordia-tests concordia ${LIBCONFIG_LIB} concordia-tests-common)
+target_link_libraries(concordia-tests concordia ${LIBCONFIG_LIB} concordia-tests-common utf8case)

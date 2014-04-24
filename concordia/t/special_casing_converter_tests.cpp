@@ -25,8 +25,4 @@ BOOST_AUTO_TEST_CASE( special_casing_converter ) {
     BOOST_CHECK_EQUAL(converter.convert(ESZET_CODE_POINT), "SS");
 }
 
-BOOST_AUTO_TEST_CASE( special_casing_converter2 ) {
-    BOOST_CHECK_EQUAL("SS", "SS");
-
-}
 BOOST_AUTO_TEST_SUITE_END()

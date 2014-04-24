@@ -43,7 +43,7 @@ file(MAKE_DIRECTORY ${PROD_RESOURCES_DIRECTORY}/temp)
 
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
-set(BASE_TARGETS concordia utf8case)
+set(BASE_TARGETS concordia)
 
 
                 
@@ -150,7 +150,7 @@ endforeach(dir)
 # Tests
 # ================================================
 
-set(TESTS_TARGETS concordia-tests utf8case-tests)
+set(TESTS_TARGETS concordia-tests)
 
 add_subdirectory(tests)
 

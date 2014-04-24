@@ -9,8 +9,6 @@ add_library(utf8case SHARED
     turkish_and_azeri_upper_contextual_case_converter.cpp
 )
 
-add_subdirectory(t)
-
 install(TARGETS utf8case DESTINATION lib/)
 install(FILES 
         case_converter_factory.hpp

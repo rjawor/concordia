@@ -74,7 +74,7 @@ endif(WITH_PCRE)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost COMPONENTS 
-      serialization unit_test_framework system filesystem program_options iostreams regex REQUIRED)
+      serialization unit_test_framework system filesystem program_options iostreams regex locale REQUIRED)
 
 # ----------------------------------------------------
 # libconfig

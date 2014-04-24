@@ -3,9 +3,11 @@
 
 #include <string>
 #include "concordia/common/config.hpp"
+#include "concordia/regex_replacement.hpp"
 #include "concordia/concordia_config.hpp"
 #include "concordia/concordia_exception.hpp"
 #include <boost/shared_ptr.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 
 /*!
@@ -27,6 +29,14 @@ public:
     string anonymize(const string & sentence);
 
 private:
+
+    boost::ptr_vector<RegexReplacement> _namedEntities;
+
+    boost::shared_ptr<RegexReplacement> _stopWords;
+    
+    boost::shared_ptr<RegexReplacement> _stopSymbols;
+    
+    boost::shared_ptr<RegexReplacement> _spaceSymbols;    
 };
 
 #endif

@@ -6,6 +6,7 @@
 #include "concordia/concordia_exception.hpp"
 #include <boost/shared_ptr.hpp>
 #include <boost/regex.hpp>
+#include <boost/regex/icu.hpp>
 
 
 /*!
@@ -19,7 +20,8 @@ typedef boost::error_info<struct my_tag,std::string> my_tag_error_info;
 
 class RegexReplacement {
 public:
-    explicit RegexReplacement(string patternString, string replacement)
+    RegexReplacement(string patternString, string replacement,
+                             bool caseSensitive = true)
                                               throw(ConcordiaException);
 
     /*! Destructor.
@@ -29,7 +31,7 @@ public:
     string apply(const string & text);
 
 private:
-    boost::regex _pattern;
+    boost::u32regex _pattern;
     
     string _replacement;    
 };

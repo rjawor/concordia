@@ -22,6 +22,7 @@ add_library(concordia SHARED
   concordia_exception.cpp
   common/logging.cpp
   common/utils.cpp
+  common/text_utils.cpp
   )
 
 add_subdirectory(t)
@@ -29,6 +30,8 @@ add_subdirectory(t)
 
 install(TARGETS concordia DESTINATION lib/)
 install(FILES 
+          regex_replacement.hpp
+          sentence_anonymizer.hpp
           interval.hpp
           tm_matches.hpp
           anubis_search_result.hpp
@@ -47,6 +50,7 @@ install(FILES
           common/config.hpp
           common/logging.hpp
           common/utils.hpp
+          common/text_utils.hpp
         DESTINATION include/concordia/common/)
 
 # ----------------------------------------------------

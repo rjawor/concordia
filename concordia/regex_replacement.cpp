@@ -3,11 +3,16 @@
 #include <boost/exception/all.hpp>
 #include <boost/throw_exception.hpp>
 
-RegexReplacement::RegexReplacement(string patternString, string replacement)
+RegexReplacement::RegexReplacement(string patternString, string replacement,
+                                   bool caseSensitive)
                                          throw(ConcordiaException):
                                          _replacement(replacement) {
     try {
-        _pattern = boost::regex(patternString);
+        if (caseSensitive) {
+            _pattern = boost::make_u32regex(patternString);
+        } else {
+            _pattern = boost::make_u32regex(patternString, boost::regex::icase);        
+        }
     } catch ( const std::exception & e ) {
         stringstream ss;
         
@@ -25,7 +30,7 @@ RegexReplacement::~RegexReplacement() {
 }
 
 string RegexReplacement::apply(const string & text) {
-    return boost::regex_replace(text, _pattern, _replacement,
+    return boost::u32regex_replace(text, _pattern, _replacement,
                     boost::match_default | boost::format_all);
 }
 

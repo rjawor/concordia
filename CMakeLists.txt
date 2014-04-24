@@ -43,7 +43,7 @@ file(MAKE_DIRECTORY ${PROD_RESOURCES_DIRECTORY}/temp)
 
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
-set(BASE_TARGETS concordia)
+set(BASE_TARGETS concordia utf8case)
 
 
                 
@@ -135,7 +135,7 @@ configure_file (
 # Concordia: sub-projects
 # ================================================
 
-set(ALL_DIRECTORIES concordia concordia-console libdivsufsort)
+set(ALL_DIRECTORIES concordia concordia-console libdivsufsort utf8 utf8case)
 
 include_directories("${concordia_SOURCE_DIR}")
 
@@ -150,7 +150,7 @@ endforeach(dir)
 # Tests
 # ================================================
 
-set(TESTS_TARGETS concordia-tests)
+set(TESTS_TARGETS concordia-tests utf8case-tests)
 
 add_subdirectory(tests)
 

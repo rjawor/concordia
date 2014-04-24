@@ -1,3 +1,4 @@
 1. lokalizowane to_lower
 2. anonimizacja zdań
 3. Dzielenie zdań (max 255 tokenów)
+4. concordia-server

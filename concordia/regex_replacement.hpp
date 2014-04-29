@@ -16,7 +16,7 @@
 
 using namespace std;
 
-typedef boost::error_info<struct my_tag,std::string> my_tag_error_info;
+typedef boost::error_info<struct my_tag, std::string> my_tag_error_info;
 
 class RegexReplacement {
 public:
@@ -27,13 +27,13 @@ public:
     /*! Destructor.
     */
     virtual ~RegexReplacement();
-    
+
     string apply(const string & text);
 
 private:
     boost::u32regex _pattern;
-    
-    string _replacement;    
+
+    string _replacement;
 };
 
 #endif

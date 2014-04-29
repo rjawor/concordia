@@ -33,11 +33,14 @@ public:
                     generateHash(const string & sentence)
                                 throw(ConcordiaException);
 
+    boost::shared_ptr<vector<string> >
+                    generateTokenVector(const string & sentence);
+
     void serializeWordMap();
 
 private:
     boost::shared_ptr<WordMap> _wordMap;
-    
+
     boost::shared_ptr<SentenceAnonymizer> _sentenceAnonymizer;
 
     string _wordMapFilePath;

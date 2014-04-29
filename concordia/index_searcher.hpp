@@ -12,7 +12,7 @@
 #include "concordia/concordia_exception.hpp"
 #include "concordia/anubis_search_result.hpp"
 
-#include "divsufsort.h"
+#include <divsufsort.h>
 
 /*!
   Class for searching the index with a sentence.

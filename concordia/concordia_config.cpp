@@ -7,6 +7,11 @@
 #define HASHED_INDEX_PARAM "hashed_index_path"
 #define MARKERS_PARAM "markers_path"
 #define SUFFIX_ARRAY_PARAM "suffix_array_path"
+#define HTML_TAGS_PARAM "html_tags_path"
+#define SPACE_SYMBOLS_PARAM "space_symbols_path"
+#define STOP_WORDS_PARAM "stop_words_path"
+#define NAMED_ENTITIES_PARAM "named_entities_path"
+#define STOP_SYMBOLS_PARAM "stop_symbols_path"
 
 ConcordiaConfig::ConcordiaConfig(const string & configFilePath)
                                      throw(ConcordiaException) {
@@ -29,6 +34,16 @@ ConcordiaConfig::ConcordiaConfig(const string & configFilePath)
           ConcordiaConfig::_readConfigParameterStr(MARKERS_PARAM);
     _suffixArrayFilePath =
           ConcordiaConfig::_readConfigParameterStr(SUFFIX_ARRAY_PARAM);
+    _htmlTagsFilePath =
+          ConcordiaConfig::_readConfigParameterStr(HTML_TAGS_PARAM);
+    _spaceSymbolsFilePath =
+          ConcordiaConfig::_readConfigParameterStr(SPACE_SYMBOLS_PARAM);
+    _stopWordsFilePath =
+          ConcordiaConfig::_readConfigParameterStr(STOP_WORDS_PARAM);
+    _namedEntitiesFilePath =
+          ConcordiaConfig::_readConfigParameterStr(NAMED_ENTITIES_PARAM);
+    _stopSymbolsFilePath =
+          ConcordiaConfig::_readConfigParameterStr(STOP_SYMBOLS_PARAM);
 }
 
 ConcordiaConfig::~ConcordiaConfig() {

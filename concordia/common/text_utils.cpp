@@ -9,7 +9,7 @@ TextUtils::TextUtils() {
     _upperConverter =
         StringCaseConverterManager::getInstance().getUpperCaseConverter("pl");
 }
- 
+
 string TextUtils::toLowerCase(const string & text) {
     return simpleConvert(*_lowerConverter, text);
 }

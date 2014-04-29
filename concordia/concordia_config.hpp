@@ -50,6 +50,26 @@ public:
         return _suffixArrayFilePath;
     }
 
+    string & getHtmlTagsFilePath() {
+        return _htmlTagsFilePath;
+    }
+
+    string & getSpaceSymbolsFilePath() {
+        return _spaceSymbolsFilePath;
+    }
+
+    string & getStopWordsFilePath() {
+        return _stopWordsFilePath;
+    }
+
+    string & getNamedEntitiesFilePath() {
+        return _namedEntitiesFilePath;
+    }
+
+    string & getStopSymbolsFilePath() {
+        return _stopSymbolsFilePath;
+    }
+
 private:
     Config _config;
 
@@ -62,6 +82,16 @@ private:
     string _markersFilePath;
 
     string _suffixArrayFilePath;
+
+    string _htmlTagsFilePath;
+
+    string _spaceSymbolsFilePath;
+
+    string _stopWordsFilePath;
+
+    string _namedEntitiesFilePath;
+
+    string _stopSymbolsFilePath;
 
     string _readConfigParameterStr(const string & name)
                                      throw(ConcordiaException);

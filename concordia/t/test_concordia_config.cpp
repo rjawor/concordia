@@ -19,6 +19,11 @@ BOOST_AUTO_TEST_CASE( ConfigParameters )
     BOOST_CHECK_EQUAL( config.getHashedIndexFilePath() , "/tmp/hi.bin" );
     BOOST_CHECK_EQUAL( config.getMarkersFilePath() , "/tmp/ma.bin" );
     BOOST_CHECK_EQUAL( config.getSuffixArrayFilePath() , "/tmp/sa.bin" );
+    BOOST_CHECK_EQUAL( config.getHtmlTagsFilePath() , "/tmp/html_tags.txt" );
+    BOOST_CHECK_EQUAL( config.getSpaceSymbolsFilePath() , "/tmp/space_symbols.txt" );
+    BOOST_CHECK_EQUAL( config.getStopWordsFilePath() , "/tmp/stop_words.txt" );
+    BOOST_CHECK_EQUAL( config.getNamedEntitiesFilePath() , "/tmp/named_entities.txt" );
+    BOOST_CHECK_EQUAL( config.getStopSymbolsFilePath() , "/tmp/stop_symbols.txt" );
 }
 
 BOOST_AUTO_TEST_CASE( NonexistentConfigTest )

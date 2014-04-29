@@ -24,19 +24,19 @@ BOOST_AUTO_TEST_CASE( ConcordiaVersion )
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    concordia.addExample(Example("Ala ma kota",14));
-    concordia.addExample(Example("Ala ma rysia",51));
-    concordia.addExample(Example("Marysia ma rysia",123));
+    concordia.addExample(Example("Ala posiada kota",14));
+    concordia.addExample(Example("Ala posiada rysia",51));
+    concordia.addExample(Example("Marysia posiada rysia",123));
     concordia.refreshSAfromRAM();
         
     /*The test index contains 3 sentences:    
-     14: "Ala ma kota"
-     51: "Ala ma rysia"
-    123: "Marysia ma rysia"
+     14: "Ala posiada kota"
+     51: "Ala posiada rysia"
+    123: "Marysia posiada rysia"
     
     Test word map:
     Ala -> 0
-    ma -> 1
+    posiada -> 1
     kota -> 2
     rysia -> 3
     Marysia -> 4
@@ -51,8 +51,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
     
     */
     
-    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia.simpleSearch("ma rysia");
-    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia.simpleSearch("ma kota Ala");
+    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia.simpleSearch("posiada rysia");
+    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia.simpleSearch("posiada kota Ala");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
@@ -71,28 +71,29 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
 
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 {
+    // modified stop words to avoid anonymization 
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
     boost::ptr_vector<Example> testExamples;
-    testExamples.push_back(new Example("to jest okno",312));
-    testExamples.push_back(new Example("czy jest okno otwarte",202));
-    testExamples.push_back(new Example("chyba to jest tutaj",45));
-    testExamples.push_back(new Example("to jest",29));
+    testExamples.push_back(new Example("xto xjest okno",312));
+    testExamples.push_back(new Example("czy xjest okno otwarte",202));
+    testExamples.push_back(new Example("chyba xto xjest xtutaj",45));
+    testExamples.push_back(new Example("xto xjest",29));
     concordia.addAllExamples(testExamples);
 
     /*The test index contains 4 sentences:    
-    312: "to jest okno"
-    202: "czy jest okno otwarte"
-     45: "chyba to jest tutaj"
-     29: "to jest"
+    312: "xto xjest okno"
+    202: "czy xjest okno otwarte"
+     45: "chyba xto xjest xtutaj"
+     29: "xto xjest"
     
     Test word map:
-    to -> 0
-    jest -> 1
+    xto -> 0
+    xjest -> 1
     okno -> 2
     czy -> 3
     otwarte -> 4
     chyba -> 5
-    tutaj -> 6
+    xtutaj -> 6
     
     Test hashed index:
         n:  0  1  2  3  4  5  6  7  8  9 10 11 12
@@ -105,8 +106,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
     */
     
     Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("to jest");
-    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia2.simpleSearch("jest okno");
+    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("xto xjest");
+    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia2.simpleSearch("xjest okno");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 

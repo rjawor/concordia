@@ -31,34 +31,34 @@ public:
     SUFFIX_MARKER_TYPE getExampleId() const {
         return _exampleId;
     }
-    
+
     void calculateSimpleScore();
-    
+
     void calculateScore();
 
     void addExampleInterval(int start, int end);
 
     void addPatternInterval(int start, int end);
-    
+
 private:
     bool _alreadyIntersects(boost::ptr_vector<Interval> intervalList,
                            int start, int end);
-    
+
     double _getLogarithmicOverlay(boost::ptr_vector<Interval> intervalList,
                                  unsigned char sentenceSize,
                                  double k);
-    
-	SUFFIX_MARKER_TYPE _exampleId;
 
-	boost::ptr_vector<Interval> _exampleMatchedRegions;
+    SUFFIX_MARKER_TYPE _exampleId;
+
+    boost::ptr_vector<Interval> _exampleMatchedRegions;
 
     boost::ptr_vector<Interval> _patternMatchedRegions;
 
-	unsigned char _patternSize;
+    unsigned char _patternSize;
 
-	unsigned char _exampleSize;
+    unsigned char _exampleSize;
 
-	double _score;
+    double _score;
 };
 
 #endif

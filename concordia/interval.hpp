@@ -16,9 +16,9 @@ public:
     */
     virtual ~Interval();
 
-	bool intersects(Interval & interval);
-	
-	unsigned char getLength();
+    bool intersects(Interval & interval);
+
+    unsigned char getLength();
 
     unsigned char getStart() const {
         return _start;
@@ -30,7 +30,7 @@ public:
 
 private:
     unsigned char _start;
-    
+
     unsigned char _end;
 };
 

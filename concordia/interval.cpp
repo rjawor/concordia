@@ -10,8 +10,8 @@ Interval::~Interval() {
 }
 
 bool Interval::intersects(Interval & interval) {
-	return !(_end - 1 < interval.getStart() ||
-	         interval.getEnd() - 1  < _start);
+    return !(_end - 1 < interval.getStart() ||
+             interval.getEnd() - 1  < _start);
 }
 
 unsigned char Interval::getLength() {

@@ -35,12 +35,12 @@ public:
     string toUpperCase(const string & text);
 
 private:
-    TextUtils(TextUtils const&);              // Don't Implement
+    explicit TextUtils(TextUtils const&);              // Don't Implement
 
-    void operator=(TextUtils const&); // Don't implement
+    void operator=(TextUtils const&);                  // Don't implement
 
     boost::shared_ptr<StringGeneralCaseConverter> _lowerConverter;
-    
+
     boost::shared_ptr<StringGeneralCaseConverter> _upperConverter;
 };
 

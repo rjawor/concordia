@@ -12,7 +12,8 @@ using namespace std;
 
 class AnubisSearchResult {
 public:
-    explicit AnubisSearchResult(const SUFFIX_MARKER_TYPE & exampleId, const double score);
+    explicit AnubisSearchResult(const SUFFIX_MARKER_TYPE & exampleId,
+                                const double score);
 
     /*! Destructor.
     */
@@ -29,7 +30,7 @@ public:
 
 private:
     SUFFIX_MARKER_TYPE _exampleId;
-    
+
     double _score;
 };
 

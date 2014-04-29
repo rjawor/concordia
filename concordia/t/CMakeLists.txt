@@ -1,4 +1,5 @@
 add_library(concordia-tests
+  test_sentence_anonymizer.cpp
   test_text_utils.cpp
   test_regex_replacement.cpp
   test_example.cpp

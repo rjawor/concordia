@@ -27,4 +27,16 @@ markers_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_MARKERS@"
 suffix_array_path = "@PROD_RESOURCES_DIRECTORY@/temp/@TEMP_SUFFIX_ARRAY@"
 #-------------------------------------------------------------------------------
 
+# Anonymizer -------------------------------------------------------------------
+
+html_tags_path = "@PROD_RESOURCES_DIRECTORY@/anonymizer/html_tags.txt"
+
+space_symbols_path = "@PROD_RESOURCES_DIRECTORY@/anonymizer/space_symbols.txt"
+
+stop_words_path = "@PROD_RESOURCES_DIRECTORY@/anonymizer/stop_words.txt"
+
+named_entities_path = "@PROD_RESOURCES_DIRECTORY@/anonymizer/named_entities.txt"
+
+stop_symbols_path = "@PROD_RESOURCES_DIRECTORY@/anonymizer/stop_symbols.txt"
+
 ### eof

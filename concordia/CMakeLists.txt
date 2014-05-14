@@ -6,6 +6,7 @@ foreach(dir ${ALL_DIRECTORIES})
 endforeach(dir)
 
 add_library(concordia SHARED
+  anubis_searcher.cpp
   regex_replacement.cpp
   sentence_anonymizer.cpp
   interval.cpp
@@ -30,6 +31,7 @@ add_subdirectory(t)
 
 install(TARGETS concordia DESTINATION lib/)
 install(FILES 
+          anubis_searcher.hpp
           regex_replacement.hpp
           sentence_anonymizer.hpp
           interval.hpp

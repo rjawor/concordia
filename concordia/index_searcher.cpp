@@ -4,6 +4,8 @@
 #include <boost/filesystem.hpp>
 
 IndexSearcher::IndexSearcher() {
+    _anubisSearcher = boost::shared_ptr<AnubisSearcher>(
+                                   new AnubisSearcher());
 }
 
 
@@ -25,7 +27,7 @@ boost::ptr_vector<SubstringOccurence> IndexSearcher::simpleSearch(
     sauchar_t * patternArray = Utils::indexVectorToSaucharArray(hash);
     int size = sa_search(T->data(), (saidx_t) T->size(),
                          (const sauchar_t *) patternArray, patternLength,
-                         SA->data(), (saidx_t) T->size(), &left);
+                         SA->data(), (saidx_t) SA->size(), &left);
     for (int i = 0; i < size; ++i) {
         saidx_t resultPos = SA->at(left + i);
         if (resultPos % sizeof(INDEX_CHARACTER_TYPE) == 0) {
@@ -55,6 +57,7 @@ boost::ptr_vector<AnubisSearchResult> IndexSearcher::anubisSearch(
                   boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                   boost::shared_ptr<std::vector<saidx_t> > SA,
                   const string & pattern) throw(ConcordiaException) {
-    boost::ptr_vector<AnubisSearchResult> result;
-    return result;
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash =
+                                          hashGenerator->generateHash(pattern);
+    return _anubisSearcher->anubisSearch(T, markers, SA, hash);
 }

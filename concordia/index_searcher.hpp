@@ -10,6 +10,7 @@
 #include "concordia/substring_occurence.hpp"
 #include "concordia/hash_generator.hpp"
 #include "concordia/concordia_exception.hpp"
+#include "concordia/anubis_searcher.hpp"
 #include "concordia/anubis_search_result.hpp"
 
 #include <divsufsort.h>
@@ -43,6 +44,7 @@ public:
                     boost::shared_ptr<std::vector<saidx_t> > SA,
                     const string & pattern) throw(ConcordiaException);
 private:
+    boost::shared_ptr<AnubisSearcher> _anubisSearcher;
 };
 
 #endif

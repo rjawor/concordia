@@ -1,4 +1,6 @@
-1. lokalizowane to_lower (wykorzystać utf8case, naprawić testy)
-2. anonimizacja zdań
-3. Dzielenie zdań (max 255 tokenów)
-4. concordia-server
+DONE 1. lokalizowane to_lower (wykorzystać utf8case, naprawić testy)
+DONE 2. anonimizacja zdań
+DONE 3. Dzielenie zdań (max 255 tokenów)
+
+- concordia-server
+- zastanowić się nad empty hash examples

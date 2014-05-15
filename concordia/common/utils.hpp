@@ -2,6 +2,7 @@
 #define UTILS_HDR
 
 #include <boost/shared_ptr.hpp>
+#include <boost/foreach.hpp>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -37,9 +38,19 @@ public:
                              boost::shared_ptr<std::vector<sauchar_t> > vector,
                              INDEX_CHARACTER_TYPE character);
 
+    template <typename T>
+    static void printVector(boost::shared_ptr<std::vector<T> > vector);
+
 private:
     static void _insertCharToSaucharArray(sauchar_t * array,
                                  INDEX_CHARACTER_TYPE character, int pos);
 };
 
+template <typename T>
+void Utils::printVector(boost::shared_ptr<std::vector<T> > vector) {
+    for (int i = 0; i < vector->size(); i++) {
+        cout << vector->at(i) << " ";
+    }
+    cout << endl;
+}
 #endif

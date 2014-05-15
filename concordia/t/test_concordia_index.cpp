@@ -93,4 +93,36 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest2 )
     BOOST_CHECK_EQUAL_COLLECTIONS(SA->begin(), SA->end(), expectedSA->begin(), expectedSA->end());
 }
 
+BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest3 )
+{
+    ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
+                         TestResourcesManager::getTestFilePath("temp","test_markers.bin"));
+    boost::shared_ptr<vector<sauchar_t> > T = boost::shared_ptr<vector<sauchar_t> >(new vector<sauchar_t>());
+
+    //Test hashed index:
+    //    n: 0  1  2  3  4  5
+    // T[n]: 1  2  3  2  3  2
+    T->push_back(1);
+    T->push_back(2);
+    T->push_back(3);
+    T->push_back(2);
+    T->push_back(3);
+    T->push_back(2);
+    
+    //Test suffix array:
+    //    n: 0  1  2  3  4  5
+    //SA[n]: 5  3  1  0  4  2
+
+    boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(T);
+
+    boost::shared_ptr<vector<saidx_t> > expectedSA = boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
+    expectedSA->push_back(0);
+    expectedSA->push_back(5);
+    expectedSA->push_back(3);
+    expectedSA->push_back(1);
+    expectedSA->push_back(4);
+    expectedSA->push_back(2);
+    BOOST_CHECK_EQUAL_COLLECTIONS(SA->begin(), SA->end(), expectedSA->begin(), expectedSA->end());
+}
+
 BOOST_AUTO_TEST_SUITE_END()

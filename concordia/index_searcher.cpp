@@ -25,6 +25,7 @@ boost::ptr_vector<SubstringOccurence> IndexSearcher::simpleSearch(
                                           hashGenerator->generateHash(pattern);
     saidx_t patternLength = hash->size()*sizeof(INDEX_CHARACTER_TYPE);
     sauchar_t * patternArray = Utils::indexVectorToSaucharArray(hash);
+
     int size = sa_search(T->data(), (saidx_t) T->size(),
                          (const sauchar_t *) patternArray, patternLength,
                          SA->data(), (saidx_t) SA->size(), &left);

@@ -2,7 +2,7 @@
 
 
 SubstringOccurence::SubstringOccurence(const SUFFIX_MARKER_TYPE & id,
-                                       const int & offset):
+                                       const SUFFIX_MARKER_TYPE & offset):
                                        _id(id),
                                        _offset(offset) {
 }

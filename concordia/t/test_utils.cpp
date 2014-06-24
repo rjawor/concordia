@@ -60,6 +60,31 @@ BOOST_AUTO_TEST_CASE( IndexVectorToSaucharArray )
     BOOST_CHECK_EQUAL_COLLECTIONS(result->begin(), result->end(), expected->begin(), expected->end());      
 }
 
+BOOST_AUTO_TEST_CASE( IndexVectorToSaucharVector )
+{
+    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash(new vector<INDEX_CHARACTER_TYPE>());
+    hash->push_back(123456789);         // in hex: 75BCD15
+                                       // in memory:  15  cd  5b  07
+                                       // in memory DEC:  21 205  91   7 
+
+    hash->push_back(987654321);         // in hex: 3ADE68B1
+                                       // in memory:  b1  68  de  3a
+                                       // in memory DEC: 177 104 222  58         
+    boost::shared_ptr<vector<sauchar_t> > result = Utils::indexVectorToSaucharVector(hash);
+    
+    boost::shared_ptr<vector<sauchar_t> > expected(new vector<sauchar_t>());
+    expected->push_back(21);
+    expected->push_back(205);
+    expected->push_back(91);
+    expected->push_back(7);
+    expected->push_back(177);
+    expected->push_back(104);
+    expected->push_back(222);
+    expected->push_back(58);
+
+    BOOST_CHECK_EQUAL_COLLECTIONS(result->begin(), result->end(), expected->begin(), expected->end());      
+}
+
 
 
 BOOST_AUTO_TEST_SUITE_END()

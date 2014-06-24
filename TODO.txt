@@ -4,3 +4,10 @@ DONE 3. Dzielenie zdań (max 255 tokenów)
 
 - concordia-server
 - zastanowić się nad empty hash examples
+
+
+zastanowić się nad optymalizacją:
+- unordered_map tmMatchesMap
+- LCP array
+
+Anubis search się komplikuje! Przy tworzeniu obiektu tmMatches dla przykładu trzeba podać id przykładu, długość patternu i długość przykładu. Dwa pierwsze mamy, ale niestety nie ma skąd wziąć długości przykładu. Pamiętamy tylko offset sufiksu.

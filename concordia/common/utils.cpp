@@ -42,6 +42,19 @@ sauchar_t * Utils::indexVectorToSaucharArray(
     return patternArray;
 }
 
+boost::shared_ptr<std::vector<sauchar_t> > Utils::indexVectorToSaucharVector(
+                     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input) {
+    
+    boost::shared_ptr<std::vector<sauchar_t> > result = boost::shared_ptr<std::vector<sauchar_t> >(
+                                                    new std::vector<sauchar_t>);
+                                                    
+    for (vector<INDEX_CHARACTER_TYPE>::iterator it = input->begin();
+                                          it != input->end(); ++it) {
+        appendCharToSaucharVector(result, *it);
+    }
+    return result;
+}
+
 void Utils::appendCharToSaucharVector(
                              boost::shared_ptr<std::vector<sauchar_t> > vector,
                              INDEX_CHARACTER_TYPE character) {
@@ -58,4 +71,6 @@ void Utils::_insertCharToSaucharArray(sauchar_t * array,
         array[i] = characterArray[i-pos];
     }
 }
+             
+
 

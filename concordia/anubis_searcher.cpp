@@ -1,7 +1,13 @@
 #include "concordia/anubis_searcher.hpp"
+#include "concordia/tm_matches.hpp"
 
-#include<iostream>
+#include <boost/ptr_container/ptr_map.hpp>
+#include <boost/foreach.hpp>
+#include <iostream>
+#include <map>
 
+typedef boost::ptr_map<SUFFIX_MARKER_TYPE, TmMatches> TmMatchesMap;
+typedef TmMatchesMap::iterator TmMatchesMapIterator;
 
 AnubisSearcher::AnubisSearcher() {
 }
@@ -18,6 +24,39 @@ boost::ptr_vector<AnubisSearchResult> AnubisSearcher::anubisSearch(
                 boost::shared_ptr<std::vector<INDEX_CHARACTER_TYPE> > pattern)
                                                 throw(ConcordiaException) {
     boost::ptr_vector<AnubisSearchResult> result;
+    
+    boost::shared_ptr<std::vector<sauchar_t> > patternVector =
+        Utils::indexVectorToSaucharVector(pattern);
+    
+    if (patternVector->size() != pattern->size() * sizeof(INDEX_CHARACTER_TYPE)) {
+        throw ConcordiaException("Increasing pattern resolution went wrong.");
+    } 
+
+    
+    TmMatchesMap tmMatchesMap;
+    for (int offset = 0;offset < pattern->size(); offset++) {
+        int highResOffset = offset * sizeof(INDEX_CHARACTER_TYPE);
+        boost::shared_ptr<std::vector<sauchar_t> > currentPattern =
+            boost::shared_ptr<std::vector<sauchar_t> >(new std::vector<sauchar_t>(
+            patternVector->begin()+highResOffset,patternVector->end()));
+        SUFFIX_MARKER_TYPE longestPrefixesLength;
+        boost::ptr_vector<SubstringOccurence> longestPrefixes = lcpSearch(T, markers, SA,
+                                                 currentPattern, longestPrefixesLength);
+
+        BOOST_FOREACH(SubstringOccurence & occurence, longestPrefixes) {
+            TmMatchesMapIterator mapIterator = tmMatchesMap.find(occurence.getId());
+            if(mapIterator != tmMatchesMap.end()) {
+
+            } else {
+            
+            }   
+        }
+
+        
+        
+        
+    }    
+        
     return result;
 }
 

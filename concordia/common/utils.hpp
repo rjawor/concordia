@@ -34,7 +34,8 @@ public:
     static sauchar_t * indexVectorToSaucharArray(
                        boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input);
 
-    static boost::shared_ptr<std::vector<sauchar_t> > indexVectorToSaucharVector(
+    static boost::shared_ptr<std::vector<sauchar_t> >
+                   indexVectorToSaucharVector(
                        boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input);
 
     static void appendCharToSaucharVector(

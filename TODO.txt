@@ -3,7 +3,10 @@ DONE 2. anonimizacja zdań
 DONE 3. Dzielenie zdań (max 255 tokenów)
 
 - concordia-server
-- zastanowić się nad empty hash examples
+- zastanowić się nad empty hash examples (rozwiązanie: w ogóle nie szukać fraz o pustym hashu, rzucać wyjątek).
+- wyłączyć stopWords
+- puścić 100% search test na jrc
+- wyszukiwanie zdania: wyszukanie najdłuższych pasujących fragmentów Anubisem, 1D (approximate) bin packing
 
 
 zastanowić się nad optymalizacją:

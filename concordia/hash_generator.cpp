@@ -1,8 +1,10 @@
 #include "concordia/hash_generator.hpp"
+
 #include <boost/filesystem.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/algorithm/string.hpp>
+
 #include <fstream>
 
 HashGenerator::HashGenerator(boost::shared_ptr<ConcordiaConfig> config)
@@ -44,10 +46,10 @@ boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > HashGenerator::generateHash(
 boost::shared_ptr<vector<string> >
                   HashGenerator::generateTokenVector(const string & sentence) {
     string anonymizedSentence = _sentenceAnonymizer->anonymize(sentence);
+    boost::trim(anonymizedSentence);
     boost::shared_ptr<vector<string> > tokenTexts(new vector<string>());
     boost::split(*tokenTexts, anonymizedSentence, boost::is_any_of(" \t\r\n"),
                  boost::algorithm::token_compress_on);
-
     return tokenTexts;
 }
 

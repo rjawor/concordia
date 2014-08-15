@@ -43,8 +43,8 @@ BOOST_AUTO_TEST_CASE( TooLongHashTest )
     HashGenerator hashGenerator = HashGenerator(config);
 
     stringstream ss;
-    for (int i=0;i<256;i++) {
-        ss << "a" << i << " ";
+    for (int i=0;i<257;i++) {
+        ss << "xx" << i << " ";
     }
 
     string longSentence = ss.str();

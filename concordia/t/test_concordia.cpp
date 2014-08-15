@@ -123,9 +123,30 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 
     BOOST_CHECK_EQUAL(searchResult2.size(), 2);
     BOOST_CHECK_EQUAL(searchResult2.at(0).getId(), 202);
-    BOOST_CHECK_EQUAL(searchResult2.at(0).getOffset(), 1);
+    BOOST_CHECK_EQUAL(searchResult2.at(0).getOffset(), 0);
     BOOST_CHECK_EQUAL(searchResult2.at(1).getId(), 312);
     BOOST_CHECK_EQUAL(searchResult2.at(1).getOffset(), 1);
 }
+
+BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch3 )
+{
+    Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
+    boost::ptr_vector<Example> testExamples;
+    testExamples.push_back(new Example("2. Ma on w szczególności prawo do podjęcia zatrudnienia dostępnego na terytorium innego Państwa Członkowskiego z takim samym pierwszeństwem, z jakiego korzystają obywatele tego państwa.",312));
+    testExamples.push_back(new Example("czy xjest żółte otwarte",202));
+    concordia.addAllExamples(testExamples);
+    
+    Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
+    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("on w szczególności prawo do podjęcia");
+
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX)); 
+
+    BOOST_CHECK_EQUAL(searchResult1.size(), 1);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getId(), 312);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getOffset(), 1);
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

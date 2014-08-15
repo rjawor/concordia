@@ -6,4 +6,6 @@ concordia/common/config.hpp
 tests/resources/concordia-config/concordia.cfg
 tests/resources/temp
 prod/resources/temp
+prod/resources/text-files/jrc_smaller.txt
+
 

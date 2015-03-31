@@ -15,4 +15,8 @@ echo "CONCORDIA RUNNER: searching for pattern: \"Parlamentu Europejskiego\""
 echo "CONCORDIA RUNNER: searching for pattern: \"Dostęp do zatrudnienia\""
 ./build/concordia-console/concordia-console -c prod/resources/concordia-config/concordia.cfg -s "Dostęp do zatrudnienia" -n
 
+echo "CONCORDIA RUNNER: searching for pattern: \"Ma on w szczególności prawo do podjęcia zatrudnienia dostępnego na terytorium innego Państwa Członkowskiego z takim samym pierwszeństwem\""
+./build/concordia-console/concordia-console -c prod/resources/concordia-config/concordia.cfg -s "Ma on w szczególności prawo do podjęcia zatrudnienia dostępnego na terytorium innego Państwa Członkowskiego z takim samym pierwszeństwem" -n
+
+
 rm prod/resources/text-files/jrc_smaller.txt

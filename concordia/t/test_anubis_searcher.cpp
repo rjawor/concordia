@@ -1,6 +1,7 @@
 #include "tests/unit-tests/unit_tests_globals.hpp"
 #include "concordia/anubis_searcher.hpp"
 #include "concordia/common/config.hpp"
+#include "concordia/common/utils.hpp"
 
 using namespace std;
 
@@ -27,9 +28,8 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     T->push_back(3);
     T->push_back(2);
     
-    SUFFIX_MARKER_TYPE marker = 34 * SUFFIX_MARKER_DIVISOR;
     for(int i=0;i<6;i++) {
-        markers->push_back(marker++);
+        markers->push_back(Utils::createMarker(34,i,6));
     }
     
     pattern->push_back(2);

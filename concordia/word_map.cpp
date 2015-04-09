@@ -1,4 +1,5 @@
 #include "concordia/word_map.hpp"
+#include <climits>
 
 
 WordMap::WordMap() throw(ConcordiaException) {

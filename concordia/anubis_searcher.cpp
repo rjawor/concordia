@@ -117,7 +117,7 @@ void AnubisSearcher::_collectResults(
         saidx_t resultPos = SA->at(left + i);
         SUFFIX_MARKER_TYPE marker = markers->at(resultPos);
         result.push_back(new SubstringOccurence(
-                            marker / SUFFIX_MARKER_DIVISOR,
-                            marker % SUFFIX_MARKER_DIVISOR));
+                            Utils::getIdFromMarker(marker),
+                            Utils::getOffsetFromMarker(marker)));
     }
 }

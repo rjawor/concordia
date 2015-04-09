@@ -5,6 +5,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 #include <iostream>
+#include <climits>
 
 ConcordiaIndex::ConcordiaIndex(const string & hashedIndexFilePath,
                                const string & markersFilePath)
@@ -91,8 +92,10 @@ void ConcordiaIndex::_addSingleExample(
 
         // append to markersFile
 
-        SUFFIX_MARKER_TYPE marker = offset;
-        marker += example.getId() * SUFFIX_MARKER_DIVISOR;
+        SUFFIX_MARKER_TYPE marker = Utils::createMarker(
+                                           example.getId(),
+                                           offset,
+                                           hash->size());
 
         Utils::writeMarker(markersFile, marker);
         markers->push_back(marker);

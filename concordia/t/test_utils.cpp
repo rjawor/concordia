@@ -85,6 +85,33 @@ BOOST_AUTO_TEST_CASE( IndexVectorToSaucharVector )
     BOOST_CHECK_EQUAL_COLLECTIONS(result->begin(), result->end(), expected->begin(), expected->end());      
 }
 
+BOOST_AUTO_TEST_CASE( MaxSentenceSize )
+{
+    BOOST_CHECK_EQUAL(Utils::maxSentenceSize, 65536);
+}
+
+//The below examples use the following marker:
+//00000000|00000000|00000000|00000011|00000000|00000101|00000000|00000111
+
+BOOST_AUTO_TEST_CASE( CreateMarker )
+{
+    BOOST_CHECK_EQUAL(Utils::createMarker(3,5,7), 12885229575);
+}
+
+BOOST_AUTO_TEST_CASE( GetIdFromMarker )
+{
+    BOOST_CHECK_EQUAL(Utils::getIdFromMarker(12885229575), 3);
+}
+
+BOOST_AUTO_TEST_CASE( GetOffsetFromMarker )
+{
+    BOOST_CHECK_EQUAL(Utils::getOffsetFromMarker(12885229575), 5);
+}
+
+BOOST_AUTO_TEST_CASE( GetLengthFromMarker )
+{
+    BOOST_CHECK_EQUAL(Utils::getLengthFromMarker(12885229575), 7);
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()

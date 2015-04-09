@@ -1,5 +1,6 @@
 #include "concordia/example.hpp"
-
+#include <climits>
+#include <iostream>
 
 Example::Example(const string & sentence, const SUFFIX_MARKER_TYPE & id)
                                               throw(ConcordiaException):
@@ -7,7 +8,7 @@ Example::Example(const string & sentence, const SUFFIX_MARKER_TYPE & id)
                                               _id(id) {
     // check if the example id exceeds space
     // reserved for it in the suffix marker
-    if (id >= (SUFFIX_MARKER_TYPE_MAX_VALUE+1) / SUFFIX_MARKER_DIVISOR) {
+    if (id >= SUFFIX_MARKER_TYPE_MAX_VALUE >> 8) {
         throw ConcordiaException("Example id too large.");
     }
 }

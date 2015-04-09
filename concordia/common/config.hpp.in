@@ -23,8 +23,9 @@ typedef @SUFFIX_MARKER_TYPE@ SUFFIX_MARKER_TYPE;
 #define SUFFIX_MARKER_TYPE_MAX_VALUE @SUFFIX_MARKER_TYPE_MAX_VALUE@
 
 
-#define SUFFIX_MARKER_DIVISOR @SUFFIX_MARKER_DIVISOR@
-//Max sentence size is determined by suffix marker divisor.
-//The last bits in a sentence marker denote offset whose maximum value
-//is the sentence size minus 2.
-#define MAX_SENTENCE_SIZE @SUFFIX_MARKER_DIVISOR@
+#define SUFFIX_MARKER_SENTENCE_BYTES @SUFFIX_MARKER_SENTENCE_BYTES@
+//Max sentence size is determined by the SUFFIX_MARKER_SENTENCE_BYTES property.
+//The sentence marker is build as follows: its first bytes store the
+// sentence id. Next, SUFFIX_MARKER_SENTENCE_BYTES store the suffix offset
+// and the last SUFFIX_MARKER_SENTENCE_BYTES store the sentence length.
+

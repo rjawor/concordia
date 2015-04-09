@@ -45,9 +45,23 @@ public:
     template <typename T>
     static void printVector(boost::shared_ptr<std::vector<T> > vector);
 
+    static SUFFIX_MARKER_TYPE getIdFromMarker(SUFFIX_MARKER_TYPE marker);
+
+    static SUFFIX_MARKER_TYPE getOffsetFromMarker(SUFFIX_MARKER_TYPE marker);
+
+    static SUFFIX_MARKER_TYPE getLengthFromMarker(SUFFIX_MARKER_TYPE marker);
+
+    static SUFFIX_MARKER_TYPE createMarker(SUFFIX_MARKER_TYPE id,
+                                           SUFFIX_MARKER_TYPE offset,
+                                           SUFFIX_MARKER_TYPE length);
+
+    static SUFFIX_MARKER_TYPE maxSentenceSize;
+
 private:
     static void _insertCharToSaucharArray(sauchar_t * array,
                                  INDEX_CHARACTER_TYPE character, int pos);
+
+    static int _idBytes;
 };
 
 template <typename T>

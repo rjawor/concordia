@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( TooLongHashTest )
     HashGenerator hashGenerator = HashGenerator(config);
 
     stringstream ss;
-    for (int i=0;i<257;i++) {
+    for (int i=0;i<65537;i++) {
         ss << "xx" << i << " ";
     }
 

@@ -1,4 +1,5 @@
 #include "concordia/hash_generator.hpp"
+#include "concordia/common/utils.hpp"
 
 #include <boost/filesystem.hpp>
 #include <boost/archive/binary_oarchive.hpp>
@@ -30,7 +31,7 @@ boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > HashGenerator::generateHash(
                                   result(new vector<INDEX_CHARACTER_TYPE>());
     boost::shared_ptr<vector<string> > tokenTexts =
                         generateTokenVector(sentence);
-    if (tokenTexts->size() > MAX_SENTENCE_SIZE) {
+    if (tokenTexts->size() > Utils::maxSentenceSize) {
         throw ConcordiaException("Trying to add too long sentence.");
     }
     for (vector<string>::iterator it = tokenTexts->begin();

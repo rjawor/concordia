@@ -40,11 +40,9 @@ boost::ptr_vector<SubstringOccurence> IndexSearcher::simpleSearch(
             saidx_t actualResultPos = resultPos / sizeof(INDEX_CHARACTER_TYPE);
             SUFFIX_MARKER_TYPE marker = markers->at(actualResultPos);
 
-            // TODO(rafalj): think about using bitwise operators
-            // in the below code
             result.push_back(new SubstringOccurence(
-                marker / SUFFIX_MARKER_DIVISOR,
-                marker % SUFFIX_MARKER_DIVISOR));
+                        Utils::getIdFromMarker(marker),
+                        Utils::getOffsetFromMarker(marker)));
         }
     }
 

@@ -40,9 +40,7 @@ boost::ptr_vector<SubstringOccurence> IndexSearcher::simpleSearch(
             saidx_t actualResultPos = resultPos / sizeof(INDEX_CHARACTER_TYPE);
             SUFFIX_MARKER_TYPE marker = markers->at(actualResultPos);
 
-            result.push_back(new SubstringOccurence(
-                        Utils::getIdFromMarker(marker),
-                        Utils::getOffsetFromMarker(marker)));
+            result.push_back(new SubstringOccurence(marker));
         }
     }
 

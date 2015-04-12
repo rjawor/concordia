@@ -13,6 +13,7 @@
 #include "concordia/concordia_config.hpp"
 #include "concordia/concordia_index.hpp"
 #include "concordia/index_searcher.hpp"
+#include "concordia/anubis_search_result.hpp"
 #include <divsufsort.h>
 
 
@@ -44,6 +45,10 @@ public:
                                                    throw(ConcordiaException);
 
     boost::ptr_vector<SubstringOccurence> simpleSearch(
+                                                   const std::string & pattern)
+                                                      throw(ConcordiaException);
+
+    boost::ptr_vector<AnubisSearchResult> anubisSearch(
                                                    const std::string & pattern)
                                                       throw(ConcordiaException);
 

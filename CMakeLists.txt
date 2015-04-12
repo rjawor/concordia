@@ -18,6 +18,8 @@ set (SUFFIX_MARKER_TYPE_MAX_VALUE "ULLONG_MAX")
 set (SUFFIX_MARKER_SENTENCE_BYTES 2)
 # The above settings assign 4 bytes to sentence id and 2 bytes each for suffix offset and sentence length.
 # This allows to store 2^32=4 294 967 296 sentences no longer than 65536 words.
+# After changing these values be sure to adjust tests (as well as the above calculations).
+# Also, you might want to run TooLongHashTest from test_hash_generator.cpp
 
 # =============================== #
 # Production paths

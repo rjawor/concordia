@@ -143,3 +143,15 @@ boost::ptr_vector<SubstringOccurence> Concordia::simpleSearch(
     }
 }
 
+boost::ptr_vector<AnubisSearchResult> Concordia::anubisSearch(
+                                          const string & pattern)
+                                  throw(ConcordiaException) {
+    if (_T->size() > 0) {
+        return _searcher->anubisSearch(_hashGenerator, _T,
+                                         _markers, _SA, pattern);
+    } else {
+        boost::ptr_vector<AnubisSearchResult> result;
+        return result;
+    }
+}
+

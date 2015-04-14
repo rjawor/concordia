@@ -67,7 +67,7 @@ private:
 template <typename T>
 void Utils::printVector(boost::shared_ptr<std::vector<T> > vector) {
     for (int i = 0; i < vector->size(); i++) {
-        cout << vector->at(i) << " ";
+        cout << static_cast<int>(vector->at(i)) << " ";
     }
     cout << endl;
 }

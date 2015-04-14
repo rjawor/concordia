@@ -1,11 +1,19 @@
 #include "concordia/substring_occurence.hpp"
 #include "concordia/common/utils.hpp"
 
+SubstringOccurence::SubstringOccurence() {
+}
 
 SubstringOccurence::SubstringOccurence(const SUFFIX_MARKER_TYPE & marker) {
     _id = Utils::getIdFromMarker(marker);
     _offset = Utils::getOffsetFromMarker(marker);
     _exampleLength = Utils::getLengthFromMarker(marker);    
+}
+
+void SubstringOccurence::enterDataFromMarker(const SUFFIX_MARKER_TYPE & marker) {
+    _id = Utils::getIdFromMarker(marker);
+    _offset = Utils::getOffsetFromMarker(marker);
+    _exampleLength = Utils::getLengthFromMarker(marker);
 }
 
 

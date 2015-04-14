@@ -1,6 +1,8 @@
 #ifndef INTERVAL_HDR
 #define INTERVAL_HDR
 
+#include "concordia/common/config.hpp"
+
 /*!
   Class representing word interval.
 
@@ -10,7 +12,7 @@ using namespace std;
 
 class Interval {
 public:
-    explicit Interval(const unsigned char start, const unsigned char end);
+    explicit Interval(const SUFFIX_MARKER_TYPE start, const SUFFIX_MARKER_TYPE end);
 
     /*! Destructor.
     */
@@ -18,20 +20,20 @@ public:
 
     bool intersects(Interval & interval);
 
-    unsigned char getLength();
+    SUFFIX_MARKER_TYPE getLength();
 
-    unsigned char getStart() const {
+    SUFFIX_MARKER_TYPE getStart() const {
         return _start;
     }
 
-    unsigned char getEnd() const {
+    SUFFIX_MARKER_TYPE getEnd() const {
         return _end;
     }
 
 private:
-    unsigned char _start;
+    SUFFIX_MARKER_TYPE _start;
 
-    unsigned char _end;
+    SUFFIX_MARKER_TYPE _end;
 };
 
 #endif

@@ -177,7 +177,6 @@ BOOST_AUTO_TEST_CASE( ConcordiaAnubisSearch1 )
         n: 0  1  2  3  4  5  6  7  8  9 10 11
     SA[n]: 0  4  1  9  5  2 10  6  8 11  3  7 
     
-    */    
     boost::ptr_vector<AnubisSearchResult> searchResult1 = concordia.anubisSearch("posiada rysia chyba");
     boost::ptr_vector<AnubisSearchResult> searchResult2 = concordia.anubisSearch("posiada kota Ala");
 

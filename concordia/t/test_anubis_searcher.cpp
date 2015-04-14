@@ -1,7 +1,16 @@
+#include <iostream>
+
 #include "tests/unit-tests/unit_tests_globals.hpp"
+#include "concordia/tm_matches.hpp"
 #include "concordia/anubis_searcher.hpp"
+#include "concordia/concordia_index.hpp"
+#include "concordia/concordia_config.hpp"
+#include "concordia/example.hpp"
+#include "concordia/hash_generator.hpp"
 #include "concordia/common/config.hpp"
 #include "concordia/common/utils.hpp"
+#include "concordia/common/logging.hpp"
+#include "tests/common/test_resources_manager.hpp"
 
 using namespace std;
 
@@ -324,9 +333,109 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
 
 }
 
-BOOST_AUTO_TEST_CASE( AnubisSearch1 )
+BOOST_AUTO_TEST_CASE( TmMatchesTest )
 {
+    AnubisSearcher searcher;
+
+    /*The test index contains 3 sentences:    
+     14: "Ala posiada kota"
+     51: "Ala posiada rysia"
+    123: "Marysia posiada rysia"
     
+    Test word map:
+    Ala -> 0
+    posiada -> 1
+    kota -> 2
+    rysia -> 3
+    Marysia -> 4
+    
+    Test hashed index:
+        n: 0  1  2  3  4  5  6  7  8  9 10 11
+     T[n]: 0  1  2  |  0  1  3  |  4  1  3  |
+    
+    Test suffix array:
+        n: 0  1  2  3  4  5  6  7  8  9 10 11
+    SA[n]: 0  4  1  9  5  2 10  6  8 11  3  7 
+    
+    */
+    
+    ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX),
+                         TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS));
+    boost::shared_ptr<ConcordiaConfig> config(
+                                new ConcordiaConfig(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg")));
+    boost::shared_ptr<HashGenerator> hashGenerator(new HashGenerator(config));
+
+    
+    boost::shared_ptr<std::vector<sauchar_t> > T(new std::vector<sauchar_t>());
+    boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers(new std::vector<SUFFIX_MARKER_TYPE>());
+
+    index.addExample(hashGenerator, T, markers, Example("Ala posiada kota",14));
+    index.addExample(hashGenerator, T, markers, Example("Ala posiada rysia",51));
+    index.addExample(hashGenerator, T, markers, Example("Marysia posiada rysia",123));
+
+    boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(T);
+    
+    
+    // searching for pattern "Ola posiada rysia Marysia" (5 1 3 4)
+    
+    boost::shared_ptr<std::vector<INDEX_CHARACTER_TYPE> > pattern = hashGenerator->generateHash("Ola posiada rysia Marysia");
+    
+    boost::shared_ptr<TmMatchesMap> tmMatchesMap = searcher.getTmMatches(T, markers, SA, pattern);
+    BOOST_CHECK_EQUAL(tmMatchesMap->size(), 3);
+
+    TmMatches * tmMatches14 = tmMatchesMap->find(14)->second;
+    TmMatches * tmMatches51 = tmMatchesMap->find(51)->second;
+    TmMatches * tmMatches123 = tmMatchesMap->find(123)->second;
+    
+    BOOST_CHECK_EQUAL(tmMatches14->getExampleId(), 14);
+    BOOST_CHECK_EQUAL(tmMatches51->getExampleId(), 51);
+    BOOST_CHECK_EQUAL(tmMatches123->getExampleId(), 123);
+
+    // example 14
+    // example interval list: [(1,2)] 
+    boost::ptr_vector<Interval> exampleIntervals14 = tmMatches14->getExampleIntervals();    
+    BOOST_CHECK_EQUAL(exampleIntervals14.size(), 1);
+    BOOST_CHECK_EQUAL(exampleIntervals14[0].getStart(), 1);
+    BOOST_CHECK_EQUAL(exampleIntervals14[0].getEnd(), 2);
+    // pattern interval list: [(1,2)] 
+    boost::ptr_vector<Interval> patternIntervals14 = tmMatches14->getPatternIntervals();    
+    BOOST_CHECK_EQUAL(patternIntervals14.size(), 1);
+    BOOST_CHECK_EQUAL(patternIntervals14[0].getStart(), 1);
+    BOOST_CHECK_EQUAL(patternIntervals14[0].getEnd(), 2);
+    
+    // example 51
+    // example interval list: [(1,3)] 
+    boost::ptr_vector<Interval> exampleIntervals51 = tmMatches51->getExampleIntervals();    
+    BOOST_CHECK_EQUAL(exampleIntervals51.size(), 1);
+    BOOST_CHECK_EQUAL(exampleIntervals51[0].getStart(), 1);
+    BOOST_CHECK_EQUAL(exampleIntervals51[0].getEnd(), 3);
+    // pattern interval list: [(1,3)] 
+    boost::ptr_vector<Interval> patternIntervals51 = tmMatches51->getPatternIntervals();    
+    BOOST_CHECK_EQUAL(patternIntervals51.size(), 1);
+    BOOST_CHECK_EQUAL(patternIntervals51[0].getStart(), 1);
+    BOOST_CHECK_EQUAL(patternIntervals51[0].getEnd(), 3);
+    
+    // example 123
+    // example interval list: [(1,3), (0,1)] 
+    boost::ptr_vector<Interval> exampleIntervals123 = tmMatches123->getExampleIntervals();    
+    BOOST_CHECK_EQUAL(exampleIntervals123.size(), 2);
+    BOOST_CHECK_EQUAL(exampleIntervals123[0].getStart(), 1);
+    BOOST_CHECK_EQUAL(exampleIntervals123[0].getEnd(), 3);
+    BOOST_CHECK_EQUAL(exampleIntervals123[1].getStart(), 0);
+    BOOST_CHECK_EQUAL(exampleIntervals123[1].getEnd(), 1);
+    // pattern interval list: [(1,3), (3,4)] 
+    boost::ptr_vector<Interval> patternIntervals123 = tmMatches123->getPatternIntervals();    
+    BOOST_CHECK_EQUAL(patternIntervals123.size(), 2);
+    BOOST_CHECK_EQUAL(patternIntervals123[0].getStart(), 1);
+    BOOST_CHECK_EQUAL(patternIntervals123[0].getEnd(), 3);
+    BOOST_CHECK_EQUAL(patternIntervals123[1].getStart(), 3);
+    BOOST_CHECK_EQUAL(patternIntervals123[1].getEnd(), 4);
+
+
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
+    boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX)); 
+
 }
 
 

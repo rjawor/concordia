@@ -5,6 +5,7 @@
 #include "concordia/common/config.hpp"
 #include "concordia/interval.hpp"
 #include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
 
 
 /*!
@@ -26,6 +27,14 @@ public:
 
     double getScore() const {
         return _score;
+    }
+
+    boost::ptr_vector<Interval> getExampleIntervals() const {
+        return _exampleMatchedRegions;
+    }
+
+    boost::ptr_vector<Interval> getPatternIntervals() const {
+        return _patternMatchedRegions;
     }
 
     SUFFIX_MARKER_TYPE getExampleId() const {
@@ -60,5 +69,8 @@ private:
 
     double _score;
 };
+
+typedef boost::ptr_map<SUFFIX_MARKER_TYPE, TmMatches> TmMatchesMap;
+typedef TmMatchesMap::iterator TmMatchesMapIterator;
 
 #endif

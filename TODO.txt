@@ -8,7 +8,7 @@ DONE 3. Dzielenie zdań (max 255 tokenów)
 DONE Anubis search się komplikuje! Przy tworzeniu obiektu tmMatches dla przykładu trzeba podać id przykładu, długość patternu i długość przykładu. Dwa pierwsze mamy, ale niestety nie ma skąd wziąć długości przykładu. Pamiętamy tylko offset sufiksu.
 
 DONE 1. Bitwise operators (i stałe!) przy rozmiarze index character oraz markerów
-2. Wykonać anubis search na nowych markerach z długością zdania
+IN PROGRESS 2. Wykonać anubis search na nowych markerach z długością zdania
 3. Multi-threading?
 
 - concordia-server
@@ -19,6 +19,8 @@ DONE 1. Bitwise operators (i stałe!) przy rozmiarze index character oraz marker
 
 
 zastanowić się nad optymalizacją:
-- unordered_map tmMatchesMap
-- LCP array
+- tmMatchesMap jako normalna mapa (nie ptr_map)
+- REJECTED LCP array
+- !important! rezygnacja z ptr_vector (wycieki!)
+- zwracanie wektorów
 

@@ -13,6 +13,8 @@ using namespace std;
 
 class SubstringOccurence {
 public:
+    SubstringOccurence();
+
     explicit SubstringOccurence(const SUFFIX_MARKER_TYPE & marker);
 
     SubstringOccurence(const SUFFIX_MARKER_TYPE & id,
@@ -33,6 +35,8 @@ public:
     SUFFIX_MARKER_TYPE getExampleLength() const {
         return _exampleLength;
     }
+    
+    void enterDataFromMarker(const SUFFIX_MARKER_TYPE & marker);
 
 private:
     SUFFIX_MARKER_TYPE _id;

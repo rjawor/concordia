@@ -12,16 +12,16 @@ AnubisSearcher::~AnubisSearcher() {
 }
 
 
-boost::ptr_vector<AnubisSearchResult> AnubisSearcher::anubisSearch(
+std::vector<AnubisSearchResult> AnubisSearcher::anubisSearch(
                 boost::shared_ptr<std::vector<sauchar_t> > T,
                 boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                 boost::shared_ptr<std::vector<saidx_t> > SA,
-                boost::shared_ptr<std::vector<INDEX_CHARACTER_TYPE> > pattern)
+                const std::vector<INDEX_CHARACTER_TYPE> & pattern)
                                                 throw(ConcordiaException) {
     boost::shared_ptr<TmMatchesMap> tmMatchesMap = getTmMatches(T, markers, SA, pattern);
     
     // get the tmMatches list sorted descending by score
-    boost::ptr_vector<AnubisSearchResult> result;
+    std::vector<AnubisSearchResult> result;
     return result;
 }
 
@@ -29,30 +29,28 @@ boost::shared_ptr<TmMatchesMap> AnubisSearcher::getTmMatches(
                 boost::shared_ptr<std::vector<sauchar_t> > T,
                 boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                 boost::shared_ptr<std::vector<saidx_t> > SA,
-                boost::shared_ptr<std::vector<INDEX_CHARACTER_TYPE> > pattern)
+                const std::vector<INDEX_CHARACTER_TYPE> & pattern)
                                                 throw(ConcordiaException) {
 
-    boost::shared_ptr<std::vector<sauchar_t> > patternVector =
+    std::vector<sauchar_t> patternVector =
         Utils::indexVectorToSaucharVector(pattern);
 
-    if (patternVector->size() !=
-        pattern->size() * sizeof(INDEX_CHARACTER_TYPE)) {
+    if (patternVector.size() !=
+        pattern.size() * sizeof(INDEX_CHARACTER_TYPE)) {
         throw ConcordiaException("Increasing pattern resolution went wrong.");
     }
 
     boost::shared_ptr<TmMatchesMap> tmMatchesMap(new TmMatchesMap());
-    for (int offset = 0; offset < pattern->size(); offset++) {
+    for (int offset = 0; offset < pattern.size(); offset++) {
         int highResOffset = offset * sizeof(INDEX_CHARACTER_TYPE);
-        boost::shared_ptr<std::vector<sauchar_t> > currentPattern =
-            boost::shared_ptr<std::vector<sauchar_t> >
-            (new std::vector<sauchar_t>(
-            patternVector->begin()+highResOffset, patternVector->end()));
+        std::vector<sauchar_t> currentPattern(
+            patternVector.begin()+highResOffset, patternVector.end());
             
         saidx_t patternLength = 0;
         saidx_t size = SA->size();
         saidx_t left = 0;
 
-        sauchar_t * patternArray = currentPattern->data();
+        sauchar_t * patternArray = currentPattern.data();
 
         saidx_t * SAleft = SA->data();
 
@@ -77,19 +75,19 @@ boost::shared_ptr<TmMatchesMap> AnubisSearcher::getTmMatches(
                 // Add to tm matches map results surrounding the main stream.
                 // from left
                 for (saidx_t i = prevLeft; i < left; i++) {
-                    _addToMap(SA, markers, tmMatchesMap, i, pattern->size(), (patternLength / sizeof(INDEX_CHARACTER_TYPE)) -1, offset);
+                    _addToMap(SA, markers, tmMatchesMap, i, pattern.size(), (patternLength / sizeof(INDEX_CHARACTER_TYPE)) -1, offset);
                 } 
                 // from right
                 for (saidx_t i = left+size; i < prevLeft+prevSize; i++) {
-                    _addToMap(SA, markers, tmMatchesMap, i, pattern->size(), (patternLength / sizeof(INDEX_CHARACTER_TYPE)) -1, offset);                    
+                    _addToMap(SA, markers, tmMatchesMap, i, pattern.size(), (patternLength / sizeof(INDEX_CHARACTER_TYPE)) -1, offset);                    
                 } 
                 
             }
-        } while (patternLength < currentPattern->size() && size > 0);
+        } while (patternLength < currentPattern.size() && size > 0);
 
         if (size > 0) {
             for (saidx_t i = left; i < left+size; i++) {
-                _addToMap(SA, markers, tmMatchesMap, i, pattern->size(), patternLength / sizeof(INDEX_CHARACTER_TYPE), offset);
+                _addToMap(SA, markers, tmMatchesMap, i, pattern.size(), patternLength / sizeof(INDEX_CHARACTER_TYPE), offset);
             } 
         }
     }
@@ -97,18 +95,18 @@ boost::shared_ptr<TmMatchesMap> AnubisSearcher::getTmMatches(
     return tmMatchesMap;
 }
 
-boost::ptr_vector<SubstringOccurence> AnubisSearcher::lcpSearch(
+std::vector<SubstringOccurence> AnubisSearcher::lcpSearch(
                 boost::shared_ptr<std::vector<sauchar_t> > T,
                 boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                 boost::shared_ptr<std::vector<saidx_t> > SA,
-                boost::shared_ptr<std::vector<sauchar_t> > pattern,
+                const std::vector<sauchar_t> & pattern,
                 SUFFIX_MARKER_TYPE & length)
                                                  throw(ConcordiaException) {
     saidx_t patternLength = 0;
     saidx_t size = SA->size();
     saidx_t left = 0;
 
-    sauchar_t * patternArray = pattern->data();
+    const sauchar_t * patternArray = pattern.data();
 
     saidx_t * SAleft = SA->data();
 
@@ -126,9 +124,9 @@ boost::ptr_vector<SubstringOccurence> AnubisSearcher::lcpSearch(
                              SAleft, size, &localLeft);        
         left += localLeft;
         SAleft += localLeft;
-    } while (patternLength < pattern->size() && size > 0);
+    } while (patternLength < pattern.size() && size > 0);
 
-    boost::ptr_vector<SubstringOccurence> result;
+    vector<SubstringOccurence> result;
 
     if (size == 0) {
         // The search managed to find exactly the longest common prefixes.
@@ -151,7 +149,7 @@ boost::ptr_vector<SubstringOccurence> AnubisSearcher::lcpSearch(
 }
 
 void AnubisSearcher::_collectResults(
-                 boost::ptr_vector<SubstringOccurence> & result,
+                 vector<SubstringOccurence> & result,
                  boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                  boost::shared_ptr<std::vector<saidx_t> > SA,
                  saidx_t left, saidx_t size) {
@@ -160,7 +158,7 @@ void AnubisSearcher::_collectResults(
         
         if (resultPos % sizeof(INDEX_CHARACTER_TYPE) == 0) {
             SUFFIX_MARKER_TYPE marker = markers->at(resultPos / sizeof(INDEX_CHARACTER_TYPE));
-            result.push_back(new SubstringOccurence(marker));
+            result.push_back(SubstringOccurence(marker));
         }
     }
 }

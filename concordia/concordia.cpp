@@ -51,7 +51,7 @@ void Concordia::addExample(const Example & example)
 
 // Sentences are written to disk and added to T.
 // SA is generated on command by other methods.
-void Concordia::addAllExamples(const boost::ptr_vector<Example > & examples)
+void Concordia::addAllExamples(const std::vector<Example> & examples)
                                               throw(ConcordiaException) {
     _index->addAllExamples(_hashGenerator, _T, _markers, examples);
 }
@@ -131,26 +131,26 @@ void Concordia::_initializeIndex() throw(ConcordiaException) {
     }
 }
 
-boost::ptr_vector<SubstringOccurence> Concordia::simpleSearch(
+std::vector<SubstringOccurence> Concordia::simpleSearch(
                                           const string & pattern)
                                   throw(ConcordiaException) {
     if (_T->size() > 0) {
         return _searcher->simpleSearch(_hashGenerator, _T,
                                          _markers, _SA, pattern);
     } else {
-        boost::ptr_vector<SubstringOccurence> result;
+        std::vector<SubstringOccurence> result;
         return result;
     }
 }
 
-boost::ptr_vector<AnubisSearchResult> Concordia::anubisSearch(
+std::vector<AnubisSearchResult> Concordia::anubisSearch(
                                           const string & pattern)
                                   throw(ConcordiaException) {
     if (_T->size() > 0) {
         return _searcher->anubisSearch(_hashGenerator, _T,
-                                         _markers, _SA, pattern);
+                                       _markers, _SA, pattern);
     } else {
-        boost::ptr_vector<AnubisSearchResult> result;
+        std::vector<AnubisSearchResult> result;
         return result;
     }
 }

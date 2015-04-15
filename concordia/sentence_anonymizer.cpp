@@ -59,7 +59,7 @@ void SentenceAnonymizer::_createNeRules(string & namedEntitiesPath) {
                        << " in NE file: " << namedEntitiesPath;
                     throw ConcordiaException(ss.str());
                 } else {
-                    _namedEntities.push_back(new RegexReplacement(
+                    _namedEntities.push_back(RegexReplacement(
                                 tokenTexts->at(0), tokenTexts->at(1)));
                 }
             }

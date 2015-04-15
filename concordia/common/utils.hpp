@@ -32,18 +32,21 @@ public:
     static SUFFIX_MARKER_TYPE readMarker(ifstream & file);
 
     static sauchar_t * indexVectorToSaucharArray(
-                       boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input);
+                       const vector<INDEX_CHARACTER_TYPE> & input);
 
-    static boost::shared_ptr<std::vector<sauchar_t> >
-                   indexVectorToSaucharVector(
-                       boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input);
+    static std::vector<sauchar_t> indexVectorToSaucharVector(
+                       const vector<INDEX_CHARACTER_TYPE> & input);
 
     static void appendCharToSaucharVector(
                              boost::shared_ptr<std::vector<sauchar_t> > vector,
                              INDEX_CHARACTER_TYPE character);
 
+    static void appendCharToSaucharVector(
+                             std::vector<sauchar_t> & vector,
+                             INDEX_CHARACTER_TYPE character);
+
     template <typename T>
-    static void printVector(boost::shared_ptr<std::vector<T> > vector);
+    static void printVector(const std::vector<T> & vector);
 
     static SUFFIX_MARKER_TYPE getIdFromMarker(SUFFIX_MARKER_TYPE marker);
 
@@ -65,9 +68,9 @@ private:
 };
 
 template <typename T>
-void Utils::printVector(boost::shared_ptr<std::vector<T> > vector) {
-    for (int i = 0; i < vector->size(); i++) {
-        cout << static_cast<int>(vector->at(i)) << " ";
+void Utils::printVector(const std::vector<T> & vector) {
+    for (int i = 0; i < vector.size(); i++) {
+        cout << static_cast<int>(vector.at(i)) << " ";
     }
     cout << endl;
 }

@@ -2,10 +2,10 @@
 #define CONCORDIA_INDEX_HDR
 
 #include <boost/shared_ptr.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #include "concordia/common/config.hpp"
 #include "concordia/example.hpp"
@@ -40,7 +40,7 @@ public:
                 boost::shared_ptr<HashGenerator> hashGenerator,
                 boost::shared_ptr<vector<sauchar_t> > T,
                 boost::shared_ptr<vector<SUFFIX_MARKER_TYPE> > markers,
-                const boost::ptr_vector<Example > & examples);
+                const vector<Example> & examples);
 
     boost::shared_ptr<vector<saidx_t> > generateSuffixArray(
                 boost::shared_ptr<vector<sauchar_t> > T);

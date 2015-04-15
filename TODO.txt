@@ -21,6 +21,8 @@ IN PROGRESS 2. Wykonać anubis search na nowych markerach z długością zdania
 zastanowić się nad optymalizacją:
 - tmMatchesMap jako normalna mapa (nie ptr_map)
 - REJECTED LCP array
-- !important! rezygnacja z ptr_vector (wycieki!)
+- !important! rezygnacja z ptr_vector
 - zwracanie wektorów
+- powyrzucać using namespace std
+- profiling
 

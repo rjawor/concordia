@@ -5,7 +5,6 @@
 #include "concordia/common/config.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/filesystem.hpp>
 
 #include <string>
@@ -52,8 +51,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
     
     */
     
-    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia.simpleSearch("posiada rysia");
-    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia.simpleSearch("posiada kota Ala");
+    vector<SubstringOccurence> searchResult1 = concordia.simpleSearch("posiada rysia");
+    vector<SubstringOccurence> searchResult2 = concordia.simpleSearch("posiada kota Ala");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
@@ -74,11 +73,11 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 {
     // modified stop words to avoid anonymization 
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    boost::ptr_vector<Example> testExamples;
-    testExamples.push_back(new Example("xto xjest okno",312));
-    testExamples.push_back(new Example("czy xjest okno otwarte",202));
-    testExamples.push_back(new Example("chyba xto xjest xtutaj",45));
-    testExamples.push_back(new Example("xto xjest",29));
+    vector<Example> testExamples;
+    testExamples.push_back(Example("xto xjest okno",312));
+    testExamples.push_back(Example("czy xjest okno otwarte",202));
+    testExamples.push_back(Example("chyba xto xjest xtutaj",45));
+    testExamples.push_back(Example("xto xjest",29));
     concordia.addAllExamples(testExamples);
 
     /*The test index contains 4 sentences:    
@@ -107,8 +106,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
     */
     
     Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("xto xjest");
-    boost::ptr_vector<SubstringOccurence> searchResult2 = concordia2.simpleSearch("xjest okno");
+    vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("xto xjest");
+    vector<SubstringOccurence> searchResult2 = concordia2.simpleSearch("xjest okno");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
@@ -132,13 +131,13 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch3 )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    boost::ptr_vector<Example> testExamples;
-    testExamples.push_back(new Example("2. Ma on w szczególności prawo do podjęcia zatrudnienia dostępnego na terytorium innego Państwa Członkowskiego z takim samym pierwszeństwem, z jakiego korzystają obywatele tego państwa.",312));
-    testExamples.push_back(new Example("czy xjest żółte otwarte",202));
+    vector<Example> testExamples;
+    testExamples.push_back(Example("2. Ma on w szczególności prawo do podjęcia zatrudnienia dostępnego na terytorium innego Państwa Członkowskiego z takim samym pierwszeństwem, z jakiego korzystają obywatele tego państwa.",312));
+    testExamples.push_back(Example("czy xjest żółte otwarte",202));
     concordia.addAllExamples(testExamples);
     
     Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    boost::ptr_vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("on w szczególności prawo do podjęcia");
+    vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("on w szczególności prawo do podjęcia");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
@@ -177,8 +176,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaAnubisSearch1 )
         n: 0  1  2  3  4  5  6  7  8  9 10 11
     SA[n]: 0  4  1  9  5  2 10  6  8 11  3  7 
     
-    boost::ptr_vector<AnubisSearchResult> searchResult1 = concordia.anubisSearch("posiada rysia chyba");
-    boost::ptr_vector<AnubisSearchResult> searchResult2 = concordia.anubisSearch("posiada kota Ala");
+    vector<AnubisSearchResult> searchResult1 = concordia.anubisSearch("posiada rysia chyba");
+    vector<AnubisSearchResult> searchResult2 = concordia.anubisSearch("posiada kota Ala");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 

@@ -2,12 +2,12 @@
 #define SENTENCE_ANONYMIZER_HDR
 
 #include <string>
+#include <vector>
 #include "concordia/common/config.hpp"
 #include "concordia/regex_replacement.hpp"
 #include "concordia/concordia_config.hpp"
 #include "concordia/concordia_exception.hpp"
 #include <boost/shared_ptr.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/filesystem.hpp>
 
 
@@ -39,7 +39,7 @@ private:
                                                 string replacement,
                                                 bool wholeWord = false);
 
-    boost::ptr_vector<RegexReplacement> _namedEntities;
+    vector<RegexReplacement> _namedEntities;
 
     boost::shared_ptr<RegexReplacement> _htmlTags;
 

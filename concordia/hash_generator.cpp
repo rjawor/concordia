@@ -25,31 +25,28 @@ HashGenerator::HashGenerator(boost::shared_ptr<ConcordiaConfig> config)
 HashGenerator::~HashGenerator() {
 }
 
-boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > HashGenerator::generateHash(
+vector<INDEX_CHARACTER_TYPE> HashGenerator::generateHash(
                          const string & sentence) throw(ConcordiaException) {
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> >
-                                  result(new vector<INDEX_CHARACTER_TYPE>());
-    boost::shared_ptr<vector<string> > tokenTexts =
-                        generateTokenVector(sentence);
-    if (tokenTexts->size() > Utils::maxSentenceSize) {
+    vector<INDEX_CHARACTER_TYPE> result;
+    vector<string> tokenTexts = generateTokenVector(sentence);
+    if (tokenTexts.size() > Utils::maxSentenceSize) {
         throw ConcordiaException("Trying to add too long sentence.");
     }
-    for (vector<string>::iterator it = tokenTexts->begin();
-                                it != tokenTexts->end(); ++it) {
+    for (vector<string>::iterator it = tokenTexts.begin();
+                                it != tokenTexts.end(); ++it) {
         string token = *it;
         INDEX_CHARACTER_TYPE code = _wordMap->getWordCode(token);
-        result->push_back(code);
+        result.push_back(code);
     }
 
     return result;
 }
 
-boost::shared_ptr<vector<string> >
-                  HashGenerator::generateTokenVector(const string & sentence) {
+vector<string> HashGenerator::generateTokenVector(const string & sentence) {
     string anonymizedSentence = _sentenceAnonymizer->anonymize(sentence);
     boost::trim(anonymizedSentence);
-    boost::shared_ptr<vector<string> > tokenTexts(new vector<string>());
-    boost::split(*tokenTexts, anonymizedSentence, boost::is_any_of(" \t\r\n"),
+    vector<string> tokenTexts;
+    boost::split(tokenTexts, anonymizedSentence, boost::is_any_of(" \t\r\n"),
                  boost::algorithm::token_compress_on);
     return tokenTexts;
 }

@@ -40,37 +40,34 @@ void TmMatches::calculateSimpleScore() {
 
 void TmMatches::addExampleInterval(int start, int end) {
     if (!_alreadyIntersects(_exampleMatchedRegions, start, end)) {
-        _exampleMatchedRegions.push_back(new Interval(start, end));
+        _exampleMatchedRegions.push_back(Interval(start, end));
     }
 }
 
 void TmMatches::addPatternInterval(int start, int end) {
     if (!_alreadyIntersects(_patternMatchedRegions, start, end)) {
-        _patternMatchedRegions.push_back(new Interval(start, end));
+        _patternMatchedRegions.push_back(Interval(start, end));
     }
 }
 
 bool TmMatches::_alreadyIntersects(
-                    boost::ptr_vector<Interval> intervalList,
+                    const vector<Interval> & intervalList,
                     int start, int end) {
-    Interval * tempInterval = new Interval(start, end);
-    BOOST_FOREACH(Interval & oldInterval, intervalList) {
-        if (oldInterval.intersects(*tempInterval)) {
-            delete tempInterval;
+    Interval tempInterval(start, end);
+    BOOST_FOREACH(Interval oldInterval, intervalList) {
+        if (oldInterval.intersects(tempInterval)) {
             return true;
         }
     }
-    delete tempInterval;
-
     return false;
 }
 
 double TmMatches::_getLogarithmicOverlay(
-                            boost::ptr_vector<Interval> intervalList,
+                            const vector<Interval> & intervalList,
                             unsigned char sentenceSize,
                             double k) {
     double overlayScore = 0;
-    BOOST_FOREACH(Interval & interval, intervalList) {
+    BOOST_FOREACH(Interval interval, intervalList) {
         double intervalOverlay = static_cast<double>(interval.getLength())
                                  / static_cast<double>(sentenceSize);
         double significanceFactor = pow(log(interval.getLength()+1)

@@ -2,9 +2,9 @@
 #define TM_MATCHES_HDR
 
 #include <string>
+#include <vector>
 #include "concordia/common/config.hpp"
 #include "concordia/interval.hpp"
-#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 
 
@@ -29,11 +29,11 @@ public:
         return _score;
     }
 
-    boost::ptr_vector<Interval> getExampleIntervals() const {
+    vector<Interval> getExampleIntervals() const {
         return _exampleMatchedRegions;
     }
 
-    boost::ptr_vector<Interval> getPatternIntervals() const {
+    vector<Interval> getPatternIntervals() const {
         return _patternMatchedRegions;
     }
 
@@ -50,18 +50,18 @@ public:
     void addPatternInterval(int start, int end);
 
 private:
-    bool _alreadyIntersects(boost::ptr_vector<Interval> intervalList,
-                           int start, int end);
+    bool _alreadyIntersects(const vector<Interval> & intervalList,
+                            int start, int end);
 
-    double _getLogarithmicOverlay(boost::ptr_vector<Interval> intervalList,
-                                 unsigned char sentenceSize,
-                                 double k);
+    double _getLogarithmicOverlay(const vector<Interval> & intervalList,
+                                  unsigned char sentenceSize,
+                                  double k);
 
     SUFFIX_MARKER_TYPE _exampleId;
 
-    boost::ptr_vector<Interval> _exampleMatchedRegions;
+    vector<Interval> _exampleMatchedRegions;
 
-    boost::ptr_vector<Interval> _patternMatchedRegions;
+    vector<Interval> _patternMatchedRegions;
 
     unsigned char _patternSize;
 

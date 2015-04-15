@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/filesystem.hpp>
 
 #include "concordia/common/config.hpp"
@@ -41,16 +40,14 @@ public:
 
     void addExample(const Example & example) throw(ConcordiaException);
 
-    void addAllExamples(const boost::ptr_vector<Example > & examples)
+    void addAllExamples(const std::vector<Example> & examples)
                                                    throw(ConcordiaException);
 
-    boost::ptr_vector<SubstringOccurence> simpleSearch(
-                                                   const std::string & pattern)
-                                                      throw(ConcordiaException);
+    std::vector<SubstringOccurence> simpleSearch(const std::string & pattern)
+                                                 throw(ConcordiaException);
 
-    boost::ptr_vector<AnubisSearchResult> anubisSearch(
-                                                   const std::string & pattern)
-                                                      throw(ConcordiaException);
+    std::vector<AnubisSearchResult> anubisSearch(const std::string & pattern)
+                                                 throw(ConcordiaException);
 
     void loadRAMIndexFromDisk() throw(ConcordiaException);
 

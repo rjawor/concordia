@@ -23,13 +23,13 @@ BOOST_AUTO_TEST_CASE( SimpleHashTest )
     
     HashGenerator hashGenerator = HashGenerator(config);
 
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash = hashGenerator.generateHash("Ala posiada kota");
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected(new vector<INDEX_CHARACTER_TYPE>());
-    expected->push_back(0);
-    expected->push_back(1);
-    expected->push_back(2);
+    vector<INDEX_CHARACTER_TYPE> hash = hashGenerator.generateHash("Ala posiada kota");
+    vector<INDEX_CHARACTER_TYPE> expected;
+    expected.push_back(0);
+    expected.push_back(1);
+    expected.push_back(2);
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(hash->begin(), hash->end(), expected->begin(), expected->end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(hash.begin(), hash.end(), expected.begin(), expected.end());
 }
 
 /* Commentet out - the test takes too long. Run it once whenever the SUFFIX_MARKER_SENTENCE_BYTES parameter changes.
@@ -76,22 +76,22 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     
     HashGenerator hashGenerator1 = HashGenerator(config);
 
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash1 = hashGenerator1.generateHash("Ala posiada kota");
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected1(new vector<INDEX_CHARACTER_TYPE>());
-    expected1->push_back(0);
-    expected1->push_back(1);
-    expected1->push_back(2);
-    BOOST_CHECK_EQUAL_COLLECTIONS(hash1->begin(), hash1->end(), expected1->begin(), expected1->end());
+    vector<INDEX_CHARACTER_TYPE> hash1 = hashGenerator1.generateHash("Ala posiada kota");
+    vector<INDEX_CHARACTER_TYPE> expected1;
+    expected1.push_back(0);
+    expected1.push_back(1);
+    expected1.push_back(2);
+    BOOST_CHECK_EQUAL_COLLECTIONS(hash1.begin(), hash1.end(), expected1.begin(), expected1.end());
 
     hashGenerator1.serializeWordMap();
    
     HashGenerator hashGenerator2 = HashGenerator(config);
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash2 = hashGenerator2.generateHash("Ala posiada psa");
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected2(new vector<INDEX_CHARACTER_TYPE>());
-    expected2->push_back(0);
-    expected2->push_back(1);
-    expected2->push_back(3);
-    BOOST_CHECK_EQUAL_COLLECTIONS(hash2->begin(), hash2->end(), expected2->begin(), expected2->end());
+    vector<INDEX_CHARACTER_TYPE> hash2 = hashGenerator2.generateHash("Ala posiada psa");
+    vector<INDEX_CHARACTER_TYPE> expected2;
+    expected2.push_back(0);
+    expected2.push_back(1);
+    expected2.push_back(3);
+    BOOST_CHECK_EQUAL_COLLECTIONS(hash2.begin(), hash2.end(), expected2.begin(), expected2.end());
 
     boost::filesystem::remove(config->getWordMapFilePath());       
 }
@@ -106,23 +106,23 @@ BOOST_AUTO_TEST_CASE( TokenVectorTest )
     
     HashGenerator hashGenerator = HashGenerator(config);
 
-    boost::shared_ptr<vector<string> > tokenVector = hashGenerator.generateTokenVector("12.02.2014   o  godzinie 17:40 doszło do kolizji na ulicy Grobla; policjanci ustalili, że kierowca zaparkował  samochód.");
-    boost::shared_ptr<vector<string> > expected(new vector<string>());
-    expected->push_back("ne_date");
-    expected->push_back("godzinie");
-    expected->push_back("ne_number");
-    expected->push_back("ne_number");
-    expected->push_back("doszło");
-    expected->push_back("kolizji");
-    expected->push_back("ulicy");
-    expected->push_back("grobla");
-    expected->push_back("policjanci");
-    expected->push_back("ustalili");
-    expected->push_back("kierowca");
-    expected->push_back("zaparkował");
-    expected->push_back("samochód");
+    vector<string> tokenVector = hashGenerator.generateTokenVector("12.02.2014   o  godzinie 17:40 doszło do kolizji na ulicy Grobla; policjanci ustalili, że kierowca zaparkował  samochód.");
+    vector<string> expected;
+    expected.push_back("ne_date");
+    expected.push_back("godzinie");
+    expected.push_back("ne_number");
+    expected.push_back("ne_number");
+    expected.push_back("doszło");
+    expected.push_back("kolizji");
+    expected.push_back("ulicy");
+    expected.push_back("grobla");
+    expected.push_back("policjanci");
+    expected.push_back("ustalili");
+    expected.push_back("kierowca");
+    expected.push_back("zaparkował");
+    expected.push_back("samochód");
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(tokenVector->begin(), tokenVector->end(), expected->begin(), expected->end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(tokenVector.begin(), tokenVector.end(), expected.begin(), expected.end());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

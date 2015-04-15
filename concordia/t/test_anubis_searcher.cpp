@@ -22,7 +22,6 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     boost::shared_ptr<std::vector<sauchar_t> > T(new std::vector<sauchar_t>());
     boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers(new std::vector<SUFFIX_MARKER_TYPE>());
     boost::shared_ptr<std::vector<saidx_t> > SA(new std::vector<saidx_t>());
-    boost::shared_ptr<std::vector<sauchar_t> > pattern(new std::vector<sauchar_t>());
     
     /* Search in text: "banana"
        T = 123232 (all one sentence id=34)
@@ -64,25 +63,26 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
         markers->push_back(Utils::createMarker(34,i,6));
     }
     
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(2);
+    std::vector<sauchar_t> pattern;
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(2);
 
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(3);
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(3);
 
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(4);
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(4);
 
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(0);
-    pattern->push_back(4);
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(0);
+    pattern.push_back(4);
     
     /* Suffix array for the hashed index: 0001 0002 0003 0002 0003 0002
          0:000100020003000200030002
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     SA->push_back(11);
 
     SUFFIX_MARKER_TYPE highResLength;
-    boost::ptr_vector<SubstringOccurence> result = searcher.lcpSearch(T, markers, SA, pattern, highResLength);
+    std::vector<SubstringOccurence> result = searcher.lcpSearch(T, markers, SA, pattern, highResLength);
     SUFFIX_MARKER_TYPE length = highResLength / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get the following results from SA:
@@ -155,39 +155,39 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
 
     //--------pattern banana
 
-    boost::shared_ptr<std::vector<sauchar_t> > pattern2(new std::vector<sauchar_t>());
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(1);
+    std::vector<sauchar_t> pattern2;
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(1);
 
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(2);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(2);
 
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(3);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(3);
 
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(2);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(2);
 
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(3);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(3);
 
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(0);
-    pattern2->push_back(2);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(0);
+    pattern2.push_back(2);
 
     SUFFIX_MARKER_TYPE highResLength2;
-    boost::ptr_vector<SubstringOccurence> result2 = searcher.lcpSearch(T, markers, SA, pattern2, highResLength2);
+    vector<SubstringOccurence> result2 = searcher.lcpSearch(T, markers, SA, pattern2, highResLength2);
     SUFFIX_MARKER_TYPE length2 = highResLength2 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get one result from SA:
@@ -203,34 +203,34 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     
     //--------pattern banan
 
-    boost::shared_ptr<std::vector<sauchar_t> > pattern3(new std::vector<sauchar_t>());
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(1);
+    std::vector<sauchar_t> pattern3;
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(1);
 
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(2);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(2);
 
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(3);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(3);
 
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(2);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(2);
 
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(0);
-    pattern3->push_back(3);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(0);
+    pattern3.push_back(3);
 
     SUFFIX_MARKER_TYPE highResLength3;
-    boost::ptr_vector<SubstringOccurence> result3 = searcher.lcpSearch(T, markers, SA, pattern3, highResLength3);
+    vector<SubstringOccurence> result3 = searcher.lcpSearch(T, markers, SA, pattern3, highResLength3);
     SUFFIX_MARKER_TYPE length3 = highResLength3 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get one result from SA:
@@ -245,29 +245,29 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
 
     //--------pattern nazz
 
-    boost::shared_ptr<std::vector<sauchar_t> > pattern4(new std::vector<sauchar_t>());
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(3);
+    std::vector<sauchar_t> pattern4;
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(3);
 
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(2);
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(2);
 
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(4);
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(4);
 
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(0);
-    pattern4->push_back(4);
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(0);
+    pattern4.push_back(4);
 
     SUFFIX_MARKER_TYPE highResLength4;
-    boost::ptr_vector<SubstringOccurence> result4 = searcher.lcpSearch(T, markers, SA, pattern4, highResLength4);
+    vector<SubstringOccurence> result4 = searcher.lcpSearch(T, markers, SA, pattern4, highResLength4);
     SUFFIX_MARKER_TYPE length4 = highResLength4 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get 2 results from SA:
@@ -286,19 +286,19 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
 
     //--------pattern zz
 
-    boost::shared_ptr<std::vector<sauchar_t> > pattern5(new std::vector<sauchar_t>());
-    pattern5->push_back(0);
-    pattern5->push_back(0);
-    pattern5->push_back(0);
-    pattern5->push_back(4);
+    std::vector<sauchar_t> pattern5;
+    pattern5.push_back(0);
+    pattern5.push_back(0);
+    pattern5.push_back(0);
+    pattern5.push_back(4);
 
-    pattern5->push_back(0);
-    pattern5->push_back(0);
-    pattern5->push_back(0);
-    pattern5->push_back(4);
+    pattern5.push_back(0);
+    pattern5.push_back(0);
+    pattern5.push_back(0);
+    pattern5.push_back(4);
 
     SUFFIX_MARKER_TYPE highResLength5;
-    boost::ptr_vector<SubstringOccurence> result5 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength5);
+    vector<SubstringOccurence> result5 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength5);
     SUFFIX_MARKER_TYPE length5 = highResLength5 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get 0 results from SA, lcp length = 0;
@@ -309,20 +309,20 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
 
     //--------pattern existing in the text but spanning over parts of characters
 
-    boost::shared_ptr<std::vector<sauchar_t> > pattern6(new std::vector<sauchar_t>());
-    pattern6->push_back(0);
-    pattern6->push_back(0);
-    pattern6->push_back(3);
+    std::vector<sauchar_t> pattern6;
+    pattern6.push_back(0);
+    pattern6.push_back(0);
+    pattern6.push_back(3);
 
-    pattern6->push_back(0);
-    pattern6->push_back(0);
-    pattern6->push_back(0);
-    pattern6->push_back(2);
+    pattern6.push_back(0);
+    pattern6.push_back(0);
+    pattern6.push_back(0);
+    pattern6.push_back(2);
 
-    pattern6->push_back(0);
+    pattern6.push_back(0);
 
     SUFFIX_MARKER_TYPE highResLength6;
-    boost::ptr_vector<SubstringOccurence> result6 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength6);
+    vector<SubstringOccurence> result6 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength6);
     SUFFIX_MARKER_TYPE length6 = highResLength6 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get 0 results from SA, lcp length = 0;
@@ -378,7 +378,7 @@ BOOST_AUTO_TEST_CASE( TmMatchesTest )
     
     // searching for pattern "Ola posiada rysia Marysia" (5 1 3 4)
     
-    boost::shared_ptr<std::vector<INDEX_CHARACTER_TYPE> > pattern = hashGenerator->generateHash("Ola posiada rysia Marysia");
+    std::vector<INDEX_CHARACTER_TYPE> pattern = hashGenerator->generateHash("Ola posiada rysia Marysia");
     
     boost::shared_ptr<TmMatchesMap> tmMatchesMap = searcher.getTmMatches(T, markers, SA, pattern);
     BOOST_CHECK_EQUAL(tmMatchesMap->size(), 3);
@@ -393,38 +393,38 @@ BOOST_AUTO_TEST_CASE( TmMatchesTest )
 
     // example 14
     // example interval list: [(1,2)] 
-    boost::ptr_vector<Interval> exampleIntervals14 = tmMatches14->getExampleIntervals();    
+    vector<Interval> exampleIntervals14 = tmMatches14->getExampleIntervals();    
     BOOST_CHECK_EQUAL(exampleIntervals14.size(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals14[0].getStart(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals14[0].getEnd(), 2);
     // pattern interval list: [(1,2)] 
-    boost::ptr_vector<Interval> patternIntervals14 = tmMatches14->getPatternIntervals();    
+    vector<Interval> patternIntervals14 = tmMatches14->getPatternIntervals();    
     BOOST_CHECK_EQUAL(patternIntervals14.size(), 1);
     BOOST_CHECK_EQUAL(patternIntervals14[0].getStart(), 1);
     BOOST_CHECK_EQUAL(patternIntervals14[0].getEnd(), 2);
     
     // example 51
     // example interval list: [(1,3)] 
-    boost::ptr_vector<Interval> exampleIntervals51 = tmMatches51->getExampleIntervals();    
+    vector<Interval> exampleIntervals51 = tmMatches51->getExampleIntervals();    
     BOOST_CHECK_EQUAL(exampleIntervals51.size(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals51[0].getStart(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals51[0].getEnd(), 3);
     // pattern interval list: [(1,3)] 
-    boost::ptr_vector<Interval> patternIntervals51 = tmMatches51->getPatternIntervals();    
+    vector<Interval> patternIntervals51 = tmMatches51->getPatternIntervals();    
     BOOST_CHECK_EQUAL(patternIntervals51.size(), 1);
     BOOST_CHECK_EQUAL(patternIntervals51[0].getStart(), 1);
     BOOST_CHECK_EQUAL(patternIntervals51[0].getEnd(), 3);
     
     // example 123
     // example interval list: [(1,3), (0,1)] 
-    boost::ptr_vector<Interval> exampleIntervals123 = tmMatches123->getExampleIntervals();    
+    vector<Interval> exampleIntervals123 = tmMatches123->getExampleIntervals();    
     BOOST_CHECK_EQUAL(exampleIntervals123.size(), 2);
     BOOST_CHECK_EQUAL(exampleIntervals123[0].getStart(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals123[0].getEnd(), 3);
     BOOST_CHECK_EQUAL(exampleIntervals123[1].getStart(), 0);
     BOOST_CHECK_EQUAL(exampleIntervals123[1].getEnd(), 1);
     // pattern interval list: [(1,3), (3,4)] 
-    boost::ptr_vector<Interval> patternIntervals123 = tmMatches123->getPatternIntervals();    
+    vector<Interval> patternIntervals123 = tmMatches123->getPatternIntervals();    
     BOOST_CHECK_EQUAL(patternIntervals123.size(), 2);
     BOOST_CHECK_EQUAL(patternIntervals123[0].getStart(), 1);
     BOOST_CHECK_EQUAL(patternIntervals123[0].getEnd(), 3);

@@ -31,58 +31,58 @@ BOOST_AUTO_TEST_CASE( WriteReadSingleCharacter )
 
 BOOST_AUTO_TEST_CASE( IndexVectorToSaucharArray )
 {
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash(new vector<INDEX_CHARACTER_TYPE>());
-    hash->push_back(123456789);         // in hex: 75BCD15
+    vector<INDEX_CHARACTER_TYPE> hash;
+    hash.push_back(123456789);         // in hex: 75BCD15
                                        // in memory:  15  cd  5b  07
                                        // in memory DEC:  21 205  91   7 
 
-    hash->push_back(987654321);         // in hex: 3ADE68B1
+    hash.push_back(987654321);         // in hex: 3ADE68B1
                                        // in memory:  b1  68  de  3a
                                        // in memory DEC: 177 104 222  58         
     sauchar_t * dataArray = Utils::indexVectorToSaucharArray(hash);
 
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > result(new vector<INDEX_CHARACTER_TYPE>());
+    vector<INDEX_CHARACTER_TYPE> result;
     for (int i=0;i<8;i++) {
         INDEX_CHARACTER_TYPE a = dataArray[i];
-        result->push_back(a);    
+        result.push_back(a);    
     }
     
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > expected(new vector<INDEX_CHARACTER_TYPE>());
-    expected->push_back(21);
-    expected->push_back(205);
-    expected->push_back(91);
-    expected->push_back(7);
-    expected->push_back(177);
-    expected->push_back(104);
-    expected->push_back(222);
-    expected->push_back(58);
+    vector<INDEX_CHARACTER_TYPE> expected;
+    expected.push_back(21);
+    expected.push_back(205);
+    expected.push_back(91);
+    expected.push_back(7);
+    expected.push_back(177);
+    expected.push_back(104);
+    expected.push_back(222);
+    expected.push_back(58);
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(result->begin(), result->end(), expected->begin(), expected->end());      
+    BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(), result.end(), expected.begin(), expected.end());      
 }
 
 BOOST_AUTO_TEST_CASE( IndexVectorToSaucharVector )
 {
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash(new vector<INDEX_CHARACTER_TYPE>());
-    hash->push_back(123456789);         // in hex: 75BCD15
+    vector<INDEX_CHARACTER_TYPE> hash;
+    hash.push_back(123456789);         // in hex: 75BCD15
                                        // in memory:  15  cd  5b  07
                                        // in memory DEC:  21 205  91   7 
 
-    hash->push_back(987654321);         // in hex: 3ADE68B1
+    hash.push_back(987654321);         // in hex: 3ADE68B1
                                        // in memory:  b1  68  de  3a
                                        // in memory DEC: 177 104 222  58         
-    boost::shared_ptr<vector<sauchar_t> > result = Utils::indexVectorToSaucharVector(hash);
+    vector<sauchar_t> result = Utils::indexVectorToSaucharVector(hash);
     
-    boost::shared_ptr<vector<sauchar_t> > expected(new vector<sauchar_t>());
-    expected->push_back(21);
-    expected->push_back(205);
-    expected->push_back(91);
-    expected->push_back(7);
-    expected->push_back(177);
-    expected->push_back(104);
-    expected->push_back(222);
-    expected->push_back(58);
+    vector<sauchar_t> expected;
+    expected.push_back(21);
+    expected.push_back(205);
+    expected.push_back(91);
+    expected.push_back(7);
+    expected.push_back(177);
+    expected.push_back(104);
+    expected.push_back(222);
+    expected.push_back(58);
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(result->begin(), result->end(), expected->begin(), expected->end());      
+    BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(), result.end(), expected.begin(), expected.end());      
 }
 
 BOOST_AUTO_TEST_CASE( MaxSentenceSize )

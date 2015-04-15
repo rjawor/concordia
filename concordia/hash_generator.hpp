@@ -29,12 +29,10 @@ public:
     */
     virtual ~HashGenerator();
 
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> >
-                    generateHash(const string & sentence)
+    vector<INDEX_CHARACTER_TYPE> generateHash(const string & sentence)
                                 throw(ConcordiaException);
 
-    boost::shared_ptr<vector<string> >
-                    generateTokenVector(const string & sentence);
+    vector<string> generateTokenVector(const string & sentence);
 
     void serializeWordMap();
 

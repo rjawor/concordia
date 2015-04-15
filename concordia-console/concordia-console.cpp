@@ -3,7 +3,6 @@
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/foreach.hpp>
 
@@ -68,7 +67,7 @@ int main(int argc, char** argv) {
             std::cout << "\tSearching for pattern: \"" << pattern <<
                                                           "\"" << std::endl;
             time_start = boost::posix_time::microsec_clock::local_time();
-            boost::ptr_vector<SubstringOccurence> result =
+            std::vector<SubstringOccurence> result =
                                              concordia.simpleSearch(pattern);
             time_end = boost::posix_time::microsec_clock::local_time();
             msdiff = time_end - time_start;
@@ -89,12 +88,12 @@ int main(int argc, char** argv) {
             std::string line;
             if (text_file.is_open()) {
                 long lineCount = 0;
-                boost::ptr_vector<Example> buffer;
+                vector<Example> buffer;
                 boost::posix_time::ptime timeStart =
                             boost::posix_time::microsec_clock::local_time();
                 while (getline(text_file, line)) {
                     lineCount++;
-                    buffer.push_back(new Example(line, lineCount));
+                    buffer.push_back(Example(line, lineCount));
                     if (lineCount % READ_BUFFER_LENGTH == 0) {
                         concordia.addAllExamples(buffer);
                         buffer.clear();

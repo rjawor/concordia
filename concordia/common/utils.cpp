@@ -30,29 +30,37 @@ SUFFIX_MARKER_TYPE Utils::readMarker(ifstream & file) {
 }
 
 sauchar_t * Utils::indexVectorToSaucharArray(
-                     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input) {
-    const int kArraySize = input->size()*sizeof(INDEX_CHARACTER_TYPE);
+                       const vector<INDEX_CHARACTER_TYPE> & input) {
+    const int kArraySize = input.size()*sizeof(INDEX_CHARACTER_TYPE);
     sauchar_t * patternArray =
                     new sauchar_t[kArraySize];
     int pos = 0;
-    for (vector<INDEX_CHARACTER_TYPE>::iterator it = input->begin();
-                                          it != input->end(); ++it) {
+    for (vector<INDEX_CHARACTER_TYPE>::const_iterator it = input.begin();
+                                                it != input.end(); ++it) {
         _insertCharToSaucharArray(patternArray, *it, pos);
         pos += sizeof(INDEX_CHARACTER_TYPE);
     }
     return patternArray;
 }
 
-boost::shared_ptr<std::vector<sauchar_t> > Utils::indexVectorToSaucharVector(
-                     boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > input) {
-    boost::shared_ptr<std::vector<sauchar_t> > result =
-        boost::shared_ptr<std::vector<sauchar_t> >(new std::vector<sauchar_t>);
-
-    for (vector<INDEX_CHARACTER_TYPE>::iterator it = input->begin();
-                                          it != input->end(); ++it) {
+std::vector<sauchar_t> Utils::indexVectorToSaucharVector(
+                              const vector<INDEX_CHARACTER_TYPE> & input) {
+    std::vector<sauchar_t> result;
+    for (vector<INDEX_CHARACTER_TYPE>::const_iterator it = input.begin();
+                                               it != input.end(); ++it) {
         appendCharToSaucharVector(result, *it);
     }
     return result;
+}
+
+
+void Utils::appendCharToSaucharVector(
+                             std::vector<sauchar_t> & vector,
+                             INDEX_CHARACTER_TYPE character) {
+    sauchar_t * characterArray = reinterpret_cast<sauchar_t *>(&character);
+    for (int i = 0; i < sizeof(character); i++) {
+        vector.push_back(characterArray[i]);
+    }
 }
 
 void Utils::appendCharToSaucharVector(

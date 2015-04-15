@@ -56,7 +56,7 @@ void ConcordiaIndex::addAllExamples(
                 boost::shared_ptr<HashGenerator> hashGenerator,
                 boost::shared_ptr<vector<sauchar_t> > T,
                 boost::shared_ptr<vector<SUFFIX_MARKER_TYPE> > markers,
-                const boost::ptr_vector<Example > & examples) {
+                const vector<Example> & examples) {
     ofstream hashedIndexFile;
     hashedIndexFile.open(_hashedIndexFilePath.c_str(), ios::out|
                                                      ios::app|ios::binary);
@@ -81,11 +81,11 @@ void ConcordiaIndex::_addSingleExample(
                         boost::shared_ptr<std::vector<sauchar_t> > T,
                         boost::shared_ptr<vector<SUFFIX_MARKER_TYPE> > markers,
                         const Example & example) {
-    boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash
+    vector<INDEX_CHARACTER_TYPE> hash
                           = hashGenerator->generateHash(example.getSentence());
     int offset = 0;
-    for (vector<INDEX_CHARACTER_TYPE>::iterator it = hash->begin();
-                                          it != hash->end(); ++it) {
+    for (vector<INDEX_CHARACTER_TYPE>::iterator it = hash.begin();
+                                          it != hash.end(); ++it) {
         INDEX_CHARACTER_TYPE character = *it;
         Utils::writeIndexCharacter(hashedIndexFile, character);
         Utils::appendCharToSaucharVector(T, character);
@@ -95,7 +95,7 @@ void ConcordiaIndex::_addSingleExample(
         SUFFIX_MARKER_TYPE marker = Utils::createMarker(
                                            example.getId(),
                                            offset,
-                                           hash->size());
+                                           hash.size());
 
         Utils::writeMarker(markersFile, marker);
         markers->push_back(marker);

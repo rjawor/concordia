@@ -23,6 +23,6 @@ REJECTED - tmMatchesMap jako normalna mapa (nie ptr_map)
 REJECTED - LCP array
 DONE - !important! rezygnacja z ptr_vector
 DONE - zwracanie wektorów
-- powyrzucać using namespace std
+DONE - powyrzucać using namespace std
 - profiling
 

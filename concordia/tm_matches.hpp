@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include "concordia/common/config.hpp"
 #include "concordia/interval.hpp"
 #include <boost/ptr_container/ptr_map.hpp>
@@ -17,9 +18,11 @@ using namespace std;
 
 class TmMatches {
 public:
-    explicit TmMatches(const SUFFIX_MARKER_TYPE exampleId,
-                       const unsigned char exampleSize,
-                       const unsigned char patternSize);
+    TmMatches();
+        
+    TmMatches(const SUFFIX_MARKER_TYPE exampleId,
+              const SUFFIX_MARKER_TYPE exampleSize,
+              const SUFFIX_MARKER_TYPE patternSize);
 
     /*! Destructor.
     */
@@ -54,7 +57,7 @@ private:
                             int start, int end);
 
     double _getLogarithmicOverlay(const vector<Interval> & intervalList,
-                                  unsigned char sentenceSize,
+                                  SUFFIX_MARKER_TYPE sentenceSize,
                                   double k);
 
     SUFFIX_MARKER_TYPE _exampleId;
@@ -63,9 +66,9 @@ private:
 
     vector<Interval> _patternMatchedRegions;
 
-    unsigned char _patternSize;
+    SUFFIX_MARKER_TYPE _patternSize;
 
-    unsigned char _exampleSize;
+    SUFFIX_MARKER_TYPE _exampleSize;
 
     double _score;
 };

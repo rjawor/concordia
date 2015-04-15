@@ -2,13 +2,16 @@
 #include <boost/foreach.hpp>
 #include <math.h>
 
+TmMatches::TmMatches() {
+}
+
 TmMatches::TmMatches(const SUFFIX_MARKER_TYPE exampleId,
-                       const unsigned char exampleSize,
-                       const unsigned char patternSize):
-                        _exampleId(exampleId),
-                        _exampleSize(exampleSize),
-                        _patternSize(patternSize),
-                        _score(0) {
+                     const SUFFIX_MARKER_TYPE exampleSize,
+                     const SUFFIX_MARKER_TYPE patternSize):
+                      _exampleId(exampleId),
+                      _exampleSize(exampleSize),
+                      _patternSize(patternSize),
+                      _score(0) {
 }
 
 TmMatches::~TmMatches() {
@@ -64,7 +67,7 @@ bool TmMatches::_alreadyIntersects(
 
 double TmMatches::_getLogarithmicOverlay(
                             const vector<Interval> & intervalList,
-                            unsigned char sentenceSize,
+                            SUFFIX_MARKER_TYPE sentenceSize,
                             double k) {
     double overlayScore = 0;
     BOOST_FOREACH(Interval interval, intervalList) {

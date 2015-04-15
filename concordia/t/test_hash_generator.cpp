@@ -8,9 +8,6 @@
 #include "concordia/hash_generator.hpp"
 #include "tests/common/test_resources_manager.hpp"
 
-
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(hash_generator)
 
 BOOST_AUTO_TEST_CASE( SimpleHashTest )
@@ -23,8 +20,8 @@ BOOST_AUTO_TEST_CASE( SimpleHashTest )
     
     HashGenerator hashGenerator = HashGenerator(config);
 
-    vector<INDEX_CHARACTER_TYPE> hash = hashGenerator.generateHash("Ala posiada kota");
-    vector<INDEX_CHARACTER_TYPE> expected;
+    std::vector<INDEX_CHARACTER_TYPE> hash = hashGenerator.generateHash("Ala posiada kota");
+    std::vector<INDEX_CHARACTER_TYPE> expected;
     expected.push_back(0);
     expected.push_back(1);
     expected.push_back(2);
@@ -44,17 +41,17 @@ BOOST_AUTO_TEST_CASE( TooLongHashTest )
     
     HashGenerator hashGenerator = HashGenerator(config);
 
-    stringstream ss;
+    std::stringstream ss;
     for (int i=0;i<65537;i++) {
         ss << "xx" << i << " ";
     }
 
-    string longSentence = ss.str();
+    std::string longSentence = ss.str();
     
     bool exceptionThrown = false;
-    string message = "";
+    std::string message = "";
     try {
-        boost::shared_ptr<vector<INDEX_CHARACTER_TYPE> > hash = hashGenerator.generateHash(longSentence);
+        boost::shared_ptr<std::vector<INDEX_CHARACTER_TYPE> > hash = hashGenerator.generateHash(longSentence);
     } catch (ConcordiaException & e) {
         exceptionThrown = true;
         message = e.what();
@@ -76,8 +73,8 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     
     HashGenerator hashGenerator1 = HashGenerator(config);
 
-    vector<INDEX_CHARACTER_TYPE> hash1 = hashGenerator1.generateHash("Ala posiada kota");
-    vector<INDEX_CHARACTER_TYPE> expected1;
+    std::vector<INDEX_CHARACTER_TYPE> hash1 = hashGenerator1.generateHash("Ala posiada kota");
+    std::vector<INDEX_CHARACTER_TYPE> expected1;
     expected1.push_back(0);
     expected1.push_back(1);
     expected1.push_back(2);
@@ -86,8 +83,8 @@ BOOST_AUTO_TEST_CASE( HashSerializationTest )
     hashGenerator1.serializeWordMap();
    
     HashGenerator hashGenerator2 = HashGenerator(config);
-    vector<INDEX_CHARACTER_TYPE> hash2 = hashGenerator2.generateHash("Ala posiada psa");
-    vector<INDEX_CHARACTER_TYPE> expected2;
+    std::vector<INDEX_CHARACTER_TYPE> hash2 = hashGenerator2.generateHash("Ala posiada psa");
+    std::vector<INDEX_CHARACTER_TYPE> expected2;
     expected2.push_back(0);
     expected2.push_back(1);
     expected2.push_back(3);
@@ -106,8 +103,8 @@ BOOST_AUTO_TEST_CASE( TokenVectorTest )
     
     HashGenerator hashGenerator = HashGenerator(config);
 
-    vector<string> tokenVector = hashGenerator.generateTokenVector("12.02.2014   o  godzinie 17:40 doszło do kolizji na ulicy Grobla; policjanci ustalili, że kierowca zaparkował  samochód.");
-    vector<string> expected;
+    std::vector<std::string> tokenVector = hashGenerator.generateTokenVector("12.02.2014   o  godzinie 17:40 doszło do kolizji na ulicy Grobla; policjanci ustalili, że kierowca zaparkował  samochód.");
+    std::vector<std::string> expected;
     expected.push_back("ne_date");
     expected.push_back("godzinie");
     expected.push_back("ne_number");

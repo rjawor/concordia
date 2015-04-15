@@ -13,13 +13,13 @@
 #define NAMED_ENTITIES_PARAM "named_entities_path"
 #define STOP_SYMBOLS_PARAM "stop_symbols_path"
 
-ConcordiaConfig::ConcordiaConfig(const string & configFilePath)
+ConcordiaConfig::ConcordiaConfig(const std::string & configFilePath)
                                      throw(ConcordiaException) {
     try {
         _config.readFile(configFilePath.c_str());
-    } catch(ParseException & e) {
+    } catch(libconfig::ParseException & e) {
         throw ConcordiaException("Error parsing config file: "+configFilePath);
-    } catch(FileIOException & e) {
+    } catch(libconfig::FileIOException & e) {
         throw ConcordiaException("I/O error reading config file: "
                                                               +configFilePath);
     }
@@ -49,7 +49,7 @@ ConcordiaConfig::ConcordiaConfig(const string & configFilePath)
 ConcordiaConfig::~ConcordiaConfig() {
 }
 
-string ConcordiaConfig::_readConfigParameterStr(const string & name)
+std::string ConcordiaConfig::_readConfigParameterStr(const std::string & name)
                                              throw(ConcordiaException) {
     if (!_config.exists(name)) {
         throw ConcordiaException("Config error: "+name+" setting not found");

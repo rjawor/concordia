@@ -84,11 +84,11 @@ int main(int argc, char** argv) {
             std::string filePath = cli["read-file"].as<std::string>();
             std::cout << "\tReading sentences from file: " << filePath <<
                                                                   std::endl;
-            ifstream text_file(filePath.c_str());
+            std::ifstream text_file(filePath.c_str());
             std::string line;
             if (text_file.is_open()) {
                 long lineCount = 0;
-                vector<Example> buffer;
+                std::vector<Example> buffer;
                 boost::posix_time::ptime timeStart =
                             boost::posix_time::microsec_clock::local_time();
                 while (getline(text_file, line)) {
@@ -147,7 +147,7 @@ int main(int argc, char** argv) {
                   << "Terminating execution."
                   << std::endl;
         return 1;
-    } catch(exception & e) {
+    } catch(std::exception & e) {
         std::cerr << "Unexpected exception caught with message: "
                   << std::endl
                   << e.what()

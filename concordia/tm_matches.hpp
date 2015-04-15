@@ -14,12 +14,10 @@
 
 */
 
-using namespace std;
-
 class TmMatches {
 public:
     TmMatches();
-        
+
     TmMatches(const SUFFIX_MARKER_TYPE exampleId,
               const SUFFIX_MARKER_TYPE exampleSize,
               const SUFFIX_MARKER_TYPE patternSize);
@@ -32,11 +30,11 @@ public:
         return _score;
     }
 
-    vector<Interval> getExampleIntervals() const {
+    std::vector<Interval> getExampleIntervals() const {
         return _exampleMatchedRegions;
     }
 
-    vector<Interval> getPatternIntervals() const {
+    std::vector<Interval> getPatternIntervals() const {
         return _patternMatchedRegions;
     }
 
@@ -53,18 +51,18 @@ public:
     void addPatternInterval(int start, int end);
 
 private:
-    bool _alreadyIntersects(const vector<Interval> & intervalList,
+    bool _alreadyIntersects(const std::vector<Interval> & intervalList,
                             int start, int end);
 
-    double _getLogarithmicOverlay(const vector<Interval> & intervalList,
+    double _getLogarithmicOverlay(const std::vector<Interval> & intervalList,
                                   SUFFIX_MARKER_TYPE sentenceSize,
                                   double k);
 
     SUFFIX_MARKER_TYPE _exampleId;
 
-    vector<Interval> _exampleMatchedRegions;
+    std::vector<Interval> _exampleMatchedRegions;
 
-    vector<Interval> _patternMatchedRegions;
+    std::vector<Interval> _patternMatchedRegions;
 
     SUFFIX_MARKER_TYPE _patternSize;
 

@@ -7,8 +7,6 @@
 #include <list>
 #include <boost/algorithm/string/predicate.hpp>
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(concordia_config)
 
 BOOST_AUTO_TEST_CASE( ConfigParameters )
@@ -29,7 +27,7 @@ BOOST_AUTO_TEST_CASE( ConfigParameters )
 BOOST_AUTO_TEST_CASE( NonexistentConfigTest )
 {
     bool exceptionThrown = false;
-    string message = "";
+    std::string message = "";
     try {
         ConcordiaConfig config(TestResourcesManager::getTestConcordiaConfigFilePath("foo.cfg")); 
     } catch (ConcordiaException & e) {
@@ -44,7 +42,7 @@ BOOST_AUTO_TEST_CASE( NonexistentConfigTest )
 BOOST_AUTO_TEST_CASE( InvalidConfigTest )
 {
     bool exceptionThrown = false;
-    string message = "";
+    std::string message = "";
     try {
         ConcordiaConfig config(TestResourcesManager::getTestConcordiaConfigFilePath("invalid.cfg")); 
     } catch (ConcordiaException & e) {

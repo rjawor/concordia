@@ -3,7 +3,8 @@
 #include <boost/exception/all.hpp>
 #include <boost/throw_exception.hpp>
 
-RegexReplacement::RegexReplacement(string patternString, string replacement,
+RegexReplacement::RegexReplacement(std::string patternString,
+                                   std::string replacement,
                                    bool caseSensitive)
                                          throw(ConcordiaException):
                                          _replacement(replacement) {
@@ -15,7 +16,7 @@ RegexReplacement::RegexReplacement(string patternString, string replacement,
                                              boost::regex::icase);
         }
     } catch(const std::exception & e) {
-        stringstream ss;
+        std::stringstream ss;
 
         ss << "Bad regex pattern: " << patternString <<
              " Detailed info: " << e.what();
@@ -31,7 +32,7 @@ RegexReplacement::RegexReplacement(string patternString, string replacement,
 RegexReplacement::~RegexReplacement() {
 }
 
-string RegexReplacement::apply(const string & text) {
+std::string RegexReplacement::apply(const std::string & text) {
     try {
         return boost::u32regex_replace(text, _pattern, _replacement,
                         boost::match_default | boost::format_all);

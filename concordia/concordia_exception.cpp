@@ -4,7 +4,7 @@ ConcordiaException::ConcordiaException() throw():
     _message("Concordia exception") {
 }
 
-ConcordiaException::ConcordiaException(const string & message) throw():
+ConcordiaException::ConcordiaException(const std::string & message) throw():
     _message(message) {
 }
 

@@ -5,23 +5,20 @@
 #include <boost/filesystem.hpp>
 
 #include "divsufsort.h"
-#include <string>
-
-using namespace std;
 
 BOOST_AUTO_TEST_SUITE(utils)
 
 BOOST_AUTO_TEST_CASE( WriteReadSingleCharacter )
 {
-    ofstream testFileOutput;
+    std::ofstream testFileOutput;
     testFileOutput.open(TestResourcesManager::getTestFilePath("temp","temp_file.bin").c_str(),
-                                   ios::out|ios::binary);
+                                   std::ios::out|std::ios::binary);
     INDEX_CHARACTER_TYPE testCharacter = 123456789; //in hex: 75BCD15
     Utils::writeIndexCharacter(testFileOutput,testCharacter);
     testFileOutput.close();
     
-    ifstream testFileInput;
-    testFileInput.open(TestResourcesManager::getTestFilePath("temp","temp_file.bin").c_str(),ios::in|ios::binary);
+    std::ifstream testFileInput;
+    testFileInput.open(TestResourcesManager::getTestFilePath("temp","temp_file.bin").c_str(),std::ios::in|std::ios::binary);
     INDEX_CHARACTER_TYPE retrievedCharacter = Utils::readIndexCharacter(testFileInput);
     BOOST_CHECK_EQUAL(retrievedCharacter, testCharacter);
     testFileInput.close();
@@ -31,7 +28,7 @@ BOOST_AUTO_TEST_CASE( WriteReadSingleCharacter )
 
 BOOST_AUTO_TEST_CASE( IndexVectorToSaucharArray )
 {
-    vector<INDEX_CHARACTER_TYPE> hash;
+    std::vector<INDEX_CHARACTER_TYPE> hash;
     hash.push_back(123456789);         // in hex: 75BCD15
                                        // in memory:  15  cd  5b  07
                                        // in memory DEC:  21 205  91   7 
@@ -41,13 +38,13 @@ BOOST_AUTO_TEST_CASE( IndexVectorToSaucharArray )
                                        // in memory DEC: 177 104 222  58         
     sauchar_t * dataArray = Utils::indexVectorToSaucharArray(hash);
 
-    vector<INDEX_CHARACTER_TYPE> result;
+    std::vector<INDEX_CHARACTER_TYPE> result;
     for (int i=0;i<8;i++) {
         INDEX_CHARACTER_TYPE a = dataArray[i];
         result.push_back(a);    
     }
     
-    vector<INDEX_CHARACTER_TYPE> expected;
+    std::vector<INDEX_CHARACTER_TYPE> expected;
     expected.push_back(21);
     expected.push_back(205);
     expected.push_back(91);
@@ -62,7 +59,7 @@ BOOST_AUTO_TEST_CASE( IndexVectorToSaucharArray )
 
 BOOST_AUTO_TEST_CASE( IndexVectorToSaucharVector )
 {
-    vector<INDEX_CHARACTER_TYPE> hash;
+    std::vector<INDEX_CHARACTER_TYPE> hash;
     hash.push_back(123456789);         // in hex: 75BCD15
                                        // in memory:  15  cd  5b  07
                                        // in memory DEC:  21 205  91   7 
@@ -70,9 +67,9 @@ BOOST_AUTO_TEST_CASE( IndexVectorToSaucharVector )
     hash.push_back(987654321);         // in hex: 3ADE68B1
                                        // in memory:  b1  68  de  3a
                                        // in memory DEC: 177 104 222  58         
-    vector<sauchar_t> result = Utils::indexVectorToSaucharVector(hash);
+    std::vector<sauchar_t> result = Utils::indexVectorToSaucharVector(hash);
     
-    vector<sauchar_t> expected;
+    std::vector<sauchar_t> expected;
     expected.push_back(21);
     expected.push_back(205);
     expected.push_back(91);

@@ -54,7 +54,7 @@ void TmMatches::addPatternInterval(int start, int end) {
 }
 
 bool TmMatches::_alreadyIntersects(
-                    const vector<Interval> & intervalList,
+                    const std::vector<Interval> & intervalList,
                     int start, int end) {
     Interval tempInterval(start, end);
     BOOST_FOREACH(Interval oldInterval, intervalList) {
@@ -66,7 +66,7 @@ bool TmMatches::_alreadyIntersects(
 }
 
 double TmMatches::_getLogarithmicOverlay(
-                            const vector<Interval> & intervalList,
+                            const std::vector<Interval> & intervalList,
                             SUFFIX_MARKER_TYPE sentenceSize,
                             double k) {
     double overlayScore = 0;

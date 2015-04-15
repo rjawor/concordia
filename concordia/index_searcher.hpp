@@ -20,8 +20,6 @@
 
 */
 
-using namespace std;
-
 class IndexSearcher {
 public:
     explicit IndexSearcher();
@@ -30,19 +28,19 @@ public:
     */
     virtual ~IndexSearcher();
 
-    vector<SubstringOccurence> simpleSearch(
+    std::vector<SubstringOccurence> simpleSearch(
                     boost::shared_ptr<HashGenerator> hashGenerator,
                     boost::shared_ptr<std::vector<sauchar_t> > T,
                     boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                     boost::shared_ptr<std::vector<saidx_t> > SA,
-                    const string & pattern) throw(ConcordiaException);
+                    const std::string & pattern) throw(ConcordiaException);
 
-    vector<AnubisSearchResult> anubisSearch(
+    std::vector<AnubisSearchResult> anubisSearch(
                     boost::shared_ptr<HashGenerator> hashGenerator,
                     boost::shared_ptr<std::vector<sauchar_t> > T,
                     boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                     boost::shared_ptr<std::vector<saidx_t> > SA,
-                    const string & pattern) throw(ConcordiaException);
+                    const std::string & pattern) throw(ConcordiaException);
 private:
     boost::shared_ptr<AnubisSearcher> _anubisSearcher;
 };

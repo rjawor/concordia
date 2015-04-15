@@ -14,26 +14,24 @@
 
 */
 
-using namespace std;
-
 typedef boost::error_info<struct my_tag, std::string> my_tag_error_info;
 
 class RegexReplacement {
 public:
-    RegexReplacement(string patternString, string replacement,
-                             bool caseSensitive = true)
-                                              throw(ConcordiaException);
+    RegexReplacement(std::string patternString, std::string replacement,
+                                              bool caseSensitive = true)
+                                               throw(ConcordiaException);
 
     /*! Destructor.
     */
     virtual ~RegexReplacement();
 
-    string apply(const string & text);
+    std::string apply(const std::string & text);
 
 private:
     boost::u32regex _pattern;
 
-    string _replacement;
+    std::string _replacement;
 };
 
 #endif

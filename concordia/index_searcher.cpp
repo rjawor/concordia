@@ -12,16 +12,17 @@ IndexSearcher::IndexSearcher() {
 IndexSearcher::~IndexSearcher() {
 }
 
-vector<SubstringOccurence> IndexSearcher::simpleSearch(
+std::vector<SubstringOccurence> IndexSearcher::simpleSearch(
                   boost::shared_ptr<HashGenerator> hashGenerator,
                   boost::shared_ptr<std::vector<sauchar_t> > T,
                   boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                   boost::shared_ptr<std::vector<saidx_t> > SA,
-                  const string & pattern) throw(ConcordiaException) {
-    vector<SubstringOccurence> result;
+                  const std::string & pattern) throw(ConcordiaException) {
+    std::vector<SubstringOccurence> result;
 
     int left;
-    vector<INDEX_CHARACTER_TYPE> hash = hashGenerator->generateHash(pattern);
+    std::vector<INDEX_CHARACTER_TYPE> hash =
+                                 hashGenerator->generateHash(pattern);
     saidx_t patternLength = hash.size()*sizeof(INDEX_CHARACTER_TYPE);
     sauchar_t * patternArray = Utils::indexVectorToSaucharArray(hash);
 
@@ -47,12 +48,13 @@ vector<SubstringOccurence> IndexSearcher::simpleSearch(
     return result;
 }
 
-vector<AnubisSearchResult> IndexSearcher::anubisSearch(
+std::vector<AnubisSearchResult> IndexSearcher::anubisSearch(
                   boost::shared_ptr<HashGenerator> hashGenerator,
                   boost::shared_ptr<std::vector<sauchar_t> > T,
                   boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                   boost::shared_ptr<std::vector<saidx_t> > SA,
-                  const string & pattern) throw(ConcordiaException) {
-    vector<INDEX_CHARACTER_TYPE> hash = hashGenerator->generateHash(pattern);
+                  const std::string & pattern) throw(ConcordiaException) {
+    std::vector<INDEX_CHARACTER_TYPE> hash =
+                                 hashGenerator->generateHash(pattern);
     return _anubisSearcher->anubisSearch(T, markers, SA, hash);
 }

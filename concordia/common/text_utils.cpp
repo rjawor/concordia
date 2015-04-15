@@ -10,10 +10,10 @@ TextUtils::TextUtils() {
         StringCaseConverterManager::getInstance().getUpperCaseConverter("pl");
 }
 
-string TextUtils::toLowerCase(const string & text) {
+std::string TextUtils::toLowerCase(const std::string & text) {
     return simpleConvert(*_lowerConverter, text);
 }
 
-string TextUtils::toUpperCase(const string & text) {
+std::string TextUtils::toUpperCase(const std::string & text) {
     return simpleConvert(*_upperConverter, text);
 }

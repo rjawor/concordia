@@ -5,8 +5,6 @@
 #include <boost/locale.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(regex_replacement)
 
 BOOST_AUTO_TEST_CASE( SimpleReplacement )
@@ -18,7 +16,7 @@ BOOST_AUTO_TEST_CASE( SimpleReplacement )
 BOOST_AUTO_TEST_CASE( BadRegex )
 {
     bool exceptionThrown = false;
-    string message = "";
+    std::string message = "";
     try {
         RegexReplacement rr("+a","b");
     } catch (ConcordiaException & e) {

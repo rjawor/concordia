@@ -7,9 +7,6 @@
 
 #include "concordia/concordia_exception.hpp"
 
-using namespace std;
-using namespace libconfig;
-
 /*!
 Class representing the Concordia configuration.
 */
@@ -20,8 +17,8 @@ public:
      \param configFilePath path of the configuration file (see \ref running3 for file specification).
      \throws ConcordiaException
     */
-    explicit ConcordiaConfig(const string & configFilePath)
-                                            throw(ConcordiaException);
+    explicit ConcordiaConfig(const std::string & configFilePath)
+                                       throw(ConcordiaException);
 
     /*! Destructor.
     */
@@ -30,70 +27,70 @@ public:
     /*! Getter for the puddle file path parameter.
      \returns file path of the puddle tagset
     */
-    string & getPuddleTagsetFilePath() {
+    std::string & getPuddleTagsetFilePath() {
         return _puddleTagsetFilePath;
     }
 
-    string & getWordMapFilePath() {
+    std::string & getWordMapFilePath() {
         return _wordMapFilePath;
     }
 
-    string & getHashedIndexFilePath() {
+    std::string & getHashedIndexFilePath() {
         return _hashedIndexFilePath;
     }
 
-    string & getMarkersFilePath() {
+    std::string & getMarkersFilePath() {
         return _markersFilePath;
     }
 
-    string & getSuffixArrayFilePath() {
+    std::string & getSuffixArrayFilePath() {
         return _suffixArrayFilePath;
     }
 
-    string & getHtmlTagsFilePath() {
+    std::string & getHtmlTagsFilePath() {
         return _htmlTagsFilePath;
     }
 
-    string & getSpaceSymbolsFilePath() {
+    std::string & getSpaceSymbolsFilePath() {
         return _spaceSymbolsFilePath;
     }
 
-    string & getStopWordsFilePath() {
+    std::string & getStopWordsFilePath() {
         return _stopWordsFilePath;
     }
 
-    string & getNamedEntitiesFilePath() {
+    std::string & getNamedEntitiesFilePath() {
         return _namedEntitiesFilePath;
     }
 
-    string & getStopSymbolsFilePath() {
+    std::string & getStopSymbolsFilePath() {
         return _stopSymbolsFilePath;
     }
 
 private:
-    Config _config;
+    libconfig::Config _config;
 
-    string _puddleTagsetFilePath;
+    std::string _puddleTagsetFilePath;
 
-    string _wordMapFilePath;
+    std::string _wordMapFilePath;
 
-    string _hashedIndexFilePath;
+    std::string _hashedIndexFilePath;
 
-    string _markersFilePath;
+    std::string _markersFilePath;
 
-    string _suffixArrayFilePath;
+    std::string _suffixArrayFilePath;
 
-    string _htmlTagsFilePath;
+    std::string _htmlTagsFilePath;
 
-    string _spaceSymbolsFilePath;
+    std::string _spaceSymbolsFilePath;
 
-    string _stopWordsFilePath;
+    std::string _stopWordsFilePath;
 
-    string _namedEntitiesFilePath;
+    std::string _namedEntitiesFilePath;
 
-    string _stopSymbolsFilePath;
+    std::string _stopSymbolsFilePath;
 
-    string _readConfigParameterStr(const string & name)
+    std::string _readConfigParameterStr(const std::string & name)
                                      throw(ConcordiaException);
 };
 

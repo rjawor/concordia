@@ -7,9 +7,6 @@
 #include "utf8case/case_converter_factory.hpp"
 #include "utf8case/string_case_converter_manager.hpp"
 
-
-using namespace std;
-
 /*! Utility class for performing simple string operations.
 */
 class TextUtils {
@@ -26,13 +23,13 @@ public:
      \param text input string
      \returns lower case version of the input string.
     */
-    string toLowerCase(const string & text);
+    std::string toLowerCase(const std::string & text);
 
     /*! A method for converting all string letters to upper case.
      \param text input string
      \returns upper case version of the input string.
     */
-    string toUpperCase(const string & text);
+    std::string toUpperCase(const std::string & text);
 
 private:
     explicit TextUtils(TextUtils const&);              // Don't Implement

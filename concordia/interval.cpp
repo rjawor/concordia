@@ -1,9 +1,10 @@
 #include "concordia/interval.hpp"
 
 
-Interval::Interval(const SUFFIX_MARKER_TYPE start, const SUFFIX_MARKER_TYPE end):
-                                                _start(start),
-                                                _end(end) {
+Interval::Interval(const SUFFIX_MARKER_TYPE start,
+                   const SUFFIX_MARKER_TYPE end):
+                                    _start(start),
+                                    _end(end) {
 }
 
 Interval::~Interval() {

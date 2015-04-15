@@ -7,35 +7,35 @@ Utils::Utils() {
 Utils::~Utils() {
 }
 
-void Utils::writeIndexCharacter(ofstream & file,
+void Utils::writeIndexCharacter(std::ofstream & file,
                                       INDEX_CHARACTER_TYPE character) {
     file.write(reinterpret_cast<char *>(&character), sizeof(character));
 }
 
-void Utils::writeMarker(ofstream & file,
+void Utils::writeMarker(std::ofstream & file,
                                       SUFFIX_MARKER_TYPE marker) {
     file.write(reinterpret_cast<char *>(&marker), sizeof(marker));
 }
 
-INDEX_CHARACTER_TYPE Utils::readIndexCharacter(ifstream & file) {
+INDEX_CHARACTER_TYPE Utils::readIndexCharacter(std::ifstream & file) {
     INDEX_CHARACTER_TYPE character;
     file.read(reinterpret_cast<char *>(&character), sizeof(character));
     return character;
 }
 
-SUFFIX_MARKER_TYPE Utils::readMarker(ifstream & file) {
+SUFFIX_MARKER_TYPE Utils::readMarker(std::ifstream & file) {
     SUFFIX_MARKER_TYPE marker;
     file.read(reinterpret_cast<char *>(&marker), sizeof(marker));
     return marker;
 }
 
 sauchar_t * Utils::indexVectorToSaucharArray(
-                       const vector<INDEX_CHARACTER_TYPE> & input) {
+                       const std::vector<INDEX_CHARACTER_TYPE> & input) {
     const int kArraySize = input.size()*sizeof(INDEX_CHARACTER_TYPE);
     sauchar_t * patternArray =
                     new sauchar_t[kArraySize];
     int pos = 0;
-    for (vector<INDEX_CHARACTER_TYPE>::const_iterator it = input.begin();
+    for (std::vector<INDEX_CHARACTER_TYPE>::const_iterator it = input.begin();
                                                 it != input.end(); ++it) {
         _insertCharToSaucharArray(patternArray, *it, pos);
         pos += sizeof(INDEX_CHARACTER_TYPE);
@@ -44,9 +44,9 @@ sauchar_t * Utils::indexVectorToSaucharArray(
 }
 
 std::vector<sauchar_t> Utils::indexVectorToSaucharVector(
-                              const vector<INDEX_CHARACTER_TYPE> & input) {
+                              const std::vector<INDEX_CHARACTER_TYPE> & input) {
     std::vector<sauchar_t> result;
-    for (vector<INDEX_CHARACTER_TYPE>::const_iterator it = input.begin();
+    for (std::vector<INDEX_CHARACTER_TYPE>::const_iterator it = input.begin();
                                                it != input.end(); ++it) {
         appendCharToSaucharVector(result, *it);
     }

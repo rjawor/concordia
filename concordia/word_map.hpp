@@ -14,8 +14,6 @@
 
 */
 
-using namespace std;
-
 class WordMap {
 public:
     explicit WordMap() throw(ConcordiaException);
@@ -24,8 +22,8 @@ public:
     */
     virtual ~WordMap();
 
-    INDEX_CHARACTER_TYPE getWordCode(const string & word)
-                                throw(ConcordiaException);
+    INDEX_CHARACTER_TYPE getWordCode(const std::string & word)
+                                     throw(ConcordiaException);
 
 private:
     friend class boost::serialization::access;
@@ -37,7 +35,7 @@ private:
         ar & _nextFree;
     }
 
-    map<string, INDEX_CHARACTER_TYPE> _map;
+    std::map<std::string, INDEX_CHARACTER_TYPE> _map;
 
     INDEX_CHARACTER_TYPE _nextFree;
 };

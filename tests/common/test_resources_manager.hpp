@@ -6,17 +6,15 @@
 
 #include "concordia/common/config.hpp"
 
-using namespace std;
-
 class TestResourcesManager {
 public:
-    static string getPuddleFilePath(const string & filename);
+    static std::string getPuddleFilePath(const std::string & filename);
 
-    static string getTestConcordiaConfigFilePath(const string & filename);
+    static std::string getTestConcordiaConfigFilePath(const std::string & filename);
 
-	static string getProdConcordiaConfigFilePath(const string & filename);
+	static std::string getProdConcordiaConfigFilePath(const std::string & filename);
 
-    static string getTestFilePath(const string & module, const string & filename);
+    static std::string getTestFilePath(const std::string & module, const std::string & filename);
 
 };
 

@@ -12,8 +12,6 @@
 #include "concordia/common/logging.hpp"
 #include "tests/common/test_resources_manager.hpp"
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(anubis_searcher)
 
 BOOST_AUTO_TEST_CASE( LcpSearch1 )
@@ -187,7 +185,7 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     pattern2.push_back(2);
 
     SUFFIX_MARKER_TYPE highResLength2;
-    vector<SubstringOccurence> result2 = searcher.lcpSearch(T, markers, SA, pattern2, highResLength2);
+    std::vector<SubstringOccurence> result2 = searcher.lcpSearch(T, markers, SA, pattern2, highResLength2);
     SUFFIX_MARKER_TYPE length2 = highResLength2 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get one result from SA:
@@ -230,7 +228,7 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     pattern3.push_back(3);
 
     SUFFIX_MARKER_TYPE highResLength3;
-    vector<SubstringOccurence> result3 = searcher.lcpSearch(T, markers, SA, pattern3, highResLength3);
+    std::vector<SubstringOccurence> result3 = searcher.lcpSearch(T, markers, SA, pattern3, highResLength3);
     SUFFIX_MARKER_TYPE length3 = highResLength3 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get one result from SA:
@@ -267,7 +265,7 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     pattern4.push_back(4);
 
     SUFFIX_MARKER_TYPE highResLength4;
-    vector<SubstringOccurence> result4 = searcher.lcpSearch(T, markers, SA, pattern4, highResLength4);
+    std::vector<SubstringOccurence> result4 = searcher.lcpSearch(T, markers, SA, pattern4, highResLength4);
     SUFFIX_MARKER_TYPE length4 = highResLength4 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get 2 results from SA:
@@ -298,7 +296,7 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     pattern5.push_back(4);
 
     SUFFIX_MARKER_TYPE highResLength5;
-    vector<SubstringOccurence> result5 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength5);
+    std::vector<SubstringOccurence> result5 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength5);
     SUFFIX_MARKER_TYPE length5 = highResLength5 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get 0 results from SA, lcp length = 0;
@@ -322,7 +320,7 @@ BOOST_AUTO_TEST_CASE( LcpSearch1 )
     pattern6.push_back(0);
 
     SUFFIX_MARKER_TYPE highResLength6;
-    vector<SubstringOccurence> result6 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength6);
+    std::vector<SubstringOccurence> result6 = searcher.lcpSearch(T, markers, SA, pattern5, highResLength6);
     SUFFIX_MARKER_TYPE length6 = highResLength6 / sizeof(INDEX_CHARACTER_TYPE);
 
     /* Expecting to get 0 results from SA, lcp length = 0;
@@ -393,38 +391,38 @@ BOOST_AUTO_TEST_CASE( TmMatchesTest )
 
     // example 14
     // example interval list: [(1,2)] 
-    vector<Interval> exampleIntervals14 = tmMatches14->getExampleIntervals();    
+    std::vector<Interval> exampleIntervals14 = tmMatches14->getExampleIntervals();    
     BOOST_CHECK_EQUAL(exampleIntervals14.size(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals14[0].getStart(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals14[0].getEnd(), 2);
     // pattern interval list: [(1,2)] 
-    vector<Interval> patternIntervals14 = tmMatches14->getPatternIntervals();    
+    std::vector<Interval> patternIntervals14 = tmMatches14->getPatternIntervals();    
     BOOST_CHECK_EQUAL(patternIntervals14.size(), 1);
     BOOST_CHECK_EQUAL(patternIntervals14[0].getStart(), 1);
     BOOST_CHECK_EQUAL(patternIntervals14[0].getEnd(), 2);
     
     // example 51
     // example interval list: [(1,3)] 
-    vector<Interval> exampleIntervals51 = tmMatches51->getExampleIntervals();    
+    std::vector<Interval> exampleIntervals51 = tmMatches51->getExampleIntervals();    
     BOOST_CHECK_EQUAL(exampleIntervals51.size(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals51[0].getStart(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals51[0].getEnd(), 3);
     // pattern interval list: [(1,3)] 
-    vector<Interval> patternIntervals51 = tmMatches51->getPatternIntervals();    
+    std::vector<Interval> patternIntervals51 = tmMatches51->getPatternIntervals();    
     BOOST_CHECK_EQUAL(patternIntervals51.size(), 1);
     BOOST_CHECK_EQUAL(patternIntervals51[0].getStart(), 1);
     BOOST_CHECK_EQUAL(patternIntervals51[0].getEnd(), 3);
     
     // example 123
     // example interval list: [(1,3), (0,1)] 
-    vector<Interval> exampleIntervals123 = tmMatches123->getExampleIntervals();    
+    std::vector<Interval> exampleIntervals123 = tmMatches123->getExampleIntervals();    
     BOOST_CHECK_EQUAL(exampleIntervals123.size(), 2);
     BOOST_CHECK_EQUAL(exampleIntervals123[0].getStart(), 1);
     BOOST_CHECK_EQUAL(exampleIntervals123[0].getEnd(), 3);
     BOOST_CHECK_EQUAL(exampleIntervals123[1].getStart(), 0);
     BOOST_CHECK_EQUAL(exampleIntervals123[1].getEnd(), 1);
     // pattern interval list: [(1,3), (3,4)] 
-    vector<Interval> patternIntervals123 = tmMatches123->getPatternIntervals();    
+    std::vector<Interval> patternIntervals123 = tmMatches123->getPatternIntervals();    
     BOOST_CHECK_EQUAL(patternIntervals123.size(), 2);
     BOOST_CHECK_EQUAL(patternIntervals123[0].getStart(), 1);
     BOOST_CHECK_EQUAL(patternIntervals123[0].getEnd(), 3);

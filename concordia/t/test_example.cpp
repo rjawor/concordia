@@ -5,8 +5,6 @@
 
 #include "concordia/example.hpp"
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(exampleTest)
 
 BOOST_AUTO_TEST_CASE( ExceedingId )
@@ -15,7 +13,7 @@ BOOST_AUTO_TEST_CASE( ExceedingId )
     Example example1("Test", maxId);
 
     bool exceptionThrown = false;
-    string message = "";
+    std::string message = "";
     try {
         Example example2("Test", maxId+1);
     } catch (ConcordiaException & e) {

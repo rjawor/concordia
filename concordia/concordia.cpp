@@ -62,12 +62,13 @@ void Concordia::loadRAMIndexFromDisk() throw(ConcordiaException) {
       && boost::filesystem::exists(_config->getMarkersFilePath())) {
         // reading index from file
         _T->clear();
-        ifstream hashedIndexFile;
-        hashedIndexFile.open(_config->getHashedIndexFilePath().c_str(), ios::in
-                                                     | ios::ate | ios::binary);
+        std::ifstream hashedIndexFile;
+        hashedIndexFile.open(
+            _config->getHashedIndexFilePath().c_str(), std::ios::in
+                                | std::ios::ate | std::ios::binary);
         saidx_t hiFileSize = hashedIndexFile.tellg();
         if (hiFileSize > 0) {
-            hashedIndexFile.seekg(0, ios::beg);
+            hashedIndexFile.seekg(0, std::ios::beg);
 
             while (!hashedIndexFile.eof()) {
                 INDEX_CHARACTER_TYPE character =
@@ -82,12 +83,12 @@ void Concordia::loadRAMIndexFromDisk() throw(ConcordiaException) {
 
         // reading markers from file
         _markers->clear();
-        ifstream markersFile;
-        markersFile.open(_config->getMarkersFilePath().c_str(), ios::in
-                                                     | ios::ate | ios::binary);
+        std::ifstream markersFile;
+        markersFile.open(_config->getMarkersFilePath().c_str(), std::ios::in
+                                         | std::ios::ate | std::ios::binary);
         saidx_t maFileSize = markersFile.tellg();
         if (maFileSize > 0) {
-            markersFile.seekg(0, ios::beg);
+            markersFile.seekg(0, std::ios::beg);
 
             while (!markersFile.eof()) {
                 SUFFIX_MARKER_TYPE marker =
@@ -132,7 +133,7 @@ void Concordia::_initializeIndex() throw(ConcordiaException) {
 }
 
 std::vector<SubstringOccurence> Concordia::simpleSearch(
-                                          const string & pattern)
+                                          const std::string & pattern)
                                   throw(ConcordiaException) {
     if (_T->size() > 0) {
         return _searcher->simpleSearch(_hashGenerator, _T,
@@ -144,7 +145,7 @@ std::vector<SubstringOccurence> Concordia::simpleSearch(
 }
 
 std::vector<AnubisSearchResult> Concordia::anubisSearch(
-                                          const string & pattern)
+                                          const std::string & pattern)
                                   throw(ConcordiaException) {
     if (_T->size() > 0) {
         return _searcher->anubisSearch(_hashGenerator, _T,

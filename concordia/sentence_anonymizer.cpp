@@ -23,8 +23,8 @@ SentenceAnonymizer::SentenceAnonymizer(
 SentenceAnonymizer::~SentenceAnonymizer() {
 }
 
-string SentenceAnonymizer::anonymize(const string & sentence) {
-    string result = sentence;
+std::string SentenceAnonymizer::anonymize(const std::string & sentence) {
+    std::string result = sentence;
 
     result = _htmlTags->apply(result);
 
@@ -41,20 +41,20 @@ string SentenceAnonymizer::anonymize(const string & sentence) {
     return result;
 }
 
-void SentenceAnonymizer::_createNeRules(string & namedEntitiesPath) {
+void SentenceAnonymizer::_createNeRules(std::string & namedEntitiesPath) {
     if (boost::filesystem::exists(namedEntitiesPath)) {
-        string line;
-        ifstream neFile(namedEntitiesPath.c_str());
+        std::string line;
+        std::ifstream neFile(namedEntitiesPath.c_str());
         if (neFile.is_open()) {
             int lineCounter = 0;
             while (getline(neFile, line)) {
                 lineCounter++;
-                boost::shared_ptr<vector<string> >
-                                 tokenTexts(new vector<string>());
+                boost::shared_ptr<std::vector<std::string> >
+                                 tokenTexts(new std::vector<std::string>());
                 boost::split(*tokenTexts, line, boost::is_any_of(" "),
                              boost::token_compress_on);
                 if (tokenTexts->size() != 2) {
-                    stringstream ss;
+                    std::stringstream ss;
                     ss << "Invalid line: " << lineCounter
                        << " in NE file: " << namedEntitiesPath;
                     throw ConcordiaException(ss.str());
@@ -72,11 +72,11 @@ void SentenceAnonymizer::_createNeRules(string & namedEntitiesPath) {
     }
 }
 
-void SentenceAnonymizer::_createHtmlTagsRule(string & htmlTagsPath) {
-    string tagsExpression = "<\\/?(";
+void SentenceAnonymizer::_createHtmlTagsRule(std::string & htmlTagsPath) {
+    std::string tagsExpression = "<\\/?(";
     if (boost::filesystem::exists(htmlTagsPath)) {
-        string line;
-        ifstream tagsFile(htmlTagsPath.c_str());
+        std::string line;
+        std::ifstream tagsFile(htmlTagsPath.c_str());
         if (tagsFile.is_open()) {
             while (getline(tagsFile, line)) {
                 tagsExpression += "|";
@@ -95,12 +95,12 @@ void SentenceAnonymizer::_createHtmlTagsRule(string & htmlTagsPath) {
 }
 
 boost::shared_ptr<RegexReplacement>
-            SentenceAnonymizer::_getMultipleReplacementRule(
-                    string & filePath, string replacement, bool wholeWord) {
-    string expression = "(";
+        SentenceAnonymizer::_getMultipleReplacementRule(
+            std::string & filePath, std::string replacement, bool wholeWord) {
+    std::string expression = "(";
     if (boost::filesystem::exists(filePath)) {
-        string line;
-        ifstream ruleFile(filePath.c_str());
+        std::string line;
+        std::ifstream ruleFile(filePath.c_str());
         if (ruleFile.is_open()) {
             while (getline(ruleFile, line)) {
                 if (wholeWord) {

@@ -16,8 +16,6 @@
 
 */
 
-using namespace std;
-
 class SentenceAnonymizer {
 public:
     explicit SentenceAnonymizer(boost::shared_ptr<ConcordiaConfig> config)
@@ -27,19 +25,19 @@ public:
     */
     virtual ~SentenceAnonymizer();
 
-    string anonymize(const string & sentence);
+    std::string anonymize(const std::string & sentence);
 
 private:
-    void _createNeRules(string & namedEntitiesPath);
+    void _createNeRules(std::string & namedEntitiesPath);
 
-    void _createHtmlTagsRule(string & htmlTagsPath);
+    void _createHtmlTagsRule(std::string & htmlTagsPath);
 
     boost::shared_ptr<RegexReplacement> _getMultipleReplacementRule(
-                                                string & filePath,
-                                                string replacement,
-                                                bool wholeWord = false);
+                                             std::string & filePath,
+                                             std::string replacement,
+                                             bool wholeWord = false);
 
-    vector<RegexReplacement> _namedEntities;
+    std::vector<RegexReplacement> _namedEntities;
 
     boost::shared_ptr<RegexReplacement> _htmlTags;
 

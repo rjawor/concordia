@@ -11,8 +11,6 @@
 #include "concordia/concordia_exception.hpp"
 #include <divsufsort.h>
 
-using namespace std;
-
 class Utils {
 public:
     explicit Utils();
@@ -21,21 +19,21 @@ public:
     */
     virtual ~Utils();
 
-    static void writeIndexCharacter(ofstream & file,
+    static void writeIndexCharacter(std::ofstream & file,
                                      INDEX_CHARACTER_TYPE character);
 
-    static void writeMarker(ofstream & file,
+    static void writeMarker(std::ofstream & file,
                                      SUFFIX_MARKER_TYPE marker);
 
-    static INDEX_CHARACTER_TYPE readIndexCharacter(ifstream & file);
+    static INDEX_CHARACTER_TYPE readIndexCharacter(std::ifstream & file);
 
-    static SUFFIX_MARKER_TYPE readMarker(ifstream & file);
+    static SUFFIX_MARKER_TYPE readMarker(std::ifstream & file);
 
     static sauchar_t * indexVectorToSaucharArray(
-                       const vector<INDEX_CHARACTER_TYPE> & input);
+                       const std::vector<INDEX_CHARACTER_TYPE> & input);
 
     static std::vector<sauchar_t> indexVectorToSaucharVector(
-                       const vector<INDEX_CHARACTER_TYPE> & input);
+                       const std::vector<INDEX_CHARACTER_TYPE> & input);
 
     static void appendCharToSaucharVector(
                              boost::shared_ptr<std::vector<sauchar_t> > vector,
@@ -70,8 +68,8 @@ private:
 template <typename T>
 void Utils::printVector(const std::vector<T> & vector) {
     for (int i = 0; i < vector.size(); i++) {
-        cout << static_cast<int>(vector.at(i)) << " ";
+        std::cout << static_cast<int>(vector.at(i)) << " ";
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 #endif

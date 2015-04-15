@@ -1,8 +1,7 @@
 #include "concordia/example.hpp"
 #include <climits>
-#include <iostream>
 
-Example::Example(const string & sentence, const SUFFIX_MARKER_TYPE & id)
+Example::Example(const std::string & sentence, const SUFFIX_MARKER_TYPE & id)
                                               throw(ConcordiaException):
                                               _sentence(sentence),
                                               _id(id) {

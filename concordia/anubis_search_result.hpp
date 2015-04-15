@@ -8,8 +8,6 @@
 
 */
 
-using namespace std;
-
 class AnubisSearchResult {
 public:
     explicit AnubisSearchResult(const SUFFIX_MARKER_TYPE & exampleId,

@@ -18,8 +18,6 @@
 
 */
 
-using namespace std;
-
 class HashGenerator {
 public:
     explicit HashGenerator(boost::shared_ptr<ConcordiaConfig> config)
@@ -29,10 +27,10 @@ public:
     */
     virtual ~HashGenerator();
 
-    vector<INDEX_CHARACTER_TYPE> generateHash(const string & sentence)
+    std::vector<INDEX_CHARACTER_TYPE> generateHash(const std::string & sentence)
                                 throw(ConcordiaException);
 
-    vector<string> generateTokenVector(const string & sentence);
+    std::vector<std::string> generateTokenVector(const std::string & sentence);
 
     void serializeWordMap();
 
@@ -41,7 +39,7 @@ private:
 
     boost::shared_ptr<SentenceAnonymizer> _sentenceAnonymizer;
 
-    string _wordMapFilePath;
+    std::string _wordMapFilePath;
 };
 
 #endif

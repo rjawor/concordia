@@ -8,11 +8,10 @@
 
 */
 
-using namespace std;
-
 class Interval {
 public:
-    explicit Interval(const SUFFIX_MARKER_TYPE start, const SUFFIX_MARKER_TYPE end);
+    explicit Interval(const SUFFIX_MARKER_TYPE start,
+                      const SUFFIX_MARKER_TYPE end);
 
     /*! Destructor.
     */

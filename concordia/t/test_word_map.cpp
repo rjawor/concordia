@@ -1,10 +1,6 @@
 #include "tests/unit-tests/unit_tests_globals.hpp"
 #include "concordia/word_map.hpp"
 
-#include <string>
-
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(word_map)
 
 BOOST_AUTO_TEST_CASE( WordCodeTest )

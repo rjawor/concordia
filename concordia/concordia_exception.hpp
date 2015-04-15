@@ -5,12 +5,10 @@
 #include<string>
 #include<string.h>
 
-using namespace std;
-
 /*!
 Class representing an internal exception thrown in the Concordia library.
 */
-class ConcordiaException : public exception {
+class ConcordiaException : public std::exception {
 public:
     /*! Constructor.
     */
@@ -19,7 +17,7 @@ public:
     /*! Constructor with a message.
      \param message message of the exception
     */
-    explicit ConcordiaException(const string & message) throw();
+    explicit ConcordiaException(const std::string & message) throw();
 
     /*! Destructor.
     */
@@ -30,7 +28,7 @@ public:
     virtual const char* what() const throw();
 
 private:
-    string _message;
+    std::string _message;
 };
 
 #endif

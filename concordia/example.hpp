@@ -10,18 +10,17 @@
 
 */
 
-using namespace std;
-
 class Example {
 public:
-    explicit Example(const string & sentence, const SUFFIX_MARKER_TYPE & id)
-                                                   throw(ConcordiaException);
+    explicit Example(const std::string & sentence,
+                     const SUFFIX_MARKER_TYPE & id)
+                                           throw(ConcordiaException);
 
     /*! Destructor.
     */
     virtual ~Example();
 
-    string getSentence() const {
+    std::string getSentence() const {
         return _sentence;
     }
 
@@ -30,7 +29,7 @@ public:
     }
 
 private:
-    string _sentence;
+    std::string _sentence;
 
     SUFFIX_MARKER_TYPE _id;
 };

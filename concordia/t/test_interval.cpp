@@ -2,8 +2,6 @@
 #include "concordia/interval.hpp"
 #include "concordia/common/config.hpp"
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(interval)
 
 BOOST_AUTO_TEST_CASE( IntervalIntersects1 )

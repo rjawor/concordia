@@ -3,8 +3,6 @@
 #include "concordia/tm_matches.hpp"
 #include "concordia/common/config.hpp"
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(tm_matches)
 
 BOOST_AUTO_TEST_CASE( TmMatchesSimpleScore1 )

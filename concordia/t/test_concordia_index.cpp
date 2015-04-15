@@ -7,8 +7,6 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(concordia_index)
 
 
@@ -16,7 +14,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
 {
     ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
                          TestResourcesManager::getTestFilePath("temp","test_markers.bin"));
-    boost::shared_ptr<vector<sauchar_t> > T = boost::shared_ptr<vector<sauchar_t> >(new vector<sauchar_t>());
+    boost::shared_ptr<std::vector<sauchar_t> > T = boost::shared_ptr<std::vector<sauchar_t> >(new std::vector<sauchar_t>());
     //    Test hashed index:
     //    n: 0 1 2 3 4 5 6 7 8
     // T[n]: 0 1 2 0 1 3 4 1 3 
@@ -36,7 +34,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest )
 
     boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(T);
 
-    boost::shared_ptr<vector<saidx_t> > expectedSA = boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
+    boost::shared_ptr<std::vector<saidx_t> > expectedSA = boost::shared_ptr<std::vector<saidx_t> >(new std::vector<saidx_t>());
     expectedSA->push_back(0);
     expectedSA->push_back(3);
     expectedSA->push_back(1);
@@ -53,7 +51,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest2 )
 {
     ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
                          TestResourcesManager::getTestFilePath("temp","test_markers.bin"));
-    boost::shared_ptr<vector<sauchar_t> > T = boost::shared_ptr<vector<sauchar_t> >(new vector<sauchar_t>());
+    boost::shared_ptr<std::vector<sauchar_t> > T = boost::shared_ptr<std::vector<sauchar_t> >(new std::vector<sauchar_t>());
 
     //Test hashed index:
     //    n: 0  1  2  3  4  5  6  7  8  9 10 11
@@ -77,7 +75,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest2 )
 
     boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(T);
 
-    boost::shared_ptr<vector<saidx_t> > expectedSA = boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
+    boost::shared_ptr<std::vector<saidx_t> > expectedSA = boost::shared_ptr<std::vector<saidx_t> >(new std::vector<saidx_t>());
     expectedSA->push_back(0);
     expectedSA->push_back(4);
     expectedSA->push_back(1);
@@ -97,7 +95,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest3 )
 {
     ConcordiaIndex index(TestResourcesManager::getTestFilePath("temp","test_hash_index.bin"),
                          TestResourcesManager::getTestFilePath("temp","test_markers.bin"));
-    boost::shared_ptr<vector<sauchar_t> > T = boost::shared_ptr<vector<sauchar_t> >(new vector<sauchar_t>());
+    boost::shared_ptr<std::vector<sauchar_t> > T = boost::shared_ptr<std::vector<sauchar_t> >(new std::vector<sauchar_t>());
 
     //Test hashed index:
     //    n: 0  1  2  3  4  5
@@ -115,7 +113,7 @@ BOOST_AUTO_TEST_CASE( SuffixArrayGenerationTest3 )
 
     boost::shared_ptr<std::vector<saidx_t> > SA = index.generateSuffixArray(T);
 
-    boost::shared_ptr<vector<saidx_t> > expectedSA = boost::shared_ptr<vector<saidx_t> >(new vector<saidx_t>());
+    boost::shared_ptr<std::vector<saidx_t> > expectedSA = boost::shared_ptr<std::vector<saidx_t> >(new std::vector<saidx_t>());
     expectedSA->push_back(0);
     expectedSA->push_back(5);
     expectedSA->push_back(3);

@@ -10,14 +10,13 @@
 #include "concordia/anubis_search_result.hpp"
 #include "concordia/tm_matches.hpp"
 
+#include<vector>
 #include <divsufsort.h>
 
 /*!
   Class for searching using Anubis algorithm.
 
 */
-
-using namespace std;
 
 class AnubisSearcher {
 public:
@@ -49,7 +48,7 @@ public:
                     SUFFIX_MARKER_TYPE & length) throw(ConcordiaException);
 
 private:
-    void _collectResults(vector<SubstringOccurence> & result,
+    void _collectResults(std::vector<SubstringOccurence> & result,
                  boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                  boost::shared_ptr<std::vector<saidx_t> > SA,
                  saidx_t left, saidx_t size);
@@ -63,9 +62,9 @@ private:
                    SUFFIX_MARKER_TYPE patternOffset);
 
     bool _getOccurenceFromSA(boost::shared_ptr<std::vector<saidx_t> > SA,
-                             boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
-                             saidx_t sa_pos,
-                             SubstringOccurence & occurence);
+                 boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+                 saidx_t sa_pos,
+                 SubstringOccurence & occurence);
 
     void _addOccurenceToMap(boost::shared_ptr<TmMatchesMap> tmMatchesMap,
                             SubstringOccurence & occurence,

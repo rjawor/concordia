@@ -4,24 +4,24 @@
 #define CONCORDIA_TAGSET_DIRECTORY "concordia-tagset"
 #define CONCORDIA_CONFIG_DIRECTORY "concordia-config"
 
-string TestResourcesManager::getPuddleFilePath(const string & filename) {
-    string result = string(TEST_RESOURCES_DIRECTORY);
+std::string TestResourcesManager::getPuddleFilePath(const std::string & filename) {
+    std::string result = std::string(TEST_RESOURCES_DIRECTORY);
     return result + "/" + PUDDLE_TEST_DIRECTORY +  "/" + filename;
 }
 
 
-string TestResourcesManager::getTestConcordiaConfigFilePath(const string & filename) {
-    string result = string(TEST_RESOURCES_DIRECTORY);
+std::string TestResourcesManager::getTestConcordiaConfigFilePath(const std::string & filename) {
+    std::string result = std::string(TEST_RESOURCES_DIRECTORY);
     return result + "/" + CONCORDIA_CONFIG_DIRECTORY + "/" + filename;
 }
 
-string TestResourcesManager::getProdConcordiaConfigFilePath(const string & filename) {
-    string result = string(PROD_RESOURCES_DIRECTORY);
+std::string TestResourcesManager::getProdConcordiaConfigFilePath(const std::string & filename) {
+    std::string result = std::string(PROD_RESOURCES_DIRECTORY);
     return result + "/" + CONCORDIA_CONFIG_DIRECTORY + "/" + filename;
 }
 
-string TestResourcesManager::getTestFilePath(const string & module, const string & filename) {
-    string result = string(TEST_RESOURCES_DIRECTORY);
+std::string TestResourcesManager::getTestFilePath(const std::string & module, const std::string & filename) {
+    std::string result = std::string(TEST_RESOURCES_DIRECTORY);
     return result + "/" + module + "/" + filename;
 }
 

@@ -9,14 +9,12 @@
 
 #include <string>
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(concordia_main)
 
 BOOST_AUTO_TEST_CASE( ConcordiaVersion )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    string version = concordia.getVersion();
+    std::string version = concordia.getVersion();
     BOOST_CHECK_EQUAL( version , "0.1");
 }
 
@@ -51,8 +49,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch1 )
     
     */
     
-    vector<SubstringOccurence> searchResult1 = concordia.simpleSearch("posiada rysia");
-    vector<SubstringOccurence> searchResult2 = concordia.simpleSearch("posiada kota Ala");
+    std::vector<SubstringOccurence> searchResult1 = concordia.simpleSearch("posiada rysia");
+    std::vector<SubstringOccurence> searchResult2 = concordia.simpleSearch("posiada kota Ala");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
@@ -73,7 +71,7 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 {
     // modified stop words to avoid anonymization 
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    vector<Example> testExamples;
+    std::vector<Example> testExamples;
     testExamples.push_back(Example("xto xjest okno",312));
     testExamples.push_back(Example("czy xjest okno otwarte",202));
     testExamples.push_back(Example("chyba xto xjest xtutaj",45));
@@ -106,8 +104,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
     */
     
     Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("xto xjest");
-    vector<SubstringOccurence> searchResult2 = concordia2.simpleSearch("xjest okno");
+    std::vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("xto xjest");
+    std::vector<SubstringOccurence> searchResult2 = concordia2.simpleSearch("xjest okno");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
@@ -131,13 +129,13 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch3 )
 {
     Concordia concordia = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    vector<Example> testExamples;
+    std::vector<Example> testExamples;
     testExamples.push_back(Example("2. Ma on w szczególności prawo do podjęcia zatrudnienia dostępnego na terytorium innego Państwa Członkowskiego z takim samym pierwszeństwem, z jakiego korzystają obywatele tego państwa.",312));
     testExamples.push_back(Example("czy xjest żółte otwarte",202));
     concordia.addAllExamples(testExamples);
     
     Concordia concordia2 = Concordia(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg"));
-    vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("on w szczególności prawo do podjęcia");
+    std::vector<SubstringOccurence> searchResult1 = concordia2.simpleSearch("on w szczególności prawo do podjęcia");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
@@ -176,8 +174,8 @@ BOOST_AUTO_TEST_CASE( ConcordiaAnubisSearch1 )
         n: 0  1  2  3  4  5  6  7  8  9 10 11
     SA[n]: 0  4  1  9  5  2 10  6  8 11  3  7 
     
-    vector<AnubisSearchResult> searchResult1 = concordia.anubisSearch("posiada rysia chyba");
-    vector<AnubisSearchResult> searchResult2 = concordia.anubisSearch("posiada kota Ala");
+    std::vector<AnubisSearchResult> searchResult1 = concordia.anubisSearch("posiada rysia chyba");
+    std::vector<AnubisSearchResult> searchResult2 = concordia.anubisSearch("posiada kota Ala");
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 

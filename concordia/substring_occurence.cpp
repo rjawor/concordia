@@ -7,10 +7,11 @@ SubstringOccurence::SubstringOccurence() {
 SubstringOccurence::SubstringOccurence(const SUFFIX_MARKER_TYPE & marker) {
     _id = Utils::getIdFromMarker(marker);
     _offset = Utils::getOffsetFromMarker(marker);
-    _exampleLength = Utils::getLengthFromMarker(marker);    
+    _exampleLength = Utils::getLengthFromMarker(marker);
 }
 
-void SubstringOccurence::enterDataFromMarker(const SUFFIX_MARKER_TYPE & marker) {
+void SubstringOccurence::enterDataFromMarker(
+                                       const SUFFIX_MARKER_TYPE & marker) {
     _id = Utils::getIdFromMarker(marker);
     _offset = Utils::getOffsetFromMarker(marker);
     _exampleLength = Utils::getLengthFromMarker(marker);

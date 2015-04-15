@@ -6,8 +6,6 @@
 
 #define TMP_LOG_FILE "/tmp/concordia.log"
 
-using namespace std;
-
 BOOST_AUTO_TEST_SUITE(logging)
 
 BOOST_AUTO_TEST_CASE( LoggingTest )

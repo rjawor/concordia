@@ -1,0 +1,2 @@
+valgrind --tool=callgrind ./build/concordia-console/concordia-console -c prod/resources/concordia-config/concordia.cfg -a "Komisji Europejskiej" 
+kcachegrind callgrind.out.3952 

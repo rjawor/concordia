@@ -1,28 +1,31 @@
+- wyszukiwanie zdania: wyszukanie najdłuższych pasujących fragmentów Anubisem, 1D (approximate) bin packing. Nazwijmy to concordia search. Wyszukiwane są wszystkie najdłuższe dopasowania patternu dzięki LCP search. Zwracany jest wynik w postaci listy najdłuższych dopasowanych fragmentów, posortowanych malejąco po długości, z maksymalnie 3 przedstawicielami każdej długości. Dodatkowo obliczany jest zestaw optymalnego pokrycia patternu.
+- Prawdopodobnie długość example w markers będzie potrzebna tylko anubisowi (który, jak się okazuje, jest wolny). Pomyśleć, do czego można wykorzystać markery, bo ich idea wydaje się niezła.
+- Multi-threading?
+- concordia-server (zastanowić się, czy nie napisać CAT-a)
+- wyłączyć stopWords
+- zastanowić się nad empty hash examples (rozwiązanie: w ogóle nie szukać fraz o pustym hashu, rzucać wyjątek).
+- puścić 100% search test na jrc
+
+
+
+---------------------------- Archive -----------------------------
+
+
 DONE 1. lokalizowane to_lower (wykorzystać utf8case, naprawić testy)
 DONE 2. anonimizacja zdań
 DONE 3. Dzielenie zdań (max 255 tokenów)
 
-
-
-
 DONE Anubis search się komplikuje! Przy tworzeniu obiektu tmMatches dla przykładu trzeba podać id przykładu, długość patternu i długość przykładu. Dwa pierwsze mamy, ale niestety nie ma skąd wziąć długości przykładu. Pamiętamy tylko offset sufiksu.
 
 DONE 1. Bitwise operators (i stałe!) przy rozmiarze index character oraz markerów
-IN PROGRESS 2. Wykonać anubis search na nowych markerach z długością zdania
-3. Multi-threading?
-
-- concordia-server
-- zastanowić się nad empty hash examples (rozwiązanie: w ogóle nie szukać fraz o pustym hashu, rzucać wyjątek).
-- wyłączyć stopWords
-- puścić 100% search test na jrc
-- wyszukiwanie zdania: wyszukanie najdłuższych pasujących fragmentów Anubisem, 1D (approximate) bin packing
+DONE 2. Wykonać anubis search na nowych markerach z długością zdania
 
 
-zastanowić się nad optymalizacją:
+DONE zastanowić się nad optymalizacją:
 REJECTED - tmMatchesMap jako normalna mapa (nie ptr_map)
 REJECTED - LCP array
 DONE - !important! rezygnacja z ptr_vector
 DONE - zwracanie wektorów
 DONE - powyrzucać using namespace std
-- profiling
+DONE - profiling
 

@@ -148,7 +148,7 @@ std::vector<AnubisSearchResult> Concordia::anubisSearch(
                                           const std::string & pattern)
                                   throw(ConcordiaException) {
     if (_T->size() > 0) {
-        return _searcher->anubisSearch(_hashGenerator, _T,
+        return _searcher->anubisSearch(_config, _hashGenerator, _T,
                                        _markers, _SA, pattern);
     } else {
         std::vector<AnubisSearchResult> result;

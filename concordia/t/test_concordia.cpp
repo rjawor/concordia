@@ -158,31 +158,41 @@ BOOST_AUTO_TEST_CASE( ConcordiaAnubisSearch1 )
      14: "Ala posiada kota"
      51: "Ala posiada rysia"
     123: "Marysia posiada rysia"
-    
-    Test word map:
-    Ala -> 0
-    posiada -> 1
-    kota -> 2
-    rysia -> 3
-    Marysia -> 4
-    
-    Test hashed index:
-        n: 0  1  2  3  4  5  6  7  8  9 10 11
-     T[n]: 0  1  2  |  0  1  3  |  4  1  3  |
-    
-    Test suffix array:
-        n: 0  1  2  3  4  5  6  7  8  9 10 11
-    SA[n]: 0  4  1  9  5  2 10  6  8 11  3  7 
+    */
+
+    // the below expectations assume 0.3 anubis threshold
     
     std::vector<AnubisSearchResult> searchResult1 = concordia.anubisSearch("posiada rysia chyba");
-    std::vector<AnubisSearchResult> searchResult2 = concordia.anubisSearch("posiada kota Ala");
+    BOOST_CHECK_EQUAL(searchResult1.size(), 2);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getExampleId(), 51);
+    BOOST_CHECK_CLOSE(searchResult1.at(0).getScore(), 0.5609, 0.1);
+    BOOST_CHECK_EQUAL(searchResult1.at(1).getExampleId(), 123);
+    BOOST_CHECK_CLOSE(searchResult1.at(1).getScore(), 0.5609, 0.1);
+
+
+
+    std::vector<AnubisSearchResult> searchResult2 = concordia.anubisSearch("Marysia posiada rysia");
+    BOOST_CHECK_EQUAL(searchResult2.size(), 2);
+    BOOST_CHECK_EQUAL(searchResult2.at(0).getExampleId(), 123);
+    BOOST_CHECK_EQUAL(searchResult2.at(0).getScore(), 1);
+    BOOST_CHECK_EQUAL(searchResult2.at(1).getExampleId(), 51);
+    BOOST_CHECK_CLOSE(searchResult2.at(1).getScore(), 0.5609, 0.1);
+
+    std::vector<AnubisSearchResult> searchResult3 = concordia.anubisSearch("Nowe zdanie");
+    BOOST_CHECK_EQUAL(searchResult3.size(), 0);
+
+    std::vector<AnubisSearchResult> searchResult4 = concordia.anubisSearch("Ala posiada kota chyba");
+    BOOST_CHECK_EQUAL(searchResult4.size(), 2);
+    BOOST_CHECK_EQUAL(searchResult4.at(0).getExampleId(), 14);
+    BOOST_CHECK_CLOSE(searchResult4.at(0).getScore(), 0.848, 0.1);
+    BOOST_CHECK_EQUAL(searchResult4.at(1).getExampleId(), 51);
+    BOOST_CHECK_CLOSE(searchResult4.at(1).getScore(), 0.4707, 0.1);
 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_WORD_MAP)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_MARKERS)); 
     boost::filesystem::remove(TestResourcesManager::getTestFilePath("temp",TEMP_HASHED_INDEX)); 
 
     /*
-    BOOST_CHECK_EQUAL(searchResult1.size(), 2);
     BOOST_CHECK_EQUAL(searchResult1.at(0).getId(), 123);
     BOOST_CHECK_EQUAL(searchResult1.at(0).getOffset(), 1);
     BOOST_CHECK_EQUAL(searchResult1.at(1).getId(), 51);

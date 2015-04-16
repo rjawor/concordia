@@ -3,8 +3,11 @@
 #---------------------------
 #
 
+# Anubis score threshold
+anubis_threshold = "0.3"
+
 #Path to the Puddle tagset
-puddle_tagset_path = "@PROD_PUDDLE_TAGSET_PATH@";
+puddle_tagset_path = "@PROD_PUDDLE_TAGSET_PATH@"
 
 #-------------------------------------------------------------------------------
 #Word map, hashed index and suffix array files are in a temporary directory

@@ -36,6 +36,7 @@ public:
                     const std::string & pattern) throw(ConcordiaException);
 
     std::vector<AnubisSearchResult> anubisSearch(
+                    boost::shared_ptr<ConcordiaConfig> config,
                     boost::shared_ptr<HashGenerator> hashGenerator,
                     boost::shared_ptr<std::vector<sauchar_t> > T,
                     boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,

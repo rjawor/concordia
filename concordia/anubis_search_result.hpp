@@ -25,7 +25,9 @@ public:
         return _score;
     }
 
-
+    bool operator > (const AnubisSearchResult & other) const {
+        return (_score > other.getScore());
+    }
 private:
     SUFFIX_MARKER_TYPE _exampleId;
 

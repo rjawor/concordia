@@ -67,6 +67,10 @@ public:
         return _stopSymbolsFilePath;
     }
 
+    double getAnubisThreshold() {
+        return _anubisThreshold;
+    }
+
 private:
     libconfig::Config _config;
 
@@ -89,6 +93,8 @@ private:
     std::string _namedEntitiesFilePath;
 
     std::string _stopSymbolsFilePath;
+
+    double _anubisThreshold;
 
     std::string _readConfigParameterStr(const std::string & name)
                                      throw(ConcordiaException);

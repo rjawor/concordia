@@ -13,6 +13,7 @@ AnubisSearcher::~AnubisSearcher() {
 
 
 std::vector<AnubisSearchResult> AnubisSearcher::anubisSearch(
+                boost::shared_ptr<ConcordiaConfig> config,
                 boost::shared_ptr<std::vector<sauchar_t> > T,
                 boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                 boost::shared_ptr<std::vector<saidx_t> > SA,
@@ -21,8 +22,25 @@ std::vector<AnubisSearchResult> AnubisSearcher::anubisSearch(
     boost::shared_ptr<TmMatchesMap> tmMatchesMap =
                 getTmMatches(T, markers, SA, pattern);
 
-    // get the tmMatches list sorted descending by score
+    // 1. iterate over tmMatchesMap
+    // 2. calculate score for each tmMatches
+    // 3. create AnubisSearchResult from tmMatches with scores over threshold
+    // 4. sort the AnubisSearchResult vector decending
+    
     std::vector<AnubisSearchResult> result;
+    for(TmMatchesMapIterator iterator = tmMatchesMap->begin();
+        iterator != tmMatchesMap->end(); iterator++) {
+        TmMatches * tmMatches = iterator->second;
+        tmMatches->calculateScore();
+        
+        if (tmMatches->getScore() >= config->getAnubisThreshold()) {
+            result.push_back(AnubisSearchResult(tmMatches->getExampleId(),
+                                                tmMatches->getScore()));
+        }
+    }
+    
+    std::sort(result.begin(), result.end(), std::greater<AnubisSearchResult>());
+        
     return result;
 }
 

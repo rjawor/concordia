@@ -25,7 +25,9 @@ int main(int argc, char** argv) {
                                  "Concordia configuration file (required)")
         ("simple-search,s", boost::program_options::value<std::string>(),
                                  "Pattern to be searched in the index")
-        ("silent,n", "While searching, do not output search results")
+        ("silent,n", "While searching with simple-search, do not output search results")
+        ("anubis-search,a", boost::program_options::value<std::string>(),
+                                 "Pattern to be searched by anubis search in the index")
         ("read-file,r", boost::program_options::value<std::string>(),
                                  "File to be read and added to index");
 
@@ -78,6 +80,26 @@ int main(int argc, char** argv) {
                 BOOST_FOREACH(SubstringOccurence occurence, result) {
                     std::cout << "\t\tfound match in sentence number: "
                               << occurence.getId() << std::endl;
+                }
+            }
+        } else if  (cli.count("anubis-search")) {
+            std::string pattern = cli["anubis-search"].as<std::string>();
+            std::cout << "\tAnubis searching for pattern: \"" << pattern <<
+                                                          "\"" << std::endl;
+            time_start = boost::posix_time::microsec_clock::local_time();
+            std::vector<AnubisSearchResult> result =
+                                             concordia.anubisSearch(pattern);
+            time_end = boost::posix_time::microsec_clock::local_time();
+            msdiff = time_end - time_start;
+            std::cout << "\tFound: " << result.size() << " matches. "
+            << "Search took: " <<
+                          msdiff.total_milliseconds() << "ms." << std::endl;
+            if (!cli.count("silent")) {
+                BOOST_FOREACH(AnubisSearchResult searchResult, result) {
+                    std::cout << "\t\tfound matching sentence number: "
+                              << searchResult.getExampleId()
+                              << ", score: " << searchResult.getScore()
+                              << std::endl;
                 }
             }
         } else if (cli.count("read-file")) {

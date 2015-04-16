@@ -1,4 +1,5 @@
 #include <sstream>
+#include <stdlib.h>     
 #include "concordia/concordia_config.hpp"
 #include "concordia/common/logging.hpp"
 
@@ -12,6 +13,7 @@
 #define STOP_WORDS_PARAM "stop_words_path"
 #define NAMED_ENTITIES_PARAM "named_entities_path"
 #define STOP_SYMBOLS_PARAM "stop_symbols_path"
+#define ANUBIS_THRESHOLD_PARAM "anubis_threshold"
 
 ConcordiaConfig::ConcordiaConfig(const std::string & configFilePath)
                                      throw(ConcordiaException) {
@@ -44,6 +46,9 @@ ConcordiaConfig::ConcordiaConfig(const std::string & configFilePath)
           ConcordiaConfig::_readConfigParameterStr(NAMED_ENTITIES_PARAM);
     _stopSymbolsFilePath =
           ConcordiaConfig::_readConfigParameterStr(STOP_SYMBOLS_PARAM);
+    _anubisThreshold =
+       atof(
+         ConcordiaConfig::_readConfigParameterStr(ANUBIS_THRESHOLD_PARAM).c_str());
 }
 
 ConcordiaConfig::~ConcordiaConfig() {

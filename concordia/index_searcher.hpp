@@ -42,6 +42,14 @@ public:
                     boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                     boost::shared_ptr<std::vector<saidx_t> > SA,
                     const std::string & pattern) throw(ConcordiaException);
+
+    boost::shared_ptr<ConcordiaSearchResult> concordiaSearch(
+                    boost::shared_ptr<HashGenerator> hashGenerator,
+                    boost::shared_ptr<std::vector<sauchar_t> > T,
+                    boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+                    boost::shared_ptr<std::vector<saidx_t> > SA,
+                    const std::string & pattern) throw(ConcordiaException);
+
 private:
     boost::shared_ptr<AnubisSearcher> _anubisSearcher;
 };

@@ -156,3 +156,17 @@ std::vector<AnubisSearchResult> Concordia::anubisSearch(
     }
 }
 
+boost::shared_ptr<ConcordiaSearchResult> Concordia::concordiaSearch(
+                                             const std::string & pattern)
+                                             throw(ConcordiaException) {
+    if (_T->size() > 0) {
+        return _searcher->concordiaSearch(_hashGenerator, _T,
+                                       _markers, _SA, pattern);
+    } else {
+        std::vector<std::string> empty;
+        return boost::shared_ptr<ConcordiaSearchResult>(
+            new ConcordiaSearchResult(empty));
+    }
+}
+
+

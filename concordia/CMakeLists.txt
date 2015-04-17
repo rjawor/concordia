@@ -6,6 +6,8 @@ foreach(dir ${ALL_DIRECTORIES})
 endforeach(dir)
 
 add_library(concordia SHARED
+  concordia_search_result.cpp
+  matched_pattern_fragment.cpp
   anubis_searcher.cpp
   regex_replacement.cpp
   sentence_anonymizer.cpp

@@ -8,10 +8,11 @@
 #include "concordia/substring_occurence.hpp"
 #include "concordia/concordia_exception.hpp"
 #include "concordia/concordia_config.hpp"
+#include "concordia/concordia_search_result.hpp"
 #include "concordia/anubis_search_result.hpp"
 #include "concordia/tm_matches.hpp"
 
-#include<vector>
+#include <vector>
 #include <divsufsort.h>
 
 /*!
@@ -26,6 +27,14 @@ public:
     /*! Destructor.
     */
     virtual ~AnubisSearcher();
+
+    void concordiaSearch(
+                boost::shared_ptr<ConcordiaSearchResult> result,
+                boost::shared_ptr<std::vector<sauchar_t> > T,
+                boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+                boost::shared_ptr<std::vector<saidx_t> > SA,
+                const std::vector<INDEX_CHARACTER_TYPE> & pattern)
+                                                     throw(ConcordiaException);
 
     std::vector<AnubisSearchResult> anubisSearch(
                 boost::shared_ptr<ConcordiaConfig> config,

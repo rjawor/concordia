@@ -25,9 +25,12 @@ int main(int argc, char** argv) {
                                  "Concordia configuration file (required)")
         ("simple-search,s", boost::program_options::value<std::string>(),
                                  "Pattern to be searched in the index")
-        ("silent,n", "While searching with simple-search, do not output search results")
+        ("silent,n",
+            "While searching with simple-search, do not output search results")
         ("anubis-search,a", boost::program_options::value<std::string>(),
-                                 "Pattern to be searched by anubis search in the index")
+                        "Pattern to be searched by anubis search in the index")
+        ("concordia-search,x", boost::program_options::value<std::string>(),
+                     "Pattern to be searched by concordia search in the index")
         ("read-file,r", boost::program_options::value<std::string>(),
                                  "File to be read and added to index");
 
@@ -99,6 +102,38 @@ int main(int argc, char** argv) {
                     std::cout << "\t\tfound matching sentence number: "
                               << searchResult.getExampleId()
                               << ", score: " << searchResult.getScore()
+                              << std::endl;
+                }
+            }
+        } else if  (cli.count("concordia-search")) {
+            std::string pattern = cli["concordia-search"].as<std::string>();
+            std::cout << "\tConcordia searching for pattern: \"" << pattern <<
+                                                          "\"" << std::endl;
+            time_start = boost::posix_time::microsec_clock::local_time();
+            boost::shared_ptr<ConcordiaSearchResult> result =
+                                             concordia.concordiaSearch(pattern);
+            time_end = boost::posix_time::microsec_clock::local_time();
+            msdiff = time_end - time_start;
+
+            std::cout << "\tPattern used: " << std::endl << "\t\t";
+            BOOST_FOREACH(std::string token, result->getTokenVector()) {
+                std::cout << token << " ";
+            }
+            std::cout << std::endl;
+
+            std::cout << "\tFound: " << result->getFragments().size()
+                << " matches. "  << "Search took: " <<
+                          msdiff.total_milliseconds() << "ms." << std::endl;
+            if (!cli.count("silent")) {
+                BOOST_FOREACH(MatchedPatternFragment fragment,
+                              result->getFragments()) {
+                    std::cout << "\t\tfound matching fragment "
+                              << "(exampleId, exampleOffset,"
+                              << " patternOffset, length): "
+                              << fragment.getExampleId() << ","
+                              << fragment.getExampleOffset() << ","
+                              << fragment.getPatternOffset() << ","
+                              << fragment.getMatchedLength() << ","
                               << std::endl;
                 }
             }

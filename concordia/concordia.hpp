@@ -12,6 +12,7 @@
 #include "concordia/concordia_config.hpp"
 #include "concordia/concordia_index.hpp"
 #include "concordia/index_searcher.hpp"
+#include "concordia/concordia_search_result.hpp"
 #include "concordia/anubis_search_result.hpp"
 #include <divsufsort.h>
 
@@ -47,6 +48,10 @@ public:
                                                  throw(ConcordiaException);
 
     std::vector<AnubisSearchResult> anubisSearch(const std::string & pattern)
+                                                 throw(ConcordiaException);
+
+    boost::shared_ptr<ConcordiaSearchResult> concordiaSearch(
+                                                 const std::string & pattern)
                                                  throw(ConcordiaException);
 
     void loadRAMIndexFromDisk() throw(ConcordiaException);

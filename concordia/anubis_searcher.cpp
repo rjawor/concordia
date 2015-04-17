@@ -11,6 +11,42 @@ AnubisSearcher::AnubisSearcher() {
 AnubisSearcher::~AnubisSearcher() {
 }
 
+void AnubisSearcher::concordiaSearch(
+            boost::shared_ptr<ConcordiaSearchResult> result,
+            boost::shared_ptr<std::vector<sauchar_t> > T,
+            boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+            boost::shared_ptr<std::vector<saidx_t> > SA,
+            const std::vector<INDEX_CHARACTER_TYPE> & pattern)
+                                                 throw(ConcordiaException) {
+    // add fragments to result and sort them
+
+    std::vector<sauchar_t> patternVector =
+        Utils::indexVectorToSaucharVector(pattern);
+
+    if (patternVector.size() !=
+        pattern.size() * sizeof(INDEX_CHARACTER_TYPE)) {
+        throw ConcordiaException("Increasing pattern resolution went wrong.");
+    }
+
+    for (int offset = 0; offset < pattern.size(); offset++) {
+        int highResOffset = offset * sizeof(INDEX_CHARACTER_TYPE);
+        std::vector<sauchar_t> currentPattern(
+            patternVector.begin()+highResOffset, patternVector.end());
+        SUFFIX_MARKER_TYPE lcpLength;
+        std::vector<SubstringOccurence> occurences =
+            lcpSearch(T, markers, SA, currentPattern, lcpLength);
+
+        BOOST_FOREACH(SubstringOccurence occurence, occurences) {
+            result->addFragment(MatchedPatternFragment(
+                                    occurence.getId(),
+                                    occurence.getOffset(),
+                                    offset,
+                                    lcpLength / sizeof(INDEX_CHARACTER_TYPE)));
+        }
+    }
+
+    result->sortFragments();
+}
 
 std::vector<AnubisSearchResult> AnubisSearcher::anubisSearch(
                 boost::shared_ptr<ConcordiaConfig> config,
@@ -26,21 +62,21 @@ std::vector<AnubisSearchResult> AnubisSearcher::anubisSearch(
     // 2. calculate score for each tmMatches
     // 3. create AnubisSearchResult from tmMatches with scores over threshold
     // 4. sort the AnubisSearchResult vector decending
-    
+
     std::vector<AnubisSearchResult> result;
-    for(TmMatchesMapIterator iterator = tmMatchesMap->begin();
-        iterator != tmMatchesMap->end(); iterator++) {
+    for (TmMatchesMapIterator iterator = tmMatchesMap->begin();
+        iterator != tmMatchesMap->end(); ++iterator) {
         TmMatches * tmMatches = iterator->second;
         tmMatches->calculateScore();
-        
+
         if (tmMatches->getScore() >= config->getAnubisThreshold()) {
             result.push_back(AnubisSearchResult(tmMatches->getExampleId(),
                                                 tmMatches->getScore()));
         }
     }
-    
+
     std::sort(result.begin(), result.end(), std::greater<AnubisSearchResult>());
-        
+
     return result;
 }
 
@@ -175,6 +211,7 @@ void AnubisSearcher::_collectResults(
                  boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
                  boost::shared_ptr<std::vector<saidx_t> > SA,
                  saidx_t left, saidx_t size) {
+    int resultsCount = 0;
     for (saidx_t i = 0; i < size; i++) {
         saidx_t resultPos = SA->at(left + i);
 
@@ -182,6 +219,12 @@ void AnubisSearcher::_collectResults(
             SUFFIX_MARKER_TYPE marker =
                 markers->at(resultPos / sizeof(INDEX_CHARACTER_TYPE));
             result.push_back(SubstringOccurence(marker));
+
+            // truncate results,
+            // we don't need too many identical pattern overlays
+            if (++resultsCount >= CONCORDIA_SEARCH_MAX_RESULTS) {
+                break;
+            }
         }
     }
 }

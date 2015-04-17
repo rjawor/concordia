@@ -28,3 +28,5 @@ typedef @SUFFIX_MARKER_TYPE@ SUFFIX_MARKER_TYPE;
 //The sentence marker is build as follows: its first bytes store the
 // sentence id. Next, SUFFIX_MARKER_SENTENCE_BYTES store the suffix offset
 // and the last SUFFIX_MARKER_SENTENCE_BYTES store the sentence length.
+
+#define CONCORDIA_SEARCH_MAX_RESULTS 3

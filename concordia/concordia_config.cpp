@@ -1,5 +1,5 @@
 #include <sstream>
-#include <stdlib.h>     
+#include <stdlib.h>
 #include "concordia/concordia_config.hpp"
 #include "concordia/common/logging.hpp"
 
@@ -46,9 +46,8 @@ ConcordiaConfig::ConcordiaConfig(const std::string & configFilePath)
           ConcordiaConfig::_readConfigParameterStr(NAMED_ENTITIES_PARAM);
     _stopSymbolsFilePath =
           ConcordiaConfig::_readConfigParameterStr(STOP_SYMBOLS_PARAM);
-    _anubisThreshold =
-       atof(
-         ConcordiaConfig::_readConfigParameterStr(ANUBIS_THRESHOLD_PARAM).c_str());
+    _anubisThreshold = atof(ConcordiaConfig::_readConfigParameterStr(
+                                            ANUBIS_THRESHOLD_PARAM).c_str());
 }
 
 ConcordiaConfig::~ConcordiaConfig() {

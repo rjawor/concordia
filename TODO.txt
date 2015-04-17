@@ -1,8 +1,8 @@
-- wyszukiwanie zdania: wyszukanie najdłuższych pasujących fragmentów Anubisem, 1D (approximate) bin packing. Nazwijmy to concordia search. Wyszukiwane są wszystkie najdłuższe dopasowania patternu dzięki LCP search. Zwracany jest wynik w postaci listy najdłuższych dopasowanych fragmentów, posortowanych malejąco po długości, z maksymalnie 3 przedstawicielami każdej długości. Dodatkowo obliczany jest zestaw optymalnego pokrycia patternu.
+- wyłączyć stopWords
+- Przy concordia searh dodatkowo obliczany ma być zestaw optymalnego pokrycia patternu. Może siłowo? (jeśli przyjąć max dł. zdania 500 tokenów, to nie powinno być źle)
 - Prawdopodobnie długość example w markers będzie potrzebna tylko anubisowi (który, jak się okazuje, jest wolny). Pomyśleć, do czego można wykorzystać markery, bo ich idea wydaje się niezła.
 - Multi-threading?
 - concordia-server (zastanowić się, czy nie napisać CAT-a)
-- wyłączyć stopWords
 - zastanowić się nad empty hash examples (rozwiązanie: w ogóle nie szukać fraz o pustym hashu, rzucać wyjątek).
 - puścić 100% search test na jrc
 
@@ -10,6 +10,7 @@
 
 ---------------------------- Archive -----------------------------
 
+DONE - wyszukiwanie zdania: wyszukanie najdłuższych pasujących fragmentów Anubisem, 1D (approximate) bin packing. Nazwijmy to concordia search. Wyszukiwane są wszystkie najdłuższe dopasowania patternu dzięki LCP search. Zwracany jest wynik w postaci listy najdłuższych dopasowanych fragmentów, posortowanych malejąco po długości, z maksymalnie 3 przedstawicielami każdej długości. 
 
 DONE 1. lokalizowane to_lower (wykorzystać utf8case, naprawić testy)
 DONE 2. anonimizacja zdań

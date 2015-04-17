@@ -59,3 +59,19 @@ std::vector<AnubisSearchResult> IndexSearcher::anubisSearch(
                                  hashGenerator->generateHash(pattern);
     return _anubisSearcher->anubisSearch(config, T, markers, SA, hash);
 }
+
+boost::shared_ptr<ConcordiaSearchResult> IndexSearcher::concordiaSearch(
+                  boost::shared_ptr<HashGenerator> hashGenerator,
+                  boost::shared_ptr<std::vector<sauchar_t> > T,
+                  boost::shared_ptr<std::vector<SUFFIX_MARKER_TYPE> > markers,
+                  boost::shared_ptr<std::vector<saidx_t> > SA,
+                  const std::string & pattern) throw(ConcordiaException) {
+    std::vector<INDEX_CHARACTER_TYPE> hash =
+                                 hashGenerator->generateHash(pattern);
+    boost::shared_ptr<ConcordiaSearchResult> result =
+     boost::shared_ptr<ConcordiaSearchResult>(
+       new ConcordiaSearchResult(hashGenerator->generateTokenVector(pattern)));
+
+    _anubisSearcher->concordiaSearch(result, T, markers, SA, hash);
+    return result;
+}

@@ -1,4 +1,6 @@
 - wyłączyć stopWords
+- concordia search zwraca pozycje tokenów z hash'a. Jak to odnieść do examples w korpusie?
+- testy zużycia pamięci
 - Przy concordia searh dodatkowo obliczany ma być zestaw optymalnego pokrycia patternu. Może siłowo? (jeśli przyjąć max dł. zdania 500 tokenów, to nie powinno być źle)
 - Prawdopodobnie długość example w markers będzie potrzebna tylko anubisowi (który, jak się okazuje, jest wolny). Pomyśleć, do czego można wykorzystać markery, bo ich idea wydaje się niezła.
 - Multi-threading?

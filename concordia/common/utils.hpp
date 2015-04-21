@@ -9,6 +9,8 @@
 
 #include "concordia/common/config.hpp"
 #include "concordia/concordia_exception.hpp"
+#include "concordia/interval.hpp"
+#include "concordia/matched_pattern_fragment.hpp"
 #include <divsufsort.h>
 
 class Utils {
@@ -55,6 +57,16 @@ public:
     static SUFFIX_MARKER_TYPE createMarker(SUFFIX_MARKER_TYPE id,
                                            SUFFIX_MARKER_TYPE offset,
                                            SUFFIX_MARKER_TYPE length);
+
+    static double getLogarithmicOverlay(
+                                  const std::vector<Interval> & intervalList,
+                                  SUFFIX_MARKER_TYPE sentenceSize,
+                                  double k);
+
+    static double getLogarithmicOverlay(
+                      const std::vector<MatchedPatternFragment> & fragmentList,
+                      SUFFIX_MARKER_TYPE patternSize,
+                      double k);
 
     static SUFFIX_MARKER_TYPE maxSentenceSize;
 

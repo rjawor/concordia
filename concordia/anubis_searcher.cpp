@@ -45,6 +45,9 @@ void AnubisSearcher::concordiaSearch(
         }
     }
 
+    // compute best overlay of the pattern by matched fragments
+    result->computeBestOverlay(pattern.size());
+
     result->sortFragments();
 }
 

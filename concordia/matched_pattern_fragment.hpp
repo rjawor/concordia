@@ -2,13 +2,14 @@
 #define MATCHED_PATTERN_FRAGMENT_HDR
 
 #include "concordia/common/config.hpp"
+#include "concordia/interval.hpp"
 
 /*!
   Class representing matched pattern fragment in concordia search.
-
+  This fragment can be seen as an interval of the pattern.
 */
 
-class MatchedPatternFragment {
+class MatchedPatternFragment : public Interval {
 public:
     MatchedPatternFragment(const SUFFIX_MARKER_TYPE & exampleId,
                            const SUFFIX_MARKER_TYPE & exampleOffset,

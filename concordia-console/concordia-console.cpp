@@ -122,18 +122,34 @@ int main(int argc, char** argv) {
             std::cout << std::endl;
 
             std::cout << "\tFound: " << result->getFragments().size()
-                << " matches. "  << "Search took: " <<
+                << " fragments. "  << "Search took: " <<
                           msdiff.total_milliseconds() << "ms." << std::endl;
             if (!cli.count("silent")) {
+                std::cout << "\tBest overlay: " << std::endl;
                 BOOST_FOREACH(MatchedPatternFragment fragment,
-                              result->getFragments()) {
-                    std::cout << "\t\tfound matching fragment "
-                              << "(exampleId, exampleOffset,"
+                              result->getBestOverlay()) {
+                    std::cout << "\t\tfragment [" << fragment.getStart()
+                              << "," << fragment.getEnd()
+                              << "] (exampleId, exampleOffset,"
                               << " patternOffset, length): "
                               << fragment.getExampleId() << ","
                               << fragment.getExampleOffset() << ","
                               << fragment.getPatternOffset() << ","
-                              << fragment.getMatchedLength() << ","
+                              << fragment.getMatchedLength()
+                              << std::endl;
+                }
+
+                std::cout << "\tAll pattern fragments: " << std::endl;
+                BOOST_FOREACH(MatchedPatternFragment fragment,
+                              result->getFragments()) {
+                    std::cout << "\t\tfragment [" << fragment.getStart()
+                              << "," << fragment.getEnd()
+                              << "] (exampleId, exampleOffset,"
+                              << " patternOffset, length): "
+                              << fragment.getExampleId() << ","
+                              << fragment.getExampleOffset() << ","
+                              << fragment.getPatternOffset() << ","
+                              << fragment.getMatchedLength()
                               << std::endl;
                 }
             }

@@ -29,10 +29,16 @@ public:
         return _end;
     }
 
-private:
+protected:
     SUFFIX_MARKER_TYPE _start;
 
     SUFFIX_MARKER_TYPE _end;
+};
+
+struct intervalEndComparator {
+    inline bool operator() (const Interval & lhs, const Interval & rhs) {
+        return (lhs.getEnd() < rhs.getEnd());
+    }
 };
 
 #endif

@@ -6,21 +6,19 @@ getPossibleCoverages
     param A - set of concordia results, current coverage
     return isTerminal - returns true if nothing from S can be added to A
 */
-boolean getPossibleCoverages(A) {
+void getPossibleCoverages(A) {
     allTerminal = true
     for s in S: // to consider - sort intervals in S and always search from the last interval in A
                 // however - how to sort the intervals? maybe by their ends?
         if not A intersects {s} // given the above, this check would only require to check if s overlaps with the last interval in A
-            allTerminal = allTerminal and getPossibleCoverages(A+{s})
+            getPossibleCoverages(A+{s})
+            allTerminal = false
     
     if allTerminal then
         score = scoreCoverage(A)
         if score > scoreCoverage(maxCoverage)
             maxCoverage = A
 
-        return true
-    else
-        return false
 }
 
 

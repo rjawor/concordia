@@ -54,10 +54,6 @@ private:
     bool _alreadyIntersects(const std::vector<Interval> & intervalList,
                             int start, int end);
 
-    double _getLogarithmicOverlay(const std::vector<Interval> & intervalList,
-                                  SUFFIX_MARKER_TYPE sentenceSize,
-                                  double k);
-
     SUFFIX_MARKER_TYPE _exampleId;
 
     std::vector<Interval> _exampleMatchedRegions;

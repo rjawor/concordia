@@ -1,7 +1,6 @@
 - wyłączyć stopWords
-- concordia search zwraca pozycje tokenów z hash'a. Jak to odnieść do examples w korpusie?
+IN PROGRESS - concordia search zwraca pozycje tokenów z hash'a. Jak to odnieść do examples w korpusie?
 - testy zużycia pamięci
-- Przy concordia searh dodatkowo obliczany ma być zestaw optymalnego pokrycia patternu. Może siłowo? (jeśli przyjąć max dł. zdania 500 tokenów, to nie powinno być źle)
 - Prawdopodobnie długość example w markers będzie potrzebna tylko anubisowi (który, jak się okazuje, jest wolny). Pomyśleć, do czego można wykorzystać markery, bo ich idea wydaje się niezła.
 - Multi-threading?
 - concordia-server (zastanowić się, czy nie napisać CAT-a)
@@ -11,6 +10,8 @@
 
 
 ---------------------------- Archive -----------------------------
+
+DONE - Przy concordia searh dodatkowo obliczany ma być zestaw optymalnego pokrycia patternu. Może siłowo? (jeśli przyjąć max dł. zdania 500 tokenów, to nie powinno być źle)
 
 DONE - wyszukiwanie zdania: wyszukanie najdłuższych pasujących fragmentów Anubisem, 1D (approximate) bin packing. Nazwijmy to concordia search. Wyszukiwane są wszystkie najdłuższe dopasowania patternu dzięki LCP search. Zwracany jest wynik w postaci listy najdłuższych dopasowanych fragmentów, posortowanych malejąco po długości, z maksymalnie 3 przedstawicielami każdej długości. 
 

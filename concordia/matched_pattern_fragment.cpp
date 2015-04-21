@@ -5,6 +5,8 @@ MatchedPatternFragment::MatchedPatternFragment(
                                    const SUFFIX_MARKER_TYPE & exampleOffset,
                                    const SUFFIX_MARKER_TYPE & patternOffset,
                                    const SUFFIX_MARKER_TYPE & matchedLength):
+                                   Interval(patternOffset,
+                                            patternOffset + matchedLength),
                                    _exampleId(exampleId),
                                    _exampleOffset(exampleOffset),
                                    _patternOffset(patternOffset),

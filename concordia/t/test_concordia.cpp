@@ -204,6 +204,15 @@ BOOST_AUTO_TEST_CASE( ConcordiaSearch1 )
     concordia.refreshSAfromRAM();
         
     boost::shared_ptr<ConcordiaSearchResult> searchResult1 = concordia.concordiaSearch("posiada rysia chyba");
+    // best overlay: [], [] 
+
+    BOOST_CHECK_EQUAL(searchResult1->getBestOverlay().size(), 2);
+    BOOST_CHECK_EQUAL(searchResult1->getBestOverlay().at(0).getStart(), 0);
+    BOOST_CHECK_EQUAL(searchResult1->getBestOverlay().at(0).getEnd(), 2);
+    BOOST_CHECK_EQUAL(searchResult1->getBestOverlay().at(1).getStart(), 2);
+    BOOST_CHECK_EQUAL(searchResult1->getBestOverlay().at(1).getEnd(), 3);
+
+
     BOOST_CHECK_EQUAL(searchResult1->getFragments().size(), 7);
 
     /*

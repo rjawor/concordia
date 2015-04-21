@@ -114,6 +114,37 @@ SUFFIX_MARKER_TYPE Utils::createMarker(SUFFIX_MARKER_TYPE id,
     return result;
 }
 
+double Utils::getLogarithmicOverlay(const std::vector<Interval> & intervalList,
+                                    SUFFIX_MARKER_TYPE sentenceSize,
+                                    double k) {
+    double overlayScore = 0;
+    BOOST_FOREACH(Interval interval, intervalList) {
+        double intervalOverlay = static_cast<double>(interval.getLength())
+                                 / static_cast<double>(sentenceSize);
+        double significanceFactor = pow(log(interval.getLength()+1)
+                                    / log(sentenceSize+1), 1/k);
+
+        overlayScore += intervalOverlay * significanceFactor;
+    }
+    return overlayScore;
+}
+
+double Utils::getLogarithmicOverlay(
+                      const std::vector<MatchedPatternFragment> & fragmentList,
+                      SUFFIX_MARKER_TYPE patternSize,
+                      double k) {
+    double overlayScore = 0;
+    BOOST_FOREACH(MatchedPatternFragment fragment, fragmentList) {
+        double intervalOverlay = static_cast<double>(fragment.getLength())
+                                 / static_cast<double>(patternSize);
+        double significanceFactor = pow(log(fragment.getLength()+1)
+                                    / log(patternSize+1), 1/k);
+
+        overlayScore += intervalOverlay * significanceFactor;
+    }
+    return overlayScore;
+}
+
 SUFFIX_MARKER_TYPE Utils::maxSentenceSize =
                      pow(2, SUFFIX_MARKER_SENTENCE_BYTES*8);
 

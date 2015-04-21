@@ -1,4 +1,6 @@
 #include "concordia/tm_matches.hpp"
+
+#include "concordia/common/utils.hpp"
 #include <boost/foreach.hpp>
 #include <math.h>
 
@@ -18,10 +20,12 @@ TmMatches::~TmMatches() {
 }
 
 void TmMatches::calculateScore() {
-    double exampleOverlay = _getLogarithmicOverlay(_exampleMatchedRegions,
+    double exampleOverlay =
+                  Utils::getLogarithmicOverlay(_exampleMatchedRegions,
                                                    _exampleSize, 1.0);
 
-    double patternOverlay = _getLogarithmicOverlay(_patternMatchedRegions,
+    double patternOverlay =
+                  Utils::getLogarithmicOverlay(_patternMatchedRegions,
                                                    _patternSize, 2.0);
     _score = (exampleOverlay + patternOverlay) / 2.0;
 }
@@ -64,20 +68,3 @@ bool TmMatches::_alreadyIntersects(
     }
     return false;
 }
-
-double TmMatches::_getLogarithmicOverlay(
-                            const std::vector<Interval> & intervalList,
-                            SUFFIX_MARKER_TYPE sentenceSize,
-                            double k) {
-    double overlayScore = 0;
-    BOOST_FOREACH(Interval interval, intervalList) {
-        double intervalOverlay = static_cast<double>(interval.getLength())
-                                 / static_cast<double>(sentenceSize);
-        double significanceFactor = pow(log(interval.getLength()+1)
-                                    / log(sentenceSize+1), 1/k);
-
-        overlayScore += intervalOverlay * significanceFactor;
-    }
-    return overlayScore;
-}
-

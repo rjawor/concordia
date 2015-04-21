@@ -34,12 +34,11 @@ BOOST_AUTO_TEST_CASE( HtmlTagsTest )
 BOOST_AUTO_TEST_CASE( StopWordsTest )
 {
     boost::shared_ptr<ConcordiaConfig> config(new ConcordiaConfig(TestResourcesManager::getTestConcordiaConfigFilePath("concordia.cfg")));
-    SentenceAnonymizer anonymizer(config);
-    
-    
-    std::string sentence = "Aczkolwiek nie wiem, czy to konieczne";
-    BOOST_CHECK_EQUAL(anonymizer.anonymize(sentence),"  wiem   konieczne");
-    
+    if (config->isStopWordsEnabled()) {
+        SentenceAnonymizer anonymizer(config);
+        std::string sentence = "Aczkolwiek nie wiem, czy to konieczne";
+        BOOST_CHECK_EQUAL(anonymizer.anonymize(sentence),"  wiem   konieczne");
+    }
 }
 
 BOOST_AUTO_TEST_CASE( StopSymbolsTest )

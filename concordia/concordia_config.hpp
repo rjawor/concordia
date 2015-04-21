@@ -55,6 +55,10 @@ public:
         return _spaceSymbolsFilePath;
     }
 
+    bool & isStopWordsEnabled() {
+        return _stopWordsEnabled;
+    }
+
     std::string & getStopWordsFilePath() {
         return _stopWordsFilePath;
     }
@@ -87,6 +91,8 @@ private:
     std::string _htmlTagsFilePath;
 
     std::string _spaceSymbolsFilePath;
+
+    bool _stopWordsEnabled;
 
     std::string _stopWordsFilePath;
 

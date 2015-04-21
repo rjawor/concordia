@@ -16,6 +16,9 @@ echo "CONCORDIA RUNNER: concordia searching for pattern: \"Współpraca Państw 
 ./build/concordia-console/concordia-console -c prod/resources/concordia-config/concordia.cfg -x "Współpraca Państw Członkowskich i Komisji Europejskiej"
 echo "CONCORDIA RUNNER: concordia searching for pattern: \"8. W odniesieniu do artykułu 45 ustęp 12\""
 ./build/concordia-console/concordia-console -c prod/resources/concordia-config/concordia.cfg -x "8. W odniesieniu do artykułu 45 ustęp 12"
+echo "CONCORDIA RUNNER: concordia searching for pattern: \"Prawo europejskie umożliwia handel zagraniczny\""
+./build/concordia-console/concordia-console -c prod/resources/concordia-config/concordia.cfg -x "Prawo europejskie umożliwia handel zagraniczny"
+
 
 echo "CONCORDIA RUNNER: searching for pattern: \"Parlamentu Europejskiego\""
 ./build/concordia-console/concordia-console -c prod/resources/concordia-config/concordia.cfg -s "Parlamentu Europejskiego" -n

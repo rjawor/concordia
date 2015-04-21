@@ -36,6 +36,8 @@ html_tags_path = "@TEST_RESOURCES_DIRECTORY@/anonymizer/html_tags.txt"
 
 space_symbols_path = "@TEST_RESOURCES_DIRECTORY@/anonymizer/space_symbols.txt"
 
+stop_words_enabled = "@STOP_WORDS_ENABLED@"
+
 stop_words_path = "@TEST_RESOURCES_DIRECTORY@/anonymizer/stop_words.txt"
 
 named_entities_path = "@TEST_RESOURCES_DIRECTORY@/anonymizer/named_entities.txt"

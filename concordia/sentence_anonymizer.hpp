@@ -41,6 +41,8 @@ private:
 
     boost::shared_ptr<RegexReplacement> _htmlTags;
 
+    bool _stopWordsEnabled;
+
     boost::shared_ptr<RegexReplacement> _stopWords;
 
     boost::shared_ptr<RegexReplacement> _stopSymbols;

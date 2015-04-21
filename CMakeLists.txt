@@ -6,6 +6,9 @@ project(concordia C CXX)
 set (CONCORDIA_VERSION_MAJOR 0)
 set (CONCORDIA_VERSION_MINOR 1)
 
+# Whether to use stop words
+set (STOP_WORDS_ENABLED "false")
+
 # Type of the characters in SA
 
 set (INDEX_CHARACTER_TYPE "unsigned int")

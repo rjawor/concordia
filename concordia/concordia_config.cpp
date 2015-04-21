@@ -10,6 +10,7 @@
 #define SUFFIX_ARRAY_PARAM "suffix_array_path"
 #define HTML_TAGS_PARAM "html_tags_path"
 #define SPACE_SYMBOLS_PARAM "space_symbols_path"
+#define STOP_WORDS_ENABLED_PARAM "stop_words_enabled"
 #define STOP_WORDS_PARAM "stop_words_path"
 #define NAMED_ENTITIES_PARAM "named_entities_path"
 #define STOP_SYMBOLS_PARAM "stop_symbols_path"
@@ -40,6 +41,9 @@ ConcordiaConfig::ConcordiaConfig(const std::string & configFilePath)
           ConcordiaConfig::_readConfigParameterStr(HTML_TAGS_PARAM);
     _spaceSymbolsFilePath =
           ConcordiaConfig::_readConfigParameterStr(SPACE_SYMBOLS_PARAM);
+    _stopWordsEnabled =
+          ConcordiaConfig::_readConfigParameterStr(
+                           STOP_WORDS_ENABLED_PARAM) != "false";
     _stopWordsFilePath =
           ConcordiaConfig::_readConfigParameterStr(STOP_WORDS_PARAM);
     _namedEntitiesFilePath =

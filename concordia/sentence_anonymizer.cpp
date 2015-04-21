@@ -12,8 +12,11 @@ SentenceAnonymizer::SentenceAnonymizer(
                                          throw(ConcordiaException) {
     _createNeRules(config->getNamedEntitiesFilePath());
     _createHtmlTagsRule(config->getHtmlTagsFilePath());
-    _stopWords = _getMultipleReplacementRule(
-                              config->getStopWordsFilePath(), "", true);
+    _stopWordsEnabled = config->isStopWordsEnabled();
+    if (_stopWordsEnabled) {    
+        _stopWords = _getMultipleReplacementRule(
+                                  config->getStopWordsFilePath(), "", true);
+    }
     _stopSymbols = _getMultipleReplacementRule(
                               config->getStopSymbolsFilePath(), "");
     _spaceSymbols = _getMultipleReplacementRule(
@@ -34,7 +37,9 @@ std::string SentenceAnonymizer::anonymize(const std::string & sentence) {
 
     result = TextUtils::getInstance().toLowerCase(result);
 
-    result = _stopWords->apply(result);
+    if (_stopWordsEnabled) {
+        result = _stopWords->apply(result);
+    }
     result = _stopSymbols->apply(result);
     result = _spaceSymbols->apply(result);
 

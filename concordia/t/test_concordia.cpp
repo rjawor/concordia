@@ -121,7 +121,7 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch2 )
 
     BOOST_CHECK_EQUAL(searchResult2.size(), 2);
     BOOST_CHECK_EQUAL(searchResult2.at(0).getId(), 202);
-    BOOST_CHECK_EQUAL(searchResult2.at(0).getOffset(), 0);
+    BOOST_CHECK_EQUAL(searchResult2.at(0).getOffset(), 1);
     BOOST_CHECK_EQUAL(searchResult2.at(1).getId(), 312);
     BOOST_CHECK_EQUAL(searchResult2.at(1).getOffset(), 1);
 }
@@ -143,7 +143,7 @@ BOOST_AUTO_TEST_CASE( ConcordiaSimpleSearch3 )
 
     BOOST_CHECK_EQUAL(searchResult1.size(), 1);
     BOOST_CHECK_EQUAL(searchResult1.at(0).getId(), 312);
-    BOOST_CHECK_EQUAL(searchResult1.at(0).getOffset(), 1);
+    BOOST_CHECK_EQUAL(searchResult1.at(0).getOffset(), 2);
 }
 
 BOOST_AUTO_TEST_CASE( ConcordiaAnubisSearch1 )
@@ -204,7 +204,7 @@ BOOST_AUTO_TEST_CASE( ConcordiaSearch1 )
     concordia.refreshSAfromRAM();
         
     boost::shared_ptr<ConcordiaSearchResult> searchResult1 = concordia.concordiaSearch("posiada rysia chyba");
-    // best overlay: [0,2], [2,3], score =  
+    // best overlay: [0,2], [2,3], score = 0.695 
 
     BOOST_CHECK_EQUAL(searchResult1->getBestOverlay().size(), 2);
     BOOST_CHECK_CLOSE(searchResult1->getBestOverlayScore(), 0.695, 0.1);
@@ -226,32 +226,32 @@ BOOST_AUTO_TEST_CASE( ConcordiaSearch1 )
     addFragment 167,1,2,1
     */
     
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(0).getExampleId(), 45);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(0).getExampleId(), 167);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(0).getExampleOffset(), 2);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(0).getPatternOffset(), 0);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(0).getMatchedLength(), 2);
 
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(1).getExampleId(), 51);
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(1).getExampleOffset(), 1);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(1).getExampleId(), 45);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(1).getExampleOffset(), 3);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(1).getPatternOffset(), 0);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(1).getMatchedLength(), 2);
 
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(2).getExampleId(), 123);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(2).getExampleId(), 51);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(2).getExampleOffset(), 1);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(2).getPatternOffset(), 0);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(2).getMatchedLength(), 2);
 
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(3).getExampleId(), 45);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(3).getExampleId(), 167);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(3).getExampleOffset(), 3);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(3).getPatternOffset(), 1);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(3).getMatchedLength(), 1);
 
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(4).getExampleId(), 51);
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(4).getExampleOffset(), 2);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(4).getExampleId(), 45);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(4).getExampleOffset(), 4);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(4).getPatternOffset(), 1);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(4).getMatchedLength(), 1);
 
-    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(5).getExampleId(), 123);
+    BOOST_CHECK_EQUAL(searchResult1->getFragments().at(5).getExampleId(), 51);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(5).getExampleOffset(), 2);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(5).getPatternOffset(), 1);
     BOOST_CHECK_EQUAL(searchResult1->getFragments().at(5).getMatchedLength(), 1);

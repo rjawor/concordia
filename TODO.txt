@@ -1,15 +1,16 @@
-- wyłączyć stopWords
 IN PROGRESS - concordia search zwraca pozycje tokenów z hash'a. Jak to odnieść do examples w korpusie?
 - testy zużycia pamięci
 - Prawdopodobnie długość example w markers będzie potrzebna tylko anubisowi (który, jak się okazuje, jest wolny). Pomyśleć, do czego można wykorzystać markery, bo ich idea wydaje się niezła.
 - Multi-threading?
 - concordia-server (zastanowić się, czy nie napisać CAT-a)
-- zastanowić się nad empty hash examples (rozwiązanie: w ogóle nie szukać fraz o pustym hashu, rzucać wyjątek).
 - puścić 100% search test na jrc
 
 
 
 ---------------------------- Archive -----------------------------
+REJECTED - zastanowić się nad empty hash examples (rozwiązanie: w ogóle nie szukać fraz o pustym hashu, rzucać wyjątek).
+
+DONE - wyłączyć stopWords
 
 DONE - Przy concordia searh dodatkowo obliczany ma być zestaw optymalnego pokrycia patternu. Może siłowo? (jeśli przyjąć max dł. zdania 500 tokenów, to nie powinno być źle)
 

@@ -125,7 +125,8 @@ int main(int argc, char** argv) {
                 << " fragments. "  << "Search took: " <<
                           msdiff.total_milliseconds() << "ms." << std::endl;
             if (!cli.count("silent")) {
-                std::cout << "\tBest overlay: " << std::endl;
+                std::cout << "\tBest overlay (score="<<
+                    result->getBestOverlayScore()<< "): " << std::endl;
                 BOOST_FOREACH(MatchedPatternFragment fragment,
                               result->getBestOverlay()) {
                     std::cout << "\t\tfragment [" << fragment.getStart()

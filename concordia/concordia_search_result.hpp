@@ -39,6 +39,10 @@ public:
         return _bestOverlay;
     }
 
+    double getBestOverlayScore() const {
+        return _bestOverlayScore;
+    }
+
 private:
     void _checkPossibleOverlays(
                 std::vector<MatchedPatternFragment> currentOverlay,

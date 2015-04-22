@@ -1,13 +1,14 @@
 IN PROGRESS - concordia search zwraca pozycje tokenów z hash'a. Jak to odnieść do examples w korpusie?
 - testy zużycia pamięci
 - Prawdopodobnie długość example w markers będzie potrzebna tylko anubisowi (który, jak się okazuje, jest wolny). Pomyśleć, do czego można wykorzystać markery, bo ich idea wydaje się niezła.
-- Multi-threading?
-- concordia-server (zastanowić się, czy nie napisać CAT-a)
-- puścić 100% search test na jrc
+- Multi-threading? (przy concordia search jak najbardziej. Tylko wtedy trzebaby zastosować sortowanie po końcach przedziału przed liczeniem best overlay, co nawiasem mówiąc jest gotowe).
+- concordia-server (zastanowić się, czy nie napisać CAT-a oraz nad tym, czy nie oddzielić projektu concordia-server).
 
 
 
 ---------------------------- Archive -----------------------------
+DONE - puścić 100% search test na jrc
+
 REJECTED - zastanowić się nad empty hash examples (rozwiązanie: w ogóle nie szukać fraz o pustym hashu, rzucać wyjątek).
 
 DONE - wyłączyć stopWords

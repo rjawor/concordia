@@ -13,7 +13,7 @@ SentenceAnonymizer::SentenceAnonymizer(
     _createNeRules(config->getNamedEntitiesFilePath());
     _createHtmlTagsRule(config->getHtmlTagsFilePath());
     _stopWordsEnabled = config->isStopWordsEnabled();
-    if (_stopWordsEnabled) {    
+    if (_stopWordsEnabled) {
         _stopWords = _getMultipleReplacementRule(
                                   config->getStopWordsFilePath(), "", true);
     }
